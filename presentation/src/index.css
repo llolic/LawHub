@@ -14,12 +14,14 @@ code {
 
 .header {
   position: relative;
-  height: 100px;
+  height: 90px;
   background-color: #446598;
   left: 0px;
   top: 0px;
   display: flex;
   align-items: flex-end;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 /* .homepage {
@@ -52,7 +54,96 @@ code {
   font-size: 24px;
 }
 
+.btn_blue {
+  background-color: #446598;
+  border-radius: 8px;
+  border: none;
+  padding: 0.4em;
+  
+  color: #FFFFFF;
+  
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+}
+
 img {
   width: auto;
   height: 100%;
+}
+
+.search_container {
+  padding: 0.8em;
+  padding-left: 6em;
+  padding-right: 6em;
+}
+
+.searchbar {
+  background-color: #89A3CB;
+  border: none;
+  padding: 0.4em;
+  border-radius: 8px;
+
+  color: #FFFFFF;
+
+  font-family: 'Roboto', sans-serif;
+  font-style: bold;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.registration_container {
+  /* padding-left: 12em;
+  padding-right: 12em; */
+  padding-top: 3em;
+
+  position: relative;
+  /* display: list-item; */
+  margin: auto;
+  width: 60%;
+  /* border: #446598; */
+  
+}
+
+.subtitle {
+  width: 100%;
+  color: #446598;
+
+  font-family: 'Roboto', sans-serif;
+  font-style: bold;
+  font-weight: 700;
+  font-size: 28px;
+
+  padding-bottom: 0.5em;
+}
+
+.form_container {
+  /* padding: 0.4em; */
+  font-family: 'Roboto', sans-serif;
+  font-style: bold;
+  font-weight: 500;
+  font-size: 18px;
+  
+}
+
+.form_field {
+  padding: 0.4em;
+  border-radius: 8px;
+  width: 100%;
+
+  color: #FFFFFF;
+
+  font-family: 'Roboto', sans-serif;
+  font-style: bold;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.card {
+  /* vertical-align: middle; */
+  /* width: 80vw; */
+  /* background-color: #FFFFFF; */
+  border: #446598;
+  
 }

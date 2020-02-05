@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from './Components/Header';
+import StudentRegistration from './Components/StudentRegistration';
+
 import './App.css';
 
 function App() {
@@ -8,6 +10,7 @@ function App() {
       <Header
         loggedIn = {false}
       />
+      <StudentRegistration/>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchBar from './SearchBar';
 import Button from './Button';
 
 import logo from '../Images/lawhub.png';
@@ -16,13 +17,16 @@ class Header extends React.Component {
     render = () => {
         return (
             <div className="header">
-            <img src={logo} alt="logo"/>
-                <button className="home_link">
-                    LAWHUB
-                </button>
+                <img src={logo} alt="logo"/>
+                <Button className="home_link" text="LAWHUB"/>
                 <Button className="btn_header" text="Leaderboard"/>
                 <Button className="btn_header" text="Mock"/>
                 <Button className="btn_header" text="Explore"/>
+
+                <SearchBar/>
+
+                <Button className="btn_header" text="Sign Up"/>
+                <Button className="btn_header" text="Login"/>
             </div>
         );
     }
