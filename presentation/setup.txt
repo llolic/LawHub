@@ -1,0 +1,10 @@
+- Install node.js v10.16 (this should install npm as well)
+- npm install -g create-react-app
+- go to presentation folder and run "npm start" 
+    - if this breaks, try "npm install" then "npm start"
+
+Files to ignore:
+- index.js
+- serviceWorker.js
+- setupTests.js
+- App.test.js

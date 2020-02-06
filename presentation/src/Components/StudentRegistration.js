@@ -2,7 +2,6 @@ import React from 'react';
 import Button from './Button';
 import InputField from './InputField';
 
-import logo from '../Images/lawhub.png';
 import '../index.css';
 
 class StudentRegistration extends React.Component {
