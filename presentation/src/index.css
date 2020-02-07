@@ -147,3 +147,21 @@ img {
   border: #446598;
   
 }
+
+.width-60 {
+  width: 60%;
+}
+
+.width-50 {
+  width: 47.5%;
+}
+
+.width-40 {
+  width: 35%;
+}
+
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}

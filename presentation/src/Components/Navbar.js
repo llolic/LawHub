@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 import Button from './Button';
+import { Link } from "react-router-dom";
 
 import logo from '../Images/lawhub.png';
 import '../index.css';
@@ -17,16 +18,34 @@ class Navbar extends React.Component {
     render = () => {
         return (
             <div className="header">
+            
                 <img src={logo} alt="logo"/>
-                <Button className="home_link" text="LAWHUB"/>
-                <Button className="btn_header" text="Leaderboard"/>
-                <Button className="btn_header" text="Mock"/>
-                <Button className="btn_header" text="Explore"/>
+
+                <Link to="/">
+                    <Button className="home_link" text="LAWHUB"/>
+                </Link>                
+
+                <Link to="/leaderboard">
+                    <Button className="btn_header" text="Leaderboard"/>
+                </Link>
+                
+                <Link to="/mock">
+                    <Button className="btn_header" text="Mock"/>
+                </Link>
+                
+                <Link to="/explore">
+                    <Button className="btn_header" text="Explore"/>
+                </Link>
 
                 <SearchBar/>
 
-                <Button className="btn_header" text="Sign Up"/>
-                <Button className="btn_header" text="Login"/>
+                <Link to="/register">
+                    <Button className="btn_header" text="Sign Up"/>
+                </Link>
+
+                <Link to="/login">
+                    <Button className="btn_header" text="Login"/>
+                </Link>
             </div>
         );
     }
