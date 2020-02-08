@@ -1,7 +1,27 @@
+RUNNING CREATE-REACT-APP 
 - Install node.js v10.16 (this should install npm as well)
 - npm install -g create-react-app
+- npm install @material-ui/core
+- npm install @material-ui/icons
 - go to presentation folder and run "npm start" 
     - if this breaks, try "npm install" then "npm start"
+
+App.js
+- The main wrapper component for the entire web app 
+- renders certain components based on the route
+
+Components
+- Button: for now only takes 2 props - className and text
+- Navbar: pretty much hard coded into App.js so it always renders
+- SearchBar: part of Navbar, need to implement its functions
+- StudentRegistration: entire registration form, mostly consists of material-ui TextFields
+
+Styles
+- using material-ui is easier since they have preset styles (also better functionality)
+- all project defined styles are all in index.css
+- .[CLASSNAME] in index.css will be applied to components with the prop className=[CLASSNAME]
+- try to not position and size components based on 'px' since it won't scale
+
 
 Files to ignore:
 - index.js

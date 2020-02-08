@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.header {
+.navbar {
   position: relative;
   height: 90px;
   background-color: #446598;
@@ -22,11 +22,20 @@ code {
   align-items: flex-end;
   padding-left: 1em;
   padding-right: 1em;
+  justify-content: space-between;
 }
 
-/* .homepage {
-  vertical-align: sub;
-} */
+.leftnav {
+  height: 90px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.rightnav {
+  height: 90px;
+  display: flex;
+  align-items: flex-end;
+}
 
 .home_link {
   background: none;
@@ -118,28 +127,6 @@ img {
   padding-bottom: 0.5em;
 }
 
-.form_container {
-  /* padding: 0.4em; */
-  font-family: 'Roboto', sans-serif;
-  font-style: bold;
-  font-weight: 500;
-  font-size: 18px;
-  
-}
-
-.form_field {
-  padding: 0.4em;
-  border-radius: 8px;
-  width: 100%;
-
-  color: #FFFFFF;
-
-  font-family: 'Roboto', sans-serif;
-  font-style: bold;
-  font-weight: 500;
-  font-size: 18px;
-}
-
 .card {
   /* vertical-align: middle; */
   /* width: 80vw; */
@@ -159,7 +146,6 @@ img {
 .width-40 {
   width: 35%;
 }
-
 
 .row {
   display: flex;

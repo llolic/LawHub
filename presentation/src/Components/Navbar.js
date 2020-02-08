@@ -17,35 +17,38 @@ class Navbar extends React.Component {
 
     render = () => {
         return (
-            <div className="header">
-            
-                <img src={logo} alt="logo"/>
+            <div className="navbar">
+                <div className="leftnav">
+                    <img src={logo} alt="logo"/>
 
-                <Link to="/">
-                    <Button className="home_link" text="LAWHUB"/>
-                </Link>                
+                    <Link to="/">
+                        <Button className="home_link" text="LAWHUB"/>
+                    </Link>                
 
-                <Link to="/leaderboard">
-                    <Button className="btn_header" text="Leaderboard"/>
-                </Link>
-                
-                <Link to="/mock">
-                    <Button className="btn_header" text="Mock"/>
-                </Link>
-                
-                <Link to="/explore">
-                    <Button className="btn_header" text="Explore"/>
-                </Link>
+                    <Link to="/leaderboard">
+                        <Button className="btn_header" text="Leaderboard"/>
+                    </Link>
 
-                <SearchBar/>
+                    <Link to="/mock">
+                        <Button className="btn_header" text="Mock"/>
+                    </Link>
 
-                <Link to="/register">
-                    <Button className="btn_header" text="Sign Up"/>
-                </Link>
+                    <Link to="/explore">
+                        <Button className="btn_header" text="Explore"/>
+                    </Link>
+                </div>
 
-                <Link to="/login">
-                    <Button className="btn_header" text="Login"/>
-                </Link>
+                <div className="rightnav">
+                    <SearchBar/>
+
+                    <Link to="/register">
+                        <Button className="btn_header" text="Sign Up"/>
+                    </Link>
+
+                    <Link to="/login">
+                        <Button className="btn_header" text="Login"/>
+                    </Link>
+                </div>
             </div>
         );
     }

@@ -1,32 +1,10 @@
 import React from 'react';
 import Button from './Button';
+import { schools, studyLevels, countries, stateprovinces } from '../Constants/registration';
 
 import { TextField, MenuItem } from '@material-ui/core';
 
 import '../index.css';
-
-const schools = [
-    {
-        name: 'Yale University'
-    },
-    {
-        name: 'Harvard University'
-    },
-
-]
-
-const studyLevels = [
-    {
-        level: 'Undergraduate'
-    },
-    {
-        level: 'Graduate'
-    }
-]
-
-// const countries
-// const states/provinces
-// get these from db?
 
 class StudentRegistration extends React.Component {
     constructor(props) {
@@ -37,6 +15,8 @@ class StudentRegistration extends React.Component {
     }
 
     render = () => {
+
+
         return (
             <div className="registration_container">
                 <div className="card">
@@ -78,9 +58,9 @@ class StudentRegistration extends React.Component {
                                 variant="outlined"
                                 fullWidth
                             >
-                                {schools.map(option => (
-                                  <MenuItem key={option.name} value={option.name}>
-                                    {option.name}
+                                {schools.map(school => (
+                                  <MenuItem key={school} value={school}>
+                                    {school}
                                   </MenuItem>
                                 ))}
                             </TextField>
@@ -98,8 +78,8 @@ class StudentRegistration extends React.Component {
                                 fullWidth
                             >
                                 {studyLevels.map(option => (
-                                  <MenuItem key={option.level} value={option.level}>
-                                    {option.level}
+                                  <MenuItem key={option} value={option}>
+                                    {option}
                                   </MenuItem>
                                 ))}
                             </TextField>
@@ -118,9 +98,9 @@ class StudentRegistration extends React.Component {
                                 variant="outlined"
                                 fullWidth
                             >
-                                {schools.map(option => (
-                                  <MenuItem key={option.name} value={option.name}>
-                                    {option.name}
+                                {countries.map(option => (
+                                  <MenuItem key={option} value={option}>
+                                    {option}
                                   </MenuItem>
                                 ))}
                             </TextField>
@@ -132,14 +112,14 @@ class StudentRegistration extends React.Component {
                                 select
                                 margin="normal"
                                 label="State/Province"
-                                value={studyLevels}
+                                value={stateprovinces}
                                 // onChange={handleChange}
                                 variant="outlined"
                                 fullWidth
                             >
-                                {studyLevels.map(option => (
-                                  <MenuItem key={option.level} value={option.level}>
-                                    {option.level}
+                                {stateprovinces.map(option => (
+                                  <MenuItem key={option} value={option}>
+                                    {option}
                                   </MenuItem>
                                 ))}
                             </TextField>
