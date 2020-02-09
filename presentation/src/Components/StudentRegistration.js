@@ -10,12 +10,41 @@ class StudentRegistration extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hoverIndex: -1
+            firstname: '',
+            lastname: '',
+            email: '',
+            school: '',
+            studylvl: '',
+            country: '',
+            stateprovince: '',
+            password: '',
+            verifyPassword: '',
+            submitted: false
         }
+    }    
+
+    submitRegistration = async () => {
+        // grab state values here?? send to database
+        console.log("Created new user");
+        const response = await fetch('/addUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        });
+
+        if (response.ok) {
+            console.log("Created new user");
+        }
+        else {
+            console.log("Failed to create user");
+        }
+        console.log(this.state);
+
     }
 
     render = () => {
-
 
         return (
             <div className="registration_container">
@@ -30,6 +59,7 @@ class StudentRegistration extends React.Component {
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        onChange={e => this.setState({firstname: e.target.value})}
                     />
                    <TextField 
                         id="lastname" 
@@ -37,6 +67,7 @@ class StudentRegistration extends React.Component {
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        onChange={e => this.setState({lastname: e.target.value})}
                     />
                    <TextField 
                         id="email" 
@@ -44,6 +75,7 @@ class StudentRegistration extends React.Component {
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        onChange={e => this.setState({email: e.target.value})}
                     />
                     
                     <div className="row">
@@ -53,8 +85,8 @@ class StudentRegistration extends React.Component {
                                 select
                                 margin="normal"
                                 label="Post-secondary Institution"
-                                value={schools}
-                                // onChange={handleChange}
+                                value={this.state.school}
+                                onChange={e => this.setState({school: e.target.value})}
                                 variant="outlined"
                                 fullWidth
                             >
@@ -72,8 +104,8 @@ class StudentRegistration extends React.Component {
                                 select
                                 margin="normal"
                                 label="Level of Study"
-                                value={studyLevels}
-                                // onChange={handleChange}
+                                value={this.state.studylvl}
+                                onChange={e => this.setState({studylvl: e.target.value})}
                                 variant="outlined"
                                 fullWidth
                             >
@@ -93,8 +125,8 @@ class StudentRegistration extends React.Component {
                                 select
                                 margin="normal"
                                 label="Country"
-                                value={schools}
-                                // onChange={handleChange}
+                                value={this.state.country}
+                                onChange={e => this.setState({country: e.target.value})}
                                 variant="outlined"
                                 fullWidth
                             >
@@ -112,8 +144,8 @@ class StudentRegistration extends React.Component {
                                 select
                                 margin="normal"
                                 label="State/Province"
-                                value={stateprovinces}
-                                // onChange={handleChange}
+                                value={this.state.stateprovince}
+                                onChange={e => this.setState({stateprovince: e.target.value})}
                                 variant="outlined"
                                 fullWidth
                             >
@@ -132,6 +164,8 @@ class StudentRegistration extends React.Component {
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        value={this.state.password}
+                        onChange={e => this.setState({password: e.target.value})}
                     />
 
                     <TextField 
@@ -140,15 +174,25 @@ class StudentRegistration extends React.Component {
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        value={this.state.verifyPassword}
+                        onChange={e => this.setState({verifyPassword: e.target.value})}
                     />  
                     
-                    <Button className="btn_blue" text="Submit"/>
+                    <div className="centerdiv">
+                        <Button 
+                            className="btn_blue" 
+                            text="Submit"
+                            disabled={
+                                (this.state.password.length > 6 && 
+                                this.state.password === this.state.verifyPassword)
+                                ? false : true}
+                            onClick={this.submitRegistration}
+                        />
+                    </div>
                 </div>
             </div>
         );
     }
-
-
 }
 
 export default StudentRegistration;

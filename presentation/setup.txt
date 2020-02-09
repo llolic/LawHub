@@ -6,6 +6,20 @@ RUNNING CREATE-REACT-APP
 - go to presentation folder and run "npm start" 
     - if this breaks, try "npm install" then "npm start"
 
+React 'props' vs. 'state' (this is how I think of it, it may not be 100% correct)
+- props
+    - data passed from a parent component used to render information
+    - if props changes, component will update automatically
+    - for "appearance"
+    - ex: <Button className="btn_blue" text="Submit"/>
+        className and text are both props, you can add as many as you want
+- state
+    - can be changed by some event occuring on the component 
+    - must have an event handler to update the state, so it rerenders
+    - for "business logic"
+    - components don't have to have a state (these are functional components)
+- state should not have elements of props
+
 App.js
 - The main wrapper component for the entire web app 
 - renders certain components based on the route

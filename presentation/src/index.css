@@ -91,8 +91,9 @@ img {
 .searchbar {
   background-color: #89A3CB;
   border: none;
-  padding: 0.4em;
+  padding: 0.2em;
   border-radius: 8px;
+  display: flex;
 
   color: #FFFFFF;
 
@@ -130,8 +131,10 @@ img {
 .card {
   /* vertical-align: middle; */
   /* width: 80vw; */
-  /* background-color: #FFFFFF; */
-  border: #446598;
+  border-radius: 8px;
+  border: 1px solid #89A3CB;
+  box-shadow: 5px 5px 5px rgb(184, 184, 184);
+  padding: 1em;
   
 }
 
@@ -150,4 +153,12 @@ img {
 .row {
   display: flex;
   justify-content: space-between;
+}
+
+.centerdiv {
+  /* position: absolute; */
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

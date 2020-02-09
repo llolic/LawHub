@@ -20,8 +20,16 @@ function App() {
             {/* login here */}
           </Route>
 
+          <Route path="/dashboard">
+            {/* dashboard (home after login) here */}
+          </Route>
+
           <Route path="/leaderboard">
             {/* leaderboard here */}
+          </Route>
+
+          <Route path="/search">
+            {/* search results here */}
           </Route>
 
           <Route path="/mock">
@@ -38,6 +46,7 @@ function App() {
 
           <Route path="/">
             {/* homepage here */}
+            {/* {loggedIn ? <Redirect to="/dashboard" /> : <Homepage />} */}
           </Route>
         </Switch>
       </Router>

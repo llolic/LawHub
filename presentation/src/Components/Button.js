@@ -1,23 +1,23 @@
 import React from 'react';
 import '../index.css';
 
-class Button extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            hoverIndex: -1
-        }
-    }
-
-    render = () => {
-        return (
-            <div>
-                <button className={this.props.className}>
-                    {this.props.text}
-                </button>
-            </div>
-        );
-    }
+/**
+ * This is a functional component, it shouldn't need a state
+ * All this component should do is render itself based on the props
+ * @param {*} props 
+ */
+const Button = (props) => {
+    return (
+        <div>
+            <button 
+                className={props.className}
+                onClick={props.onClick}
+                disabled={props.disabled}
+            >
+                {props.text}
+            </button>
+        </div>
+    );
 }
 
 export default Button;
