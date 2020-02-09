@@ -12,6 +12,14 @@ code {
     monospace;
 }
 
+
+button {
+  cursor: pointer;
+  border: none;
+  font-style: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
 .navbar {
   position: relative;
   height: 90px;
@@ -39,34 +47,36 @@ code {
 
 .home_link {
   background: none;
-  border: none;
   padding: 0.1em;
 
   color: #FFFFFF;
   
-  font-family: 'Roboto', sans-serif;
-  font-style: bold;
   font-weight: 700;
   font-size: 52px;
 }
 
+.home_link:hover {
+  text-shadow: 5px 5px 7px #30476b;
+}
+
 .btn_header {
   background: none;
-  border: none;
   padding: 0.4em;
   
   color: #FFFFFF;
   
-  font-family: 'Roboto', sans-serif;
-  font-style: bold;
   font-weight: 700;
   font-size: 24px;
+}
+
+
+.btn_header:hover {
+  text-shadow: 5px 5px 5px #30476b;
 }
 
 .btn_blue {
   background-color: #446598;
   border-radius: 8px;
-  border: none;
   padding: 0.4em;
   
   color: #FFFFFF;
@@ -75,6 +85,10 @@ code {
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
+}
+
+.btn_blue:hover {
+  background-color: #5983c4;
 }
 
 img {

@@ -2,9 +2,10 @@ import React from 'react';
 import Button from './Button';
 import { schools, studyLevels, countries, stateprovinces } from '../Constants/registration';
 
-import { TextField, MenuItem } from '@material-ui/core';
+import { TextField, MenuItem, Link } from '@material-ui/core';
 
 import '../index.css';
+import { Redirect } from 'react-router-dom';
 
 class StudentRegistration extends React.Component {
     constructor(props) {
@@ -41,10 +42,14 @@ class StudentRegistration extends React.Component {
             console.log("Failed to create user");
         }
         console.log(this.state);
+        this.setState({submitted: true}); // change this later
 
     }
 
     render = () => {
+        if (this.state.submitted) {
+            return <Redirect push to="/successfulRegistration"/>
+        }
 
         return (
             <div className="registration_container">
@@ -76,6 +81,7 @@ class StudentRegistration extends React.Component {
                         fullWidth
                         variant="outlined"
                         onChange={e => this.setState({email: e.target.value})}
+                        error={!this.state.email.includes("@") && this.state.email !== ""}
                     />
                     
                     <div className="row">
@@ -161,11 +167,15 @@ class StudentRegistration extends React.Component {
                     <TextField 
                         id="password" 
                         label="Password"
+                        helperText="Minimum 6 characters"
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        type="password"
                         value={this.state.password}
                         onChange={e => this.setState({password: e.target.value})}
+                        error={this.state.password.length < 6 && this.state.password !== ""}
+
                     />
 
                     <TextField 
@@ -174,11 +184,18 @@ class StudentRegistration extends React.Component {
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        type="password"
                         value={this.state.verifyPassword}
                         onChange={e => this.setState({verifyPassword: e.target.value})}
+                        helperText={this.state.password !== this.state.verifyPassword 
+                                    && this.state.verifyPassword !== "" 
+                                    ? "Passwords do not match" : ""}
+                        error={this.state.password !== this.state.verifyPassword && this.state.verifyPassword !== ""}
+
                     />  
                     
                     <div className="centerdiv">
+                        {/* <Link to="/successfulRegistration"> */}
                         <Button 
                             className="btn_blue" 
                             text="Submit"
@@ -188,6 +205,7 @@ class StudentRegistration extends React.Component {
                                 ? false : true}
                             onClick={this.submitRegistration}
                         />
+                        {/* </Link> */}
                     </div>
                 </div>
             </div>

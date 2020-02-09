@@ -23,6 +23,7 @@ React 'props' vs. 'state' (this is how I think of it, it may not be 100% correct
 App.js
 - The main wrapper component for the entire web app 
 - renders certain components based on the route
+- probably will need to be changed as we add features
 
 Components
 - Button: for now only takes 2 props - className and text
@@ -30,12 +31,15 @@ Components
 - SearchBar: part of Navbar, need to implement its functions
 - StudentRegistration: entire registration form, mostly consists of material-ui TextFields
 
-Styles
+Styles (index.css and material-ui)
 - using material-ui is easier since they have preset styles (also better functionality)
 - all project defined styles are all in index.css
 - .[CLASSNAME] in index.css will be applied to components with the prop className=[CLASSNAME]
 - try to not position and size components based on 'px' since it won't scale
 
+Constants
+- Some hardcoded values for form selection
+- Probably better if we can pull these from the db
 
 Files to ignore:
 - index.js
