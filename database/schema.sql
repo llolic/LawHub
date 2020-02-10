@@ -11,3 +11,5 @@ create table User (
 );
 
 -- INSERT INTO User VALUES($1, $2, $3, $4, $5, 'student', $6, $7, $8);
+
+-- INSERT INTO User VALUES($1, $2, $3, $4, $5, 'recruiter', $6, $7, $8);
