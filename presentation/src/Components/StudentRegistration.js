@@ -7,9 +7,14 @@ import { TextField, MenuItem, Link } from '@material-ui/core';
 import '../index.css';
 import { Redirect } from 'react-router-dom';
 
+/**
+ * Student Registration card for the student user.
+ * Includes logic to send/receive requests to the flask server
+ */
 class StudentRegistration extends React.Component {
     constructor(props) {
         super(props);
+        // basically what we sent as a POST request
         this.state = {
             firstname: '',
             lastname: '',
@@ -47,6 +52,7 @@ class StudentRegistration extends React.Component {
     }
 
     render = () => {
+        // this redirects to the registration successful page
         if (this.state.submitted) {
             return <Redirect push to="/successfulRegistration"/>
         }
@@ -64,6 +70,7 @@ class StudentRegistration extends React.Component {
                         margin="normal"
                         fullWidth
                         variant="outlined"
+                        // Change state if user types in the text field
                         onChange={e => this.setState({firstname: e.target.value})}
                     />
                    <TextField 
@@ -96,6 +103,7 @@ class StudentRegistration extends React.Component {
                                 variant="outlined"
                                 fullWidth
                             >
+                                {/* this is basically a for loop */}
                                 {schools.map(school => (
                                   <MenuItem key={school} value={school}>
                                     {school}
