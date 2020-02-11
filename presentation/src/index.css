@@ -7,35 +7,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.registration_container {
-  padding-top: 3em;
-  position: relative;
-  margin: auto;
-  width: 60%; 
-}
-
-.subtitle {
-  width: 100%;
-  color: #446598;
-
-  font-family: 'Roboto', sans-serif;
-  font-style: bold;
-  font-weight: 700;
-  font-size: 28px;
-
-  padding-bottom: 0.5em;
-}
-
-.card {
-  border-radius: 8px;
-  border: 1px solid #89A3CB;
-  box-shadow: 5px 5px 5px rgb(184, 184, 184);
-  padding: 1em;
 }
 
 .width-60 {
