@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './Components/Navbar';
 import StudentRegistration from './Components/StudentRegistration';
+import HomePage from './Components/HomePage';
 
 import {
   BrowserRouter as Router,
@@ -44,13 +45,17 @@ function App() {
             <StudentRegistration/>
           </Route>
 
+          <Route path="/registerRecruiter">
+            {/* <RecruiterRegistration/> */}
+          </Route>
+
           <Route path="/successfulRegistration">
             You have registered successfully!
             {/* success registration page here */}
           </Route>
 
           <Route path="/">
-            {/* homepage here */}
+            <HomePage/>
             {/* {loggedIn ? <Redirect to="/dashboard" /> : <Homepage />} */}
           </Route>
         </Switch>

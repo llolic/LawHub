@@ -3,9 +3,9 @@ import Button from './Button';
 import { schools, studyLevels, countries, stateprovinces } from '../Constants/registration';
 
 import { TextField, MenuItem, Link } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
 import '../index.css';
-import { Redirect } from 'react-router-dom';
 
 class StudentRegistration extends React.Component {
     constructor(props) {

@@ -4,7 +4,7 @@ import Button from './Button';
 import { Link } from "react-router-dom";
 
 import logo from '../Images/lawhub.png';
-import '../index.css';
+import './navbar.css';
 
 class Navbar extends React.Component {
     constructor(props) {
