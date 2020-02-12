@@ -1,0 +1,12 @@
+.footer {
+  position: relative;
+  height: 1.5em;
+  background-color: #555555;
+  display: flex-end;
+  padding: 0.5em;
+  text-align: end;
+  
+  color: #FFFFFF;
+  font-weight: 200;
+  font-size: 20px;
+}

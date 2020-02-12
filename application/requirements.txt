@@ -1,0 +1,5 @@
+flask
+flask_restful
+pyscopg2
+markdown
+os
