@@ -1,6 +1,10 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
-import markdown, os
+from flask_api import status
+# see http://www.flaskapi.org/api-guide/status-codes/
+import markdown, os, hashlib, binascii
+import database
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -20,7 +24,22 @@ class Login(Resource):
         parser.add_argument('password', required=True)
 
         args = parser.parse_args()
-        return {'email': args['email'], 'password': args['password']}
+        db = database.Database()
+        val = db.connect()
+        if val == -1:
+            #return 500
+            return status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        #sanitize email input here, learn to escape the input
+        row = db.execute("SELECT password FROM AppUser WHERE email = '{}'".format(args['email']))
+        
+        if verify_password(row[0], args['password']):
+            #return 200 ok
+            return status.HTTP_200_OK
+        
+        #return 404 unauthorized
+        return status.HTTP_401_UNAUTHORIZED
+
 
     # add helper parse_args with for loop for adding arguments
 
