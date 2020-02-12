@@ -34,6 +34,7 @@ class Login(Resource):
 
         #sanitize email input here, learn to escape the input
         row = db.execute("SELECT password FROM AppUser WHERE email = '{}'".format(args['email']))
+        db.close()
 
         if bcrypt.checkpw(args['password'], row[0]):
             #return 200 ok
