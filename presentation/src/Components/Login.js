@@ -13,17 +13,18 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-            sessId: '', //starts as nothing
-            loginState: 0 // 0 initial, 1 successful login, -1 failed login
+            sessId: '', // this needs to be global
+            loginState: 0, // 0 initial, 1 successful login, -1 failed login
+            responseData: '' // initially nothing
         }
-    }    
+    }
 
     submitLogin = async () => {
 
         // grab state values here?? send to database
 
         console.log("Attempting to login");
-        const response = await fetch('/login', {
+        const response = await fetch('104.196.152.154/api/v1/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,7 +35,8 @@ class Login extends React.Component {
         if (response.ok) {
             console.log("Login successful");
             this.setState({loginState: 1}); // change this later
-            //this.setState({sessId: response.json()})
+            this.setState({responseData: response.json()})
+            this.setState({sessId: this.responseData["sessId"]})
         }
         else {
             console.log("Failed to login");
@@ -90,8 +92,7 @@ class Login extends React.Component {
                             text="Login"
                             onClick={this.submitLogin}
                         />
-                        <br></br>
-                        { this.state.loginStatus === -1 && <p>Your login credentials could not be verified, please try again.</p>}
+                        { this.state.loginState === -1 && <p>Your login credentials could not be verified, please try again.</p>}
                         {/* </Link> */}
                     </div>
                 </div>
