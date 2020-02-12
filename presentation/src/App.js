@@ -1,7 +1,7 @@
-import React from "react";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
-import StudentRegistration from "./Components/StudentRegistration";
+import React from 'react';
+import Navbar from './Components/Navbar';
+import StudentRegistration from './Components/StudentRegistration';
+import Login from './Components/Login';
 import HomePage from "./Components/HomePage";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -12,7 +12,9 @@ function App() {
       <Router>
         <Navbar loggedIn={false} />
         <Switch>
-          <Route path="/login">{/* login here */}</Route>
+          <Route path="/login">
+            <Login/>
+          </Route>
 
           <Route path="/dashboard">
             {/* dashboard (home after login) here */}
