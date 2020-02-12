@@ -1,8 +1,9 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from flask_api import status
+import flask_bcrypt as bcrypt
 # see http://www.flaskapi.org/api-guide/status-codes/
-import markdown, os, bcrypt
+import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
 
@@ -37,7 +38,7 @@ class Login(Resource):
         db.close_connection()
         uid = row[0][0]
         password_hash = row[0][1]
-        if bcrypt.checkpw(args['password'], password_hash):
+        if bcrypt.check_password_hash(password_hash.encode(), args['password']):
             #return 200 ok
             return {"uid": uid, "sessId": "0"}
         
@@ -55,22 +56,24 @@ class Register(Resource):
         parser.add_argument('country')
         parser.add_argument('state')
         parser.add_argument('city')
-        
+
         args = parser.parse_args()
+        print(args)
+#         return {}
+
         db = database_lite.DatabaseLite()
         val = db.connect()
         if val == -1:
             #return 500
             return status.HTTP_500_INTERNAL_SERVER_ERROR
+        # return {"sup":"alfonso"}, status.HTTP_200_OK
+        password_hash = bcrypt.generate_password_hash(args['password']).decode('utf-8')
 
-        salt = bcrypt.gensalt()
-        password_hash = bcrypt.hashpw(args['password'], salt)
-
-        row = db.execute('''INSERT INTO appuser (uid, password, firstName, lastName, email, role, country, stateOrProvince, city) 
-                            VALUES (0, "{}", "{}", "{}", "{}", "{}", "{}", "{}", "{}");'''
+        row = db.execute('''INSERT INTO appuser (password, firstName, lastName, email, role, country, stateOrProvince, city) 
+                            VALUES ("{}", "{}", "{}", "{}", "{}", "{}", "{}", "{}");'''
                             .format(password_hash, args['firstName'], args['lastName'], args['email'], role, args['country'], args['state'], args['city']))
-        db.close()
-        return status.HTTP_200_OK
+        db.close_connection()
+        return {}, status.HTTP_200_OK
 
 
 class RegisterStudent(Register):
