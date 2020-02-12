@@ -1,6 +1,6 @@
-import psycopg2
+# import psycopg2
 
-class Database:
+class DatabasePostgre:
 
     def __init__(self, name='lh_db', user='user1', password='Lamas123', host='34.66.215.42', port='5432'):
         self.name = name

@@ -2,8 +2,9 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from flask_api import status
 # see http://www.flaskapi.org/api-guide/status-codes/
-import markdown, os, hashlib, binascii
-import database
+import markdown, os, bcrypt
+# http://zetcode.com/python/bcrypt/ for bcrypt methods
+import database_lite
 
 
 app = Flask(__name__)
@@ -24,7 +25,7 @@ class Login(Resource):
         parser.add_argument('password', required=True)
 
         args = parser.parse_args()
-        db = database.Database()
+        db = database_lite.DatabaseLite()
         val = db.connect()
         if val == -1:
             #return 500
@@ -32,13 +33,13 @@ class Login(Resource):
 
         #sanitize email input here, learn to escape the input
         row = db.execute("SELECT password FROM AppUser WHERE email = '{}'".format(args['email']))
-        
-        if verify_password(row[0], args['password']):
+
+        if bcrypt.checkpw(args['password'], row[0]):
             #return 200 ok
             return status.HTTP_200_OK
         
-        #return 404 unauthorized
-        return status.HTTP_401_UNAUTHORIZED
+        #return 401 unauthorized
+        return status.HTTP_401_UNAUTHORIZED 
 
 
     # add helper parse_args with for loop for adding arguments
