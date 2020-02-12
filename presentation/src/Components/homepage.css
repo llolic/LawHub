@@ -3,9 +3,10 @@
 }
 
 .home_banner {
-  width: 80%;
+  width: 85%;
   margin: auto;
   color: #C02121;
+  /* EB5757 */
   font-style: bold;
   font-weight: 700;
   font-size: 48px;
@@ -13,9 +14,9 @@
   background-image: url('../Images/homepg.jpg');
   background-repeat: no-repeat, repeat;
   background-position-x: center;
-  background-position-y: 1.5em;
+  background-position-y: 1em;
   padding-bottom: 0;
-  padding-top: 2em;
+  padding-top: 1em;
   padding-left: 2em;
   padding-right: 2em;
 
@@ -50,7 +51,6 @@
   margin: auto;
 }
 
-
 .row_card:hover {
   box-shadow: 2px 2px 8px rgb(228, 228, 228);
 }
@@ -63,23 +63,64 @@
   width: 100%;
   color: #446598;
 
-  font-family: 'Roboto', sans-serif;
   font-style: bold;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 30px;
 
   padding-bottom: 0.5em;
+}
+
+.card_title_bot {
+  width: 100%;
+  color: #446598;
+
+  font-style: bold;
+  font-weight: 700;
+  font-size: 30px;
+
+  padding-top: 0.5em;
 }
 
 .card_body {
   width: 100%;
   font-weight: 300;
-  font-size: 20px;
   padding-bottom: 0.5em;
 
 }
 
 .card_lst {
   list-style-type: circle;
+  
+  font-weight: 300;
+  font-size: 20px;
+  padding-bottom: 0.5em;
 
 }
+
+.padded_lst {
+  list-style-type: circle;
+  padding-left: 5em;
+  padding-top: 3em;
+  
+  font-weight: 300;
+  font-size: 24px;
+}
+
+.lst_item {
+  margin: 0 0 2em 0;
+}
+
+.phrase {
+  text-align: center;
+  font-weight: 300;
+  font-size: 24px;
+  padding-bottom: 0.5em;
+}
+
+em {  /* or .call em, but you should aim for consistency in your styling */
+  font-style: normal;
+  font-style: bold;
+  font-size: 58px;
+  font-weight: 900;
+}
+

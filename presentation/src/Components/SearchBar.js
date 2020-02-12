@@ -30,7 +30,7 @@ class SearchBar extends React.Component {
             to="/search"
             onClick={() => this.setState({ contents: "Search..." })}
           >
-            <SearchIcon style={{ color: "#FFFFFF", fontSize: "2em" }} />
+            <SearchIcon style={{ color: "#FFFFFF", fontSize: "1.7em" }} />
           </Link>
         </form>
       </div>

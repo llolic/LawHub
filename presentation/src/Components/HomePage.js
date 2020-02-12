@@ -1,6 +1,9 @@
 import React from "react";
 import Button from "./Button";
-import filler from "../Images/homepg.jpg";
+import quizImg from "../Images/quizInterface.png";
+import profileStats from "../Images/profileStats.png";
+import leaderboardImg from "../Images/leaderboard.png";
+
 
 import "./homepage.css";
 
@@ -21,7 +24,7 @@ class HomePage extends React.Component {
         <div className="home_banner">
           <Grid container spacing={2}>
             <Grid item xs={6} className="banner_item">
-              <div>It's WHAT you know,</div>
+              <div style={{ paddingLeft: "1.5em" }}>It's <em>what</em> you know,</div>
             </Grid>
 
             <Grid item xs={6} className="banner_item"></Grid>
@@ -29,7 +32,7 @@ class HomePage extends React.Component {
             <Grid item xs={6} className="banner_item"></Grid>
 
             <Grid item xs={6} className="banner_item">
-              <div style={{ textAlign: "end" }}>not WHO you know.</div>
+              <div style={{ textAlign: "end" }}> not <em>who</em> you know.</div>
             </Grid>
 
             <Grid item xs={12}>
@@ -53,31 +56,43 @@ class HomePage extends React.Component {
               Preparing for your LSAT or BAR exams?
             </div>
             <div className="card_body">
-              <ul className="card_lst">
-                <li>
-                  Practice mock quizzes
-                  <dd>
-                    <img src={filler} alt="quiz" style={{ width: "30%" }} />
-                  </dd>
-                </li>
-               
-              </ul>
+              <img src={quizImg} alt="quiz" style={{ width: "100%" }} />
+              <div className="phrase">
+                Practice mock quizzes created by employers, and receive instant results!
+              </div>
             </div>
           </div>
 
           <div className="half_card">
-            <div>
-              <img src={filler} alt="quiz" style={{ width: "50%" }} />
+              <div className="phrase">
+                Differentiate yourself from the crowd
+              </div>
+            <div className="center">
+              <img src={leaderboardImg} alt="stats" style={{ width: "60%" }} />
             </div>
-            <div className="card_title" style={{ textAlign: "center" }}>
+            <div className="card_title_bot" style={{ textAlign: "center" }}>
               Climb the Leaderboard
             </div>
           </div>
         </Grid>
         <div className="row_card">
           <div className="card_title" style={{ textAlign: "center" }}>
-            See detailed statistics on your progress
+            Visualize your progress
           </div>
+          <Grid container spacing={2}>
+            <img
+              src={profileStats}
+              alt="stats"
+              style={{ width: "60%" }}
+            />
+
+            <ul className="padded_lst">
+              <li className="lst_item">See personalized statistics</li>
+              <li className="lst_item">Track your progress</li>
+              <li className="lst_item">Identify strengths and weaknesses</li>
+              <li className="lst_item">Improve your skills</li>
+            </ul>
+          </Grid>
         </div>
       </div>
     );

@@ -7,7 +7,7 @@ import {
   stateprovinces
 } from "../Constants/registration";
 
-import { TextField, MenuItem, Link } from "@material-ui/core";
+import { TextField, MenuItem } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 
 import "./studentregistration.css";
