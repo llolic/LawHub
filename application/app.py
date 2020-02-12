@@ -25,7 +25,7 @@ class Login(Resource):
         parser.add_argument('password', required=True)
 
         args = parser.parse_args()
-        print(args['password'])
+
         db = database_lite.DatabaseLite()
         val = db.connect()
         if val == -1:
@@ -45,10 +45,45 @@ class Login(Resource):
         return {}, status.HTTP_401_UNAUTHORIZED
 
 
+class Register(Resource):
+    def post(self, role):
+        parser = reqparse.RequestParser()
+        parser.add_argument('email', required=True)
+        parser.add_argument('password', required=True)
+        parser.add_argument('firstName', required=True)
+        parser.add_argument('lastName', required=True)
+        parser.add_argument('country')
+        parser.add_argument('state')
+        parser.add_argument('city')
+        
+        args = parser.parse_args()
+        db = database_lite.DatabaseLite()
+        val = db.connect()
+        if val == -1:
+            #return 500
+            return status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        salt = bcrypt.gensalt()
+        password_hash = bcrypt.hashpw(args['password'], salt)
+
+        row = db.execute('''INSERT INTO appuser (uid, password, firstName, lastName, email, role, country, stateOrProvince, city) 
+                            VALUES (0, "{}", "{}", "{}", "{}", "{}", "{}", "{}", "{}");'''
+                            .format(password_hash, args['firstName'], args['lastName'], args['email'], role, args['country'], args['state'], args['city']))
+        db.close()
+        return status.HTTP_200_OK
+
+
+class RegisterStudent(Register):
+    def post(self):
+        super().post('student')
+
+
     # add helper parse_args with for loop for adding arguments
 
 
 api.add_resource(Index, '/')
+
+api.add_resource(RegisterStudent, '/api/v1/register/student')
 api.add_resource(Login, '/api/v1/login')
 
 if __name__ == "__main__":
