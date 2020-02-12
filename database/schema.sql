@@ -1,6 +1,6 @@
 create table AppUser (
-    uid INTEGER NOT NULL primary key,
-    password varchar(100) NOT NULL, 
+    uid SERIAL NOT NULL primary key,
+    password varchar(255) NOT NULL, 
     firstName varchar(100) NOT NULL,
     lastName varchar(100) NOT NULL,
     email varchar(100) NOT NULL UNIQUE,
@@ -12,7 +12,7 @@ create table AppUser (
 
 --userType is a custom type that is ENUM('student', 'recruiter')
 
--- INSERT INTO AppUser VALUES($1, $2, $3, $4, $5, 'student', $7, $8, $9);
+-- INSERT INTO AppUser(password, firstName, lastName, email, role, country, stateOrProvince, city) VALUES($1, $2, $3, $4, $5, 'student', $7, $8, $9);
 
 -- 34.66.215.42
 -- port: 5432
