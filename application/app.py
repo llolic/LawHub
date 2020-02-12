@@ -65,6 +65,8 @@ class Register(Resource):
         row = db.execute('''INSERT INTO appuser (uid, password, firstName, lastName, email, role, country, stateOrProvince, city) 
                             VALUES (0, "{}", "{}", "{}", "{}", "{}", "{}", "{}", "{}");'''
                             .format(password_hash, args['firstName'], args['lastName'], args['email'], role, args['country'], args['state'], args['city']))
+        db.close()
+        return status.HTTP_200_OK
 
 
 class RegisterStudent(Register):
