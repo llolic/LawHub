@@ -25,21 +25,25 @@ class Login(Resource):
         parser.add_argument('password', required=True)
 
         args = parser.parse_args()
+
         db = database_lite.DatabaseLite()
         val = db.connect()
         if val == -1:
             #return 500
-            return status.HTTP_500_INTERNAL_SERVER_ERROR
+            return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
         #sanitize email input here, learn to escape the input
-        row = db.execute("SELECT password FROM AppUser WHERE email = '{}'".format(args['email']))
-
-        if bcrypt.checkpw(args['password'], row[0]):
+        row = db.execute("SELECT uid, password FROM AppUser WHERE email = '{}'".format(args['email']))
+        db.close_connection()
+        uid = row[0][0]
+        password_hash = row[0][1]
+        if bcrypt.checkpw(args['password'], password_hash):
             #return 200 ok
-            return status.HTTP_200_OK
+            return {"uid": uid, "sessId": "0"}
         
         #return 401 unauthorized
-        return status.HTTP_401_UNAUTHORIZED 
+        return {}, status.HTTP_401_UNAUTHORIZED
+
 
 class Register(Resource):
     def post(self, role):
@@ -78,6 +82,7 @@ class RegisterStudent(Register):
 
 
 api.add_resource(Index, '/')
+
 api.add_resource(RegisterStudent, '/api/v1/register/student')
 api.add_resource(Login, '/api/v1/login')
 
