@@ -25,6 +25,7 @@ class Login(Resource):
         parser.add_argument('password', required=True)
 
         args = parser.parse_args()
+        print(args['password'])
         db = database_lite.DatabaseLite()
         val = db.connect()
         if val == -1:
