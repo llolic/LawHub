@@ -2,7 +2,8 @@ import React from 'react';
 import Navbar from './Components/Navbar';
 import StudentRegistration from './Components/StudentRegistration';
 import Login from './Components/Login';
-import HomePage from "./Components/HomePage";
+import HomePage from './Components/HomePage';
+import Footer from './Components/Footer'
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
