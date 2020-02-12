@@ -59,7 +59,7 @@ message is a potentially empty string.
     "message": string
 }
 ```
-sessId is a 256 bit unique token that must be sent with every subsequent request.
+sessId is a 256 bit unique token. userId and sessId must be sent with every subsequent request.
 message is a potentially empty string.
 
 
