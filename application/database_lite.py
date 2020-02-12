@@ -9,7 +9,7 @@ class DatabaseLite:
 	def create_appuser(self):
 		self.connect()
 		table_query = """create table IF NOT EXISTS AppUser (
-							uid INTEGER NOT NULL primary key,
+							uid INTEGER NOT NULL primary key AUTOINCREMENT,
 							password varchar(255) NOT NULL, 
 							firstName varchar(100) NOT NULL,
 							lastName varchar(100) NOT NULL,
@@ -48,14 +48,7 @@ if __name__ == '__main__':
 	db = DatabaseLite()
 	db.connect()
 	db.create_appuser()
-	insert_query = '''
-	INSERT INTO appuser (uid, password, firstName, lastName, email, role) VALUES (0, "password", "testFirst", "testLast", "test@example.com", "student");
-	'''
-	insert_query2 = '''
-	INSERT INTO appuser (uid, password, firstName, lastName, email, role) VALUES (1, "password1", "testFirst1", "testLast1", "test1@example.com", "student");
-	'''
 	
-	db.execute(insert_query)
 	select_query = 'SELECT * FROM appuser;'
 
 	rows = db.execute(select_query)
