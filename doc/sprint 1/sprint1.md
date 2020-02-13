@@ -47,16 +47,6 @@ _Tasks:_
    
 3. Data: Make a table to store the registered student’s username, email, and hashed password.
 
-#### As a non-registered recruiter, I want to register as a recruiter so that I can post quizzes.
-
-_Tasks:_
-
-1. Presentation: User should be able to enter username, password (need to verify twice), and email (verify twice), etc. 5 text fields for the above information, and a submit button.
-
-2. Application: Verify that password entries match, hash+salt password and store with corresponding username in database. Initialize a blank student profile and send a 200 OK response. Send an error response if the username already exists.
-
-3. Data: Make a table to store the registered recruiter’s username, email, and hashed password.
-
 #### As a registered user, I want to login, so I can access my profile.
 
 _Tasks:_
