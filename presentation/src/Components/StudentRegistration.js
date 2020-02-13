@@ -16,15 +16,16 @@ class StudentRegistration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      lastname: "",
+      firstName: "",
+      lastName: "",
       email: "",
       school: "",
       studylvl: "",
       country: "",
-      stateprovince: "",
+      stateOrProvince: "",
       password: "",
       verifyPassword: "",
+      city: "toronto",
       submitted: false
     };
   }
@@ -32,13 +33,15 @@ class StudentRegistration extends React.Component {
   submitRegistration = async () => {
     // grab state values here?? send to database
     console.log("Created new user");
-    const response = await fetch("/addUser", {
-      method: "POST",
+    const response = fetch("http://104.196.152.154:5000/api/v1/register/student", {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+          'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
-    });
+  }).then(result => {
+      console.log(result)
+  });
 
     if (response.ok) {
       console.log("Created new user");
@@ -65,7 +68,7 @@ class StudentRegistration extends React.Component {
             margin="normal"
             fullWidth
             variant="outlined"
-            onChange={e => this.setState({ firstname: e.target.value })}
+            onChange={e => this.setState({ firstName: e.target.value })}
           />
           <TextField
             id="lastname"
@@ -73,7 +76,7 @@ class StudentRegistration extends React.Component {
             margin="normal"
             fullWidth
             variant="outlined"
-            onChange={e => this.setState({ lastname: e.target.value })}
+            onChange={e => this.setState({ lastName: e.target.value })}
           />
           <TextField
             id="email"
@@ -151,8 +154,8 @@ class StudentRegistration extends React.Component {
                 select
                 margin="normal"
                 label="State/Province"
-                value={this.state.stateprovince}
-                onChange={e => this.setState({ stateprovince: e.target.value })}
+                value={this.state.stateOrProvince}
+                onChange={e => this.setState({ stateOrProvince: e.target.value })}
                 variant="outlined"
                 fullWidth
               >

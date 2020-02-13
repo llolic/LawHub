@@ -22,26 +22,30 @@ class Login extends React.Component {
     submitLogin = async () => {
 
         // grab state values here?? send to database
-
+        //const request_body = {email: this.state.email, password: this.state.password}
         console.log("Attempting to login");
-        const response = await fetch('104.196.152.154/api/v1/login', {
+        fetch("http://104.196.152.154:5000/api/v1/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(this.state)
+        }).then(result => {
+            console.log(result)
         });
 
-        if (response.ok) {
-            console.log("Login successful");
-            this.setState({loginState: 1}); // change this later
-            this.setState({responseData: response.json()})
-            this.setState({sessId: this.responseData["sessId"]})
-        }
-        else {
-            console.log("Failed to login");
-            this.setState({loginState: -1})
-        }
+        // console.log(response.status)
+        // if (response.status === 200) {
+            // console.log("Login successful");
+            // this.setState({loginState: 1}); // change this later
+            // this.setState({responseData: response.json()})
+            // console.log(response.json())
+            // this.setState({sessId: this.responseData.sessId})
+        // }
+        // else {
+            // console.log("Failed to login");
+            // this.setState({loginState: -1})
+        // }
         console.log(this.state);
 
     }
