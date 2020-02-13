@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 
 import "./searchbar.css";
 
+/**
+ * The searchbar in the navigation bar
+ * Should reset the search contents on new page navigation
+ */
 class SearchBar extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +17,7 @@ class SearchBar extends React.Component {
       contents: "Search..."
     };
   }
-
+  // TODO: When directed to a new page, reset the search bar
   render = () => {
     return (
       <div className="search_container">

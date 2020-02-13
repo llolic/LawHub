@@ -6,6 +6,12 @@ import { Link } from "react-router-dom";
 import logo from "../Images/lawhub.png";
 import "./navbar.css";
 
+/**
+ * Navigation bar for the web application.
+ * Lawhub logo is not yet clickable (do we want it to be clickable?)
+ * All components for this are not imported from material-ui,
+ * styles for the buttons/searchbar are in index.css
+ */
 class Navbar extends React.Component {
   constructor(props) {
     super(props);

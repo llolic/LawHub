@@ -12,6 +12,10 @@ import { Redirect } from "react-router-dom";
 
 import "./studentregistration.css";
 
+/**
+ * Student Registration card for the student user.
+ * Includes logic to send/receive requests to the flask server
+ */
 class StudentRegistration extends React.Component {
   constructor(props) {
     super(props);
@@ -26,12 +30,12 @@ class StudentRegistration extends React.Component {
       password: "",
       verifyPassword: "",
       city: "toronto",
-      submitted: false
+      submitted: false,
+      sessId: -1
     };
   }
 
   submitRegistration = async () => {
-    // grab state values here?? send to database
     console.log("Created new user");
     const response = fetch("http://104.196.152.154:5000/api/v1/register/student", {
       method: 'POST',

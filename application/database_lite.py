@@ -52,6 +52,7 @@ if __name__ == '__main__':
 	select_query = 'SELECT * FROM appuser;'
 
 	rows = db.execute(select_query)
-	print(rows)
+	for row in rows:
+		print(f"{row[0]}, {row[4]}")
 	db.close_connection()
 	

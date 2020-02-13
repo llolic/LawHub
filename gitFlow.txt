@@ -1,0 +1,52 @@
+-------------------------------------------------------
+BEFORE YOU DO ANYTHING
+
+1. git fetch --all (gets all updates branches)
+2. git pull
+
+-------------------------------------------------------
+CREATING NEW BRANCHES
+
+1. git checkout -b BRANCH 
+2. (You can add, commit new files here, 
+   or just push the branch first)
+3. git push -u origin BRANCH
+
+-------------------------------------------------------
+MERGING BRANCHES
+
+1. Create a Pull Request on Github
+2. USERSTORY_BRANCH/master <- YOUR_BRANCH (on github)
+
+-------------------------------------------------------
+FORGOT TO ADD LAM-## TO YOUR COMMIT?
+
+1. git commit --amend -m "LAM-## prev commit msg"
+
+This replaces your last commit with the above msg 
+
+-------------------------------------------------------
+DID WORK ON THE WRONG BRANCH? (without commits)
+
+1. git stash
+2. git checkout CORRECT_BRANCH
+3. git stash pop 
+(I think this works, I haven't tried)
+
+-------------------------------------------------------
+CREATED A LOCAL DUPLICATE BRANCH?
+
+Check this with: git branch -av (or -vv)
+
+1. git checkout master (or any other remote branch)
+2. git branch -d LOCAL_BRANCH
+3. git fetch --all
+4. git checkout BRANCH
+
+-------------------------------------------------------
+OTHER USEFUL COMMANDS
+
+- git reset --hard HEAD
+    - gets rid of all your local changes
+    - reverts to the last commit 
+    - basically git stash but doesn't save your work 

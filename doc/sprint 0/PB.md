@@ -85,3 +85,15 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 #### __17. As a recruiter, I would like employee suggestions based on my preferences in order to save time.__
 - Priority: 1
 - Point Estimate: 64
+
+#### __18. As a developer, I want to learn how to use React in order to develop the front end for the project and learn valuable skills for industry.
+- Priority: 5
+- Point Estimate: 32
+
+#### __19. As a developer, I want to learn how to create an effective architectural design in order to effectively run our website.
+- Priority: 5
+- Point Estimate: 16
+
+#### __20. As a user, I would like a navigation bar to navigate throughout the website in order to access different pages.
+- Priorty: 5
+- Point Estimate: 8
