@@ -60,18 +60,9 @@ Application: Hash password and check that it matches hash in DB. ‘200 OK’ re
 
 #### As a developer, I want to learn how to use React in order to develop the front end for the project and learn valuable skills for industry. 
 
-    Point estimate: 32
-    Priority: 5
-
 #### As a developer, I want to learn how to create an effective architectural design in order to effectively run our website.
-	
-    Point estimate: 16
-	Priority: 5
 
 #### As a user, I would like a navigation bar to navigate throughout the website in order to access different pages.
-	
-    Point estimate: 8
-	Priority: 5
 
 
 The sub-tasks of the user stories were added to Jira and assigned to group members.
