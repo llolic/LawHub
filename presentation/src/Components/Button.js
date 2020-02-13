@@ -10,8 +10,11 @@ const Button = (props) => {
     return (
         <div>
             <button 
+                // For css styles
                 className={props.className}
-                onClick={props.onClick}
+                // This will be a function that is passed in
+                onClick={props.onClick} 
+                // Can disable buttons if input isn't correct
                 disabled={props.disabled}
             >
                 {props.text}

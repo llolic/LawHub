@@ -12,6 +12,10 @@ import { Redirect } from "react-router-dom";
 
 import "./studentregistration.css";
 
+/**
+ * Student Registration card for the student user.
+ * Includes logic to send/receive requests to the flask server
+ */
 class StudentRegistration extends React.Component {
   constructor(props) {
     super(props);
@@ -170,6 +174,7 @@ class StudentRegistration extends React.Component {
                   </MenuItem>
                 ))}
               </TextField>
+
             </div>
           </div>
 
