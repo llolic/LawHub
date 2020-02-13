@@ -1,15 +1,27 @@
+## Project LAMAS
+
+
 # System Design
+
+<div style="text-align: right">
+CSC301: Intro to Software Engineering 
+</div>
+<div style="text-align: right">
+Lazar, Ahmad, Michelle, Alfonso, Shahmeer
+</div>
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 ## Table of Contents
 
 - [CRC Cards](#crc)
 - [Software Architecture Diagram](#Architecture)
 
-
-
 ## CRC
 
-### __React Components__
+### _React Components_
 
 Class Name | Button
 ------------ | -------------
@@ -62,7 +74,7 @@ Collaborators | Alfonso
 -------------------------
 
 
-### __Back-end Components__
+### _Back-end Components_
 
 
 Class Name | Login
