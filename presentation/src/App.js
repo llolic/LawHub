@@ -44,6 +44,10 @@ function App() {
             {/* success registration page here */}
           </Route>
 
+          <Route path="/successfulLogin">
+            You have logged in successfully!
+          </Route>
+
           <Route path="/">
             <HomePage />
             {/* {loggedIn ? <Redirect to="/dashboard" /> : <Homepage />} */}

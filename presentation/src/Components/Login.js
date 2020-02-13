@@ -15,7 +15,6 @@ class Login extends React.Component {
             password: '',
             sessId: '', // this needs to be global
             loginState: 0, // 0 initial, 1 successful login, -1 failed login
-            responseData: '' // initially nothing
         }
     }
 
@@ -32,26 +31,27 @@ class Login extends React.Component {
             body: JSON.stringify(this.state)
         }).then(result => {
             console.log(result)
+            if (result.ok) {
+                console.log("Login successful");
+                result.json().then((data) => {
+                    console.log(data.sessId);
+                    this.setState({sessId: data.sessId})
+                    this.setState({loginState: 1}); // change this later
+                    console.log(this.state.loginState)
+                })
+            }
+            else {
+                console.log("Failed to login");
+                this.setState({loginState: -1})
+            }
         });
-
-        // console.log(response.status)
-        // if (response.status === 200) {
-            // console.log("Login successful");
-            // this.setState({loginState: 1}); // change this later
-            // this.setState({responseData: response.json()})
-            // console.log(response.json())
-            // this.setState({sessId: this.responseData.sessId})
-        // }
-        // else {
-            // console.log("Failed to login");
-            // this.setState({loginState: -1})
-        // }
-        console.log(this.state);
+        
+        ///console.log(this.state);
 
     }
 
     render = () => {
-        if (this.loginState === 1) {
+        if (this.state.loginState === 1) {
             return <Redirect push to="/successfulLogin"/>
         } 
 
