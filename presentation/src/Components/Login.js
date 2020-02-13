@@ -76,7 +76,6 @@ class Login extends React.Component {
                     <TextField 
                         id="password" 
                         label="Password"
-                        helperText="Minimum 6 characters"
                         margin="normal"
                         fullWidth
                         variant="outlined"
@@ -87,8 +86,6 @@ class Login extends React.Component {
 
                     />
                     
-                    
-
                     <div className="centerdiv">
                         {/* <Link to="/successfulLogin"> */}
                         <Button 
@@ -96,7 +93,7 @@ class Login extends React.Component {
                             text="Login"
                             onClick={this.submitLogin}
                         />
-                        { this.state.loginState === -1 && <p>Your login credentials could not be verified, please try again.</p>}
+                        { this.state.loginState === -1 && <div>Your login credentials could not be verified, please try again.</div>}
                         {/* </Link> */}
                     </div>
                 </div>

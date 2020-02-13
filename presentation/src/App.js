@@ -15,6 +15,7 @@ function App() {
         <Switch>
           <Route path="/login">
             <Login/>
+            <div style={{ height: '8.3em' }}></div>
           </Route>
 
           <Route path="/dashboard">
