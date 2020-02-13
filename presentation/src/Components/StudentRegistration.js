@@ -36,27 +36,24 @@ class StudentRegistration extends React.Component {
   }
 
   submitRegistration = async () => {
-    // grab state values here?? send to database
-
-    console.log("Attempting to register");
-    fetch("http://104.196.152.154:5000/api/v1/register/student", {
-      method: "POST",
+    console.log("Created new user");
+    const response = fetch("http://104.196.152.154:5000/api/v1/register/student", {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+          'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
-    }).then(result => {
-      console.log(result);
-      if (result.ok) {
-        console.log("Successful registration");
-        result.json().then(data => {
-          console.log(data);
-          // has a data.message
-        });
-      } else {
-        console.log("Failed to register");
-      }
-    });
+  }).then(result => {
+      console.log(result)
+  });
+
+    if (response.ok) {
+      console.log("Created new user");
+    } else {
+      console.log("Failed to create user");
+    }
+    console.log(this.state);
+    this.setState({ submitted: true }); // change this later
   };
 
   render = () => {
@@ -162,9 +159,7 @@ class StudentRegistration extends React.Component {
                 margin="normal"
                 label="State/Province"
                 value={this.state.stateOrProvince}
-                onChange={e =>
-                  this.setState({ stateOrProvince: e.target.value })
-                }
+                onChange={e => this.setState({ stateOrProvince: e.target.value })}
                 variant="outlined"
                 fullWidth
               >
@@ -174,7 +169,6 @@ class StudentRegistration extends React.Component {
                   </MenuItem>
                 ))}
               </TextField>
-
             </div>
           </div>
 
