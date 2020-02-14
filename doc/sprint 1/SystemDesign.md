@@ -120,6 +120,8 @@ Since our system is a website and is being hosted on Google Cloud Platform, it i
 
 ![](architecture.png)
 
+Reference: https://www.linuxjournal.com/article/3508
+
 Our system is split into 3 distinct components, the Presentation Layer (front-end), the Application Layer (back-end), and the Database Layer. The front-end communicates with the back-end by hitting an endpoint. The back-end then communicates with the database to store or fetch data and responds to the front-end.
 
 
