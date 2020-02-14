@@ -6,19 +6,12 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 
 ## User Stories
 
-#### __1. As a registered user, I want to login, so I can access my profile.__   
-- Priority: 5
-- Point Estimate: 4
+User stories for sprint 1 have been removed and put into sprint1.md. 
 
 #### __2. As a user, I want to see detailed statistics of another user’s history so I have a better understanding of the applicant.__
    
 - Priority: 4
 - Point Estimate: 16
-
-#### __3. As a non-registered student, I want to register as a student so that I can complete quizzes.__
-   
-- Priority: 5
-- Point Estimate: 4
 
 #### __4. As a student, I would like to customize/update my profile by adding a biography, a resume, and a showcase of quiz scores so that my profile can stand out more to employers and change my skills as I develop as a professional.__
 
@@ -59,11 +52,6 @@ We elected to use the Powers of 2 numerical series for estimating the user story
    
 - Priority: 2
 - Point Estimate: 32
-
-#### __12. As a non-registered recruiter, I want to register as a recruiter so that I can post quizzes.__
-   
-- Priority: 5
-- Point Estimate: 4
 
 #### __13. As a recruiter, I want to be able to filter all students by categories so I can find students that meet my requirements.__
    
