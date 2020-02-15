@@ -5,18 +5,12 @@ import profileStats from "../Images/profileStats.png";
 import leaderboardImg from "../Images/leaderboard.png";
 
 
-import "./homepage.css";
+import "../Styles/homepage.css";
 
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: false
-    };
-  }
 
   render = () => {
     return (

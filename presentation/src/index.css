@@ -42,8 +42,7 @@ code {
   justify-content: center;
 }
 
-.login_container {
-  padding: 5em;
-  width: 70%;
-  margin: auto
+.filler {
+  height: 82.2vh;
 }
+

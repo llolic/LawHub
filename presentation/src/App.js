@@ -1,63 +1,86 @@
-import React from 'react';
-import Navbar from './Components/Navbar';
-import StudentRegistration from './Components/StudentRegistration';
-import Login from './Components/Login';
-import HomePage from './Components/HomePage';
-import Footer from './Components/Footer'
+import React from "react";
+import Navbar from "./Components/Navbar";
+import Registration from "./Components/Registration";
+import Login from "./Components/Login";
+import HomePage from "./Components/HomePage";
+import Footer from "./Components/Footer";
+
+import { isAuthenticated } from "./Components/Auth";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
-  return (
-    <div>
-      <Router>
-        <Navbar loggedIn={false} />
-        <Switch>
-          <Route path="/login">
-            <Login/>
-            <div style={{ height: '8.3em' }}></div>
-          </Route>
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false
+    };
+  }
 
-          <Route path="/dashboard">
-            {/* dashboard (home after login) here */}
-          </Route>
+  updateNavbar() {
+    console.log("component updated");
+    this.setState({ loggedIn: isAuthenticated() });
+  }
 
-          <Route path="/leaderboard">{/* leaderboard here */}</Route>
+  render = () => {
+    return (
+      <div>
+        <Router>
+          <Navbar
+            loggedIn={this.state.loggedIn}
+            updateNavbar={() => this.updateNavbar()}
+          />
+          <Switch>
+            <Route path="/profile">
+              {/* profile here, prob need to + userId here */}
+            </Route>
+            <Route path="/login">
+              <Login updateNavbar={() => this.updateNavbar()} />
+              <div style={{ height: "8.3em" }}></div>
+            </Route>
 
-          <Route path="/search">{/* search results here */}</Route>
+            <Route path="/dashboard">
+              {/* dashboard (home after login) here */}
+            </Route>
 
-          <Route path="/mock">
-            {/* mock quizzes here, feel free to change this name */}
-          </Route>
+            <Route path="/leaderboard">{/* leaderboard here */}</Route>
 
-          <Route path="/explore">{/* explore here */}</Route>
+            <Route path="/search">{/* search results here */}</Route>
 
-          <Route path="/register">
-            <StudentRegistration />
-          </Route>
+            <Route path="/mock">
+              {/* mock quizzes here, feel free to change this name */}
+            </Route>
 
-          <Route path="/registerRecruiter">
-            {/* <RecruiterRegistration/> */}
-          </Route>
+            <Route path="/explore">{/* explore here */}</Route>
 
-          <Route path="/successfulRegistration">
-            You have registered successfully!
-            {/* success registration page here */}
-          </Route>
+            <Route path="/register">
+              <Registration type="student" />
+            </Route>
 
-          <Route path="/successfulLogin">
-            You have logged in successfully!
-          </Route>
+            <Route path="/registerRecruiter">
+              <Registration type="recuiter" />
+            </Route>
 
-          <Route path="/">
-            <HomePage />
-            {/* {loggedIn ? <Redirect to="/dashboard" /> : <Homepage />} */}
-          </Route>
-        </Switch>
-      </Router>
-      <Footer/>
-    </div>
-  );
+            <Route path="/successfulRegistration">
+              <div className="filler">
+                <div className="centerdiv">
+                  <div className="subtitle">
+                    You have registered successfully!
+                  </div>
+                </div>
+              </div>
+            </Route>
+
+            <Route path="/">
+              <HomePage />
+              {/* {this.state.loggedIn ? <Redirect to="/dashboard" /> : <HomePage />} */}
+            </Route>
+          </Switch>
+        </Router>
+        <Footer />
+      </div>
+    );
+  };
 }
 
 export default App;
