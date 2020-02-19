@@ -72,7 +72,7 @@ class App extends React.Component {
             </Route>
 
             <Route path="/">
-              <HomePage />
+              <HomePage loggedIn={this.state.loggedIn}/>
               {/* {this.state.loggedIn ? <Redirect to="/dashboard" /> : <HomePage />} */}
             </Route>
           </Switch>
