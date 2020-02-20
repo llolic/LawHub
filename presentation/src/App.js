@@ -4,6 +4,8 @@ import Registration from "./Components/Registration";
 import Login from "./Components/Login";
 import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
+import Mock from "./Components/Mock";
+import QuizCreation from "./Components/QuizCreation";
 
 import { isAuthenticated } from "./Components/Auth";
 
@@ -48,6 +50,12 @@ class App extends React.Component {
             <Route path="/search">{/* search results here */}</Route>
 
             <Route path="/mock">
+              <Mock isRecruiter={true}/>
+              {/* mock quizzes here, feel free to change this name */}
+            </Route>
+
+            <Route path="/quizCreation">
+              <QuizCreation/>
               {/* mock quizzes here, feel free to change this name */}
             </Route>
 
