@@ -1,0 +1,44 @@
+.navbar {
+  position: relative;
+  height: 5em;
+  background-color: #446598;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: flex-end;
+  padding-left: 1em;
+  padding-right: 1em;
+  justify-content: space-between;
+}
+  
+.leftnav {
+  height: 5em;
+  display: flex;
+  align-items: flex-end;
+}
+
+.rightnav {
+  height: 5em;
+  display: flex;
+  align-items: flex-end;
+}
+
+.home_link {
+  background: none;
+  padding: 0.1em;
+
+  color: #FFFFFF;
+  
+  font-weight: 700;
+  font-size: 52px;
+}
+
+.home_link:hover {
+  text-shadow: 5px 5px 7px #30476b;
+}
+
+img {
+  width: auto;
+  height: 100%;
+}
+  
