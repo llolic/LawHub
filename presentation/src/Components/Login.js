@@ -35,6 +35,7 @@ class Login extends React.Component {
         result.json().then(data => {
           console.log(data.sessId);
           this.setState({ sessId: data.sessId });
+          // STORE THE UID
           this.setState({ loginState: 1 }); // change this later
 
           authenticate(data.sessId);

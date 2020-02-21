@@ -12,6 +12,8 @@ import { Redirect } from "react-router-dom";
 
 import "../Styles/registration.css";
 
+
+
 /**
  * Registration card component.
  * props.type determines which registration (student/recruiter) to render.
@@ -92,8 +94,8 @@ class Registration extends React.Component {
                 fullWidth
               >
                 {studyLevels.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+                  <MenuItem key={option.index} value={option.value}>
+                    {option.value}
                   </MenuItem>
                 ))}
               </TextField>
@@ -141,8 +143,8 @@ class Registration extends React.Component {
             error={!this.state.email.includes("@") && this.state.email !== ""}
           />
 
-          {this.getFields()}
-
+          {/* {this.getFields()} */}
+{/* 
           <div className="row">
             <div className="width-50">
               <TextField
@@ -183,7 +185,7 @@ class Registration extends React.Component {
                 ))}
               </TextField>
             </div>
-          </div>
+          </div> */}
 
           <TextField
             id="password"

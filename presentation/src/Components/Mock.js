@@ -26,15 +26,15 @@ class Mock extends React.Component {
           </div>
         </div>
 
-        <Grid container spacing={1}>
+        <Grid container spacing={3}>
           <Grid item xs={12} className="quiz_card">
-            <div className="card">Filler Quiz</div>
+            <div className="row_card">Filler Quiz</div>
           </Grid>
           <Grid item xs={12} className="quiz_card">
-            <div className="card">Filler Quiz</div>
+            <div className="row_card">Filler Quiz</div>
           </Grid>
           <Grid item xs={12} className="quiz_card">
-            <div className="card">Filler Quiz</div>
+            <div className="row_card">Filler Quiz</div>
           </Grid>
         </Grid>
       </div>

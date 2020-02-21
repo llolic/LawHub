@@ -16,7 +16,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.width-70 {
+  width: 70%;
+}
 .width-60 {
   width: 60%;
 }
@@ -28,6 +30,11 @@ code {
 .width-40 {
   width: 35%;
 }
+
+.width-30 {
+  width: 21%;
+}
+
 
 .row {
   display: flex;
