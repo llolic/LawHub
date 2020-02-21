@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './Components/Navbar';
 import StudentRegistration from './Components/StudentRegistration';
 import Login from './Components/Login';
+import StudentProfile from './Components/StudentProfile';
 import HomePage from './Components/HomePage';
 import Footer from './Components/Footer'
 
@@ -20,6 +21,7 @@ function App() {
 
           <Route path="/dashboard">
             {/* dashboard (home after login) here */}
+            We need to create a dashboard
           </Route>
 
           <Route path="/leaderboard">{/* leaderboard here */}</Route>
@@ -46,7 +48,11 @@ function App() {
           </Route>
 
           <Route path="/successfulLogin">
-            <HomePage />
+            Need to link this to the dashboard and set loggedIn to true, and update navbar to have profile
+          </Route>
+
+          <Route path="/studentProfile">
+            <StudentProfile />
           </Route>
 
           <Route path="/">
