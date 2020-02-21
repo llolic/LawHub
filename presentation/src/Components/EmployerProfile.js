@@ -4,22 +4,24 @@ import profilePic from "../Images/lawhub.png";
 
 import { TextField } from "@material-ui/core";
 
-import "./studentregistration.css";
+import "./employerprofile.css";
 
 /**
- * Student Registration card for the student user.
+ * Employer Profile card for employer profile customization.
  * Includes logic to send/receive requests to the flask server
  */
 class EmployerProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: "userId",
+      sessId: "sessId",
       company: "Pearson-Spectre-Litt",
       title: "Fraudulent Intern",
-      profilePicturePath: "",
       bio: "We fun",
+      profilePicturePath: "",
       submitted: false,
-      sessId: -1
+      error: false,
     };
   }
 
@@ -28,8 +30,8 @@ class EmployerProfile extends React.Component {
   }
 
   submitEmployerProfileUpdates = async () => {
-    console.log("Attempting to update profile");
-    const response = fetch("http://104.196.152.154:5000/api/v1/update", {
+    console.log("Attempting to update employer profile");
+    const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/recruiter", {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
@@ -41,9 +43,13 @@ class EmployerProfile extends React.Component {
 
     if (response.ok) {
       this.setState({ submitted: true }); // change this later
-      console.log("Successfully updated profile");
+      console.log("Successfully updated employer profile");
     } else {
-      console.log("Failed to update profile");
+      //TODO: add different error cases
+        //400 BAD REQUEST if request body formatted incorrectly, string too long
+        //500 INTERNAL SERVER ERROR for internal error (db down)
+      this.setState({ error: true });
+      console.log("Failed to update employer profile");
     }
     console.log(this.state);
   };
@@ -55,7 +61,8 @@ class EmployerProfile extends React.Component {
         <div className="card">
             <div className="subtitle">Customize Your Employer Profile </div>
           
-            { this.state.submitted && <div>Your changes have been saved.</div>}
+            { this.state.submitted && <div>Your changes have been saved.</div> }
+            { this.state.error && <div>Your changes could not be saved. Please try again</div> }
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
@@ -86,7 +93,7 @@ class EmployerProfile extends React.Component {
         />
 
         <TextField
-        id="biography"
+        id="bio"
         label="About Us"
         helperText="Feel free to enter your company description here"
         value={this.state.bio}
