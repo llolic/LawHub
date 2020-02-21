@@ -1,7 +1,7 @@
 import React from "react";
-//import Button from "./Button";
+import Button from "./Button";
 
-//import { TextField, MenuItem } from "@material-ui/core";
+import { TextField, MenuItem } from "@material-ui/core";
 //import { Redirect } from "react-router-dom";
 
 import "./studentregistration.css";
@@ -49,12 +49,12 @@ function AnswerList(props) {
 
 function QuizArea(props) {
     var style = {
-      width: "25%",
-      display: "block",
-      textAlign: "center",
-      boxSizing: "border-box",
-      float: "left",
-      padding: "0 2em"
+      //width: "25%",
+      //display: "block",
+      //textAlign: "center",
+      //boxSizing: "border-box",
+      //float: "left",
+      //padding: "0 2em"
     }
     return(
       <div style={style}>
@@ -176,7 +176,10 @@ class TakeQuiz extends React.Component {
                     dataSet:dataSet, 
                     numQs:numQs,
                     correct:0, 
-                    incorrect:0}
+                    incorrect:0,
+                    done: false,
+                    submitted: false,
+                    error: false}
       this.handleClick = this.handleClick.bind(this)
     
   }
@@ -188,32 +191,42 @@ class TakeQuiz extends React.Component {
       this.setState({incorrect: this.state.incorrect + 1})
     }
     
-    if (this.state.current === this.state.correctnumQs) {
-      //TODO: display results and prompt for redirect 
-      this.setState({current: 0})
-      this.setState({incorrect: 0})
-      this.setState({correct: 0})
+    if (this.state.current === this.state.numQs) {
+      //TODO: display results and prompt for redirect and submit to DB
+      this.setState({done: true})
     } else {
       this.setState({current: this.state.current + 1}) 
     }
   }
 
-  submitStudentProfileUpdates = async () => {
-    console.log("Attempting to update profile");
-    const response = fetch("http://104.196.152.154:5000/api/v1/update", {
+  restart = async() => {
+    if (this.state.done === true) {
+      this.setState({current: 0})
+      this.setState({correct: 0})
+      this.setState({incorrect: 0})
+      this.setState({done: false})
+      this.setState({error: false})
+      this.setState({submitted: false})
+    }
+  }
+
+  submitQuiz = async () => {
+    console.log("Attempting to submit quiz results");
+    const response = fetch("http://104.196.152.154:5000/api/v1/submitQuiz", {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
-  }).then(result => {
+    }).then(result => {
       console.log(result)
-  });
+    });
 
     if (response.ok) {
       this.setState({ submitted: true }); // change this later
       console.log("Successfully updated profile");
     } else {
+      this.setState({ error: true});
       console.log("Failed to update profile");
     }
     console.log(this.state);
@@ -221,19 +234,53 @@ class TakeQuiz extends React.Component {
 
 
   render() {
-    return(
-      <div className="takeQuizContainer">
+
+    return (
+        <div className="takeQuizContainer">
           <div className="card">
-            <div>
-                <QuizArea handleClick={this.handleClick} dataSet={this.state.dataSet[this.state.current]} />
-            </div>
+            
+
+              <div className="centerdiv">
+                {this.state.done ? (
+                  <div>
+                    You got {this.state.correct} questions correct out of {this.state.numQs + 1}
+                    {this.state.submitted ? (
+                        <div> Your results have been submitted </div>
+                    ) : (
+                        <div className="centerdiv">
+                            <Button
+                                className="btn_blue"
+                                text="Start Again"
+                                onClick={this.restart}
+                            />
+                            <Button
+                                className="btn_blue"
+                                text="Submit results"
+                                onClick={this.submitQuiz}
+                            />
+                            { this.state.error === true && <div>Your results could not submitted, please try again.</div>}
+                        </div>
+                    )}
+                  </div>
+                ) : ( //not done quiz yet
+                  <div>
+                    <QuizArea handleClick={this.handleClick} dataSet={this.state.dataSet[this.state.current]} />
+                  </div>
+                )}
+              </div>
+
           </div>
-      </div>
-    );
+          
+
+        </div>
+
+        
+
+      );
+
+    
   };
+  
 }
-
-
-
 
 export default TakeQuiz;
