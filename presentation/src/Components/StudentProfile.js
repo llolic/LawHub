@@ -38,14 +38,14 @@ class StudentProfile extends React.Component {
   submitStudentProfileUpdates = async () => {
     console.log("Attempting to update profile");
     const response = fetch("http://104.196.152.154:5000/api/v1/update", {
-      method: 'POST',
+      method: "POST",
       headers: {
-          'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
-  }).then(result => {
-      console.log(result)
-  });
+    }).then(result => {
+      console.log(result);
+    });
 
     if (response.ok) {
       this.setState({ submitted: true }); // change this later
@@ -57,20 +57,22 @@ class StudentProfile extends React.Component {
   };
 
   render = () => {
-
     return (
       <div className="studentprofile_container">
         <div className="card">
-            <div className="subtitle">Customize Your Student Profile </div>
-          
-            { this.state.submitted && <div>Your changes have been saved.</div>}
+          <div className="subtitle">Customize Your Student Profile </div>
 
-            <div className = "center">
-                <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
+          {this.state.submitted && <div>Your changes have been saved.</div>}
 
-            </div>
-                
-        <TextField
+          <div className="center">
+            <img
+              src={profilePic}
+              alt="your pic here"
+              style={{ width: "150px", height: "150px" }}
+            />
+          </div>
+
+          <TextField
             id="firstname"
             label="First Name"
             value={this.state.firstName}
@@ -78,10 +80,9 @@ class StudentProfile extends React.Component {
             fullWidth
             variant="outlined"
             onChange={e => this.setState({ firstName: e.target.value })}
-        />
-    
-    
-        <TextField
+          />
+
+          <TextField
             id="lastname"
             label="Last Name"
             value={this.state.lastName}
@@ -89,8 +90,7 @@ class StudentProfile extends React.Component {
             fullWidth
             variant="outlined"
             onChange={e => this.setState({ lastName: e.target.value })}
-        />
-    
+          />
 
           <TextField
             id="email"
@@ -170,7 +170,9 @@ class StudentProfile extends React.Component {
                 margin="normal"
                 label="State/Province"
                 value={this.state.stateOrProvince}
-                onChange={e => this.setState({ stateOrProvince: e.target.value })}
+                onChange={e =>
+                  this.setState({ stateOrProvince: e.target.value })
+                }
                 variant="outlined"
                 fullWidth
               >
@@ -193,7 +195,6 @@ class StudentProfile extends React.Component {
             variant="outlined"
             onChange={e => this.setState({ biography: e.target.value })}
           />
-
 
           <div className="centerdiv">
             <Button
