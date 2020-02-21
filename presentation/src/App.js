@@ -46,7 +46,7 @@ function App() {
           </Route>
 
           <Route path="/successfulLogin">
-            <Homepage />
+            <HomePage />
           </Route>
 
           <Route path="/">
