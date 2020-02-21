@@ -23,6 +23,10 @@ class EmployerProfile extends React.Component {
     };
   }
 
+  updateProfilePicturePath() { //TODO
+    alert("Just kidding, you can't upload pictures yet!")
+  }
+
   submitEmployerProfileUpdates = async () => {
     console.log("Attempting to update profile");
     const response = fetch("http://104.196.152.154:5000/api/v1/update", {
@@ -55,6 +59,9 @@ class EmployerProfile extends React.Component {
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
+                <Button text = "Upload Picture" 
+                    onClick = {this.updateProfilePicturePath}
+                />
             </div>
                 
         <TextField

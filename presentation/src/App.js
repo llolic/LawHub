@@ -3,6 +3,7 @@ import Navbar from './Components/Navbar';
 import StudentRegistration from './Components/StudentRegistration';
 import Login from './Components/Login';
 import StudentProfile from './Components/StudentProfile';
+import EmployerProfile from './Components/EmployerProfile';
 import HomePage from './Components/HomePage';
 import Footer from './Components/Footer'
 
@@ -53,6 +54,10 @@ function App() {
 
           <Route path="/studentProfile">
             <StudentProfile />
+          </Route>
+
+          <Route path="/employerProfile">
+            <EmployerProfile />
           </Route>
 
           <Route path="/">

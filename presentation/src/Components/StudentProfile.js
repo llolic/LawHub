@@ -28,6 +28,14 @@ class StudentProfile extends React.Component {
     };
   }
 
+  updateProfilePicturePath() { //TODO
+    alert("Just kidding, you can't upload pictures yet!")
+  }
+
+  updateResumePath() {
+      alert("Just kidding, you can't upload resumes yet!")
+  }
+
   submitStudentProfileUpdates = async () => {
     console.log("Attempting to update profile");
     const response = fetch("http://104.196.152.154:5000/api/v1/update", {
@@ -60,7 +68,14 @@ class StudentProfile extends React.Component {
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
+                <Button text = "Upload Picture" 
+                    onClick = {this.updateProfilePicturePath}
+                />
+                <Button text = "Upload Resume" 
+                    onClick = {this.updateResumePath}
+                />
             </div>
+            
 
           <div className="row">
             <div className="width-60">
