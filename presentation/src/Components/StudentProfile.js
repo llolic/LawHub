@@ -1,35 +1,28 @@
 import React from "react";
 import Button from "./Button";
-import profilePic from "../Images/lawhub.png";
 import {
   schools,
-  studyLevels,
-  countries,
-  stateprovinces
+  studyLevels
 } from "../Constants/registration";
+import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
-//import { Redirect } from "react-router-dom";
 
-import "./studentregistration.css";
+import "./studentprofile.css"; //TODO
 
 /**
- * Student Registration card for the student user.
+ * Student Profile card for the student profile customization.
  * Includes logic to send/receive requests to the flask server
  */
 class StudentProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "Fonzy",
-      lastName: "Wonzy",
-      email: "fonzywonzy@gmail.com",
+      studyLevel: 0, //TODO: integer values
       school: "Harvard University",
-      studylvl: "Undergraduate",
-      country: "Canada",
-      stateOrProvince: "Texas",
-      biography: "I am",
-      city: "toronto",
+      profilePicturePath: "../Images/lawhub.png",
+      resumePath: "",
+      bio: "I am Groot",
       submitted: false,
       sessId: -1
     };
@@ -43,9 +36,9 @@ class StudentProfile extends React.Component {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
-  }).then(result => {
+    }).then(result => {
       console.log(result)
-  });
+    });
 
     if (response.ok) {
       this.setState({ submitted: true }); // change this later
@@ -67,41 +60,7 @@ class StudentProfile extends React.Component {
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
-
             </div>
-                
-        <TextField
-            id="firstname"
-            label="First Name"
-            value={this.state.firstName}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ firstName: e.target.value })}
-        />
-    
-    
-        <TextField
-            id="lastname"
-            label="Last Name"
-            value={this.state.lastName}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ lastName: e.target.value })}
-        />
-    
-
-          <TextField
-            id="email"
-            label="Email"
-            margin="normal"
-            value={this.state.email}
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ email: e.target.value })}
-            error={!this.state.email.includes("@") && this.state.email !== ""}
-          />
 
           <div className="row">
             <div className="width-60">
@@ -125,58 +84,18 @@ class StudentProfile extends React.Component {
 
             <div className="width-40">
               <TextField
-                id="studylvl"
+                id="studyLevel"
                 select
                 margin="normal"
                 label="Level of Study"
-                value={this.state.studylvl}
-                onChange={e => this.setState({ studylvl: e.target.value })}
+                value={studyLevels[this.state.studyLevel].value}
+                onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
                 variant="outlined"
                 fullWidth
               >
-                {studyLevels.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="width-50">
-              <TextField
-                id="country"
-                select
-                margin="normal"
-                label="Country"
-                value={this.state.country}
-                onChange={e => this.setState({ country: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {countries.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-
-            <div className="width-50">
-              <TextField
-                id="state-province"
-                select
-                margin="normal"
-                label="State/Province"
-                value={this.state.stateOrProvince}
-                onChange={e => this.setState({ stateOrProvince: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {stateprovinces.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+                {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
+                  <MenuItem key={option.index} value={option.value}>
+                    {option.value}
                   </MenuItem>
                 ))}
               </TextField>
@@ -187,11 +106,11 @@ class StudentProfile extends React.Component {
             id="biography"
             label="About Me"
             helperText="Feel free to enter your biography here"
-            value={this.state.biography}
+            value={this.state.bio}
             margin="normal"
             fullWidth
             variant="outlined"
-            onChange={e => this.setState({ biography: e.target.value })}
+            onChange={e => this.setState({ bio: e.target.value })}
           />
 
 
