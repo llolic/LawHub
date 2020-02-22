@@ -7,6 +7,7 @@ from flask_cors import CORS
 import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
+import database_mysql
 import sqlite3
 
 
@@ -33,15 +34,17 @@ class Login(Resource):
 
         args = parser.parse_args()
         print(args)
-        db = database_lite.DatabaseLite()
-        val = db.connect()
-        if val == -1:
+        db = database_mysql.DatabaseMySql()
+
+        try:
+            val = db.connect()
+            #sanitize email input here, learn to escape the input
+            row = db.execute("SELECT uid, password FROM AppUser WHERE email = '{}'".format(args['email']))
+            db.close_connection()
+        except:
             #return 500
             return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
-        #sanitize email input here, learn to escape the input
-        row = db.execute("SELECT uid, password FROM AppUser WHERE email = '{}'".format(args['email']))
-        db.close_connection()
         if len(row) == 0:
             return {}, status.HTTP_401_UNAUTHORIZED
         uid = row[0][0]
@@ -71,11 +74,13 @@ class Register(Resource):
         print(args)
 #         return {}
 
-        db = database_lite.DatabaseLite()
-        val = db.connect()
-        if val == -1:
+        db = database_mysql.DatabaseMySql()
+        try:
+            val = db.connect()
+        except:
             #return 500
-            return status.HTTP_500_INTERNAL_SERVER_ERROR
+            return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
         # return {"sup":"alfonso"}, status.HTTP_200_OK
         password_hash = bcrypt.generate_password_hash(args['password']).decode('utf-8')
         try:
@@ -84,8 +89,12 @@ class Register(Resource):
                             .format(password_hash, args['firstName'], args['lastName'], args['email'], role, args['country'], args['state'], args['city']))
         except:
              return {}, status.HTTP_401_UNAUTHORIZED
+        
+        try:
+            db.close_connection()
+        except:
+            return {}, status.HTTP_500_INTERNAL_SERVER_ERROR    
 
-        db.close_connection()
         return {"message": ""}, status.HTTP_200_OK
 
 
