@@ -102,6 +102,20 @@ class RegisterStudent(Register):
     def post(self):
         super().post('student')
 
+class EditProfile(Resource):
+    def post(self, role, args):
+        print(args)
+        return args, status.HTTP_200_OK
+
+class EditProfileStudent(EditProfile):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('studyLevel', required=True, location='json')
+        parser.add_argument('school', required=True, location='json')
+        parser.add_argument('bio', required=True, location='json')
+        args = parser.parse_args()
+        super().post('Student', args)
+
 
     # add helper parse_args with for loop for adding arguments
 
@@ -110,6 +124,7 @@ api.add_resource(Index, '/')
 
 api.add_resource(RegisterStudent, '/api/v1/register/student')
 api.add_resource(Login, '/api/v1/login')
+api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
