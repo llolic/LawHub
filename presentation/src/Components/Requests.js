@@ -3,8 +3,8 @@
  *
  */
 
-export const submitRegistration = async state => {
-  fetch("http://104.196.152.154:5000/api/v1/register/" + this.props.type, {
+export const submitRegistration = async (state, type) => {
+  return fetch("http://104.196.152.154:5000/api/v1/register/" + type, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -12,46 +12,33 @@ export const submitRegistration = async state => {
     body: JSON.stringify(state)
   }).then(result => {
     console.log(result);
-    if (result.ok) {
-      console.log("Created new user");
-      return true;
-      // this.setState({ submitted: true }); // change this later
-    } else {
-      console.log("Failed to create user");
-      return false;
-    }
+    return result.ok;
+    // if (result.ok) {
+    //   console.log("Created new user");
+    //   return result.ok;
+    //   // this.setState({ submitted: true }); // change this later
+    // } else {
+    //   console.log("Failed to create user");
+    //   return result.ok;
+    // }
   });
 };
 
-export const submitLogin = async (state) => {
+export const submitLogin = async state => {
   // grab state values here?? send to database
   //const request_body = {email: this.state.email, password: this.state.password}
   console.log("Attempting to login");
-  fetch("http://104.196.152.154:5000/api/v1/login", {
+  return fetch("http://104.196.152.154:5000/api/v1/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(state)
   }).then(result => {
-    console.log(result);
     if (result.ok) {
-      console.log("Login successful");
-      result.json().then(data => {
-        console.log(data.sessId);
-        // this.setState({ sessId: data.sessId });
-        // STORE THE UID
-        // this.setState({ loginState: 1 }); // change this later
-
-        return data;
-        // authenticate(data.sessId);
-        // this.props.updateNavbar();
-      });
-    } else {
-      console.log("Failed to login");
-      return null;
-    //   this.setState({ loginState: -1 });
+      return result.json(); // uid and sessId, need stu/recruiter id??
     }
+    return -1;
   });
 };
 

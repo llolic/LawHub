@@ -15,18 +15,16 @@ import { Redirect } from "react-router-dom";
 import "../Styles/quizcreation.css";
 import "../Styles/registration.css";
 
-/**
- */
 class QuizCreation extends React.Component {
   constructor(props) {
-    super(props);
+    super(props); // sessId and uid are in props
     this.state = {
       title: "",
-      author: "",
+      author: this.props.uid,
       tags: "", // TODO: CONVERT THIS INTO AN ARRAY WHEN SENDING?
       numQuestions: 3,
       questions: [],
-      submitted: false
+      submitted: false,
     };
   }
 
@@ -53,7 +51,6 @@ class QuizCreation extends React.Component {
       }
     }
     this.setState({ numQuestions: n });
-    console.log(n);
   };
 
   // updates the question in the questions array at index qIndex
@@ -73,7 +70,6 @@ class QuizCreation extends React.Component {
   updateQType = (type, qIndex) => {
     var qs = this.state.questions;
     qs[qIndex].questionType = type;
-    console.log(this.state);
   };
 
   // loops thru number of questions and generates all fields
@@ -99,7 +95,7 @@ class QuizCreation extends React.Component {
               // defaultValue="Multiple Choice"
               aria-label="questionType"
               name="qType"
-              onChange={e => this.updateQType(e.target.value, i)} // change type here
+              onChange={e => this.updateQType(e.target.value, i)}
             >
               <FormControlLabel
                 value="mc"
@@ -158,13 +154,13 @@ class QuizCreation extends React.Component {
         </div>
       );
     }
-
     return fields;
   };
 
   render = () => {
+
     if (this.state.submitted) {
-      return <Redirect push to="/successfulRegistration" />;
+      return <Redirect push to="/mock" />;
     }
 
     return (

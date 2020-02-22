@@ -21,9 +21,11 @@ class App extends React.Component {
     };
   }
 
-  updateNavbar() {
-    console.log("component updated");
-    this.setState({ loggedIn: isAuthenticated() });
+  updateNavbar = (sessId, uid) => {
+    console.log("component updated", sessId, uid);
+    this.setState({ loggedIn: isAuthenticated() }); // replace this?
+    this.setState({ sessId: sessId });
+    this.setState({ uid: uid });
   }
 
   render = () => {
@@ -32,14 +34,14 @@ class App extends React.Component {
         <Router>
           <Navbar
             loggedIn={this.state.loggedIn}
-            updateNavbar={() => this.updateNavbar()}
+            updateNavbar={this.updateNavbar}
           />
           <Switch>
             <Route path="/profile">
               {/* profile here, prob need to + userId here */}
             </Route>
             <Route path="/login">
-              <Login updateNavbar={() => this.updateNavbar()} />
+              <Login updateNavbar={this.updateNavbar} />
               <div style={{ height: "8.3em" }}></div>
             </Route>
 
@@ -52,12 +54,12 @@ class App extends React.Component {
             <Route path="/search">{/* search results here */}</Route>
 
             <Route path="/mock">
-              <Mock isRecruiter={true}/>
+              <Mock isRecruiter={true} sessId={this.state.sessId} uid={this.state.uid}/>
               {/* mock quizzes here, feel free to change this name */}
             </Route>
 
             <Route path="/quizCreation">
-              <QuizCreation/>
+              <QuizCreation sessId={this.state.sessId} uid={this.state.uid}/>
               {/* mock quizzes here, feel free to change this name */}
             </Route>
 

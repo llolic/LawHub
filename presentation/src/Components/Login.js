@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { authenticate } from "./Auth";
+import { submitLogin } from "./Requests";
 
 import { TextField } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
@@ -18,36 +19,18 @@ class Login extends React.Component {
     };
   }
 
-  submitLogin = async () => {
-    // grab state values here?? send to database
-    //const request_body = {email: this.state.email, password: this.state.password}
-    console.log("Attempting to login");
-    fetch("http://104.196.152.154:5000/api/v1/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    }).then(result => {
-      console.log(result);
-      if (result.ok) {
-        console.log("Login successful");
-        result.json().then(data => {
-          console.log(data.sessId);
-          this.setState({ sessId: data.sessId });
-          // STORE THE UID
-          this.setState({ loginState: 1 }); // change this later
-
-          authenticate(data.sessId);
-          this.props.updateNavbar();
-
-        });
+  handleSubmit = () => {
+    submitLogin(this.state).then(result => {
+      if (result !== -1) {
+        console.log(result);
+        this.setState({ loginState: 1 });
+        authenticate(result.sessId);
+        this.props.updateNavbar(result.sessId, result.uid);
       } else {
-        console.log("Failed to login");
         this.setState({ loginState: -1 });
       }
     });
-  };
+  }
 
   render = () => {
     if (this.state.loginState === 1) {
@@ -85,7 +68,7 @@ class Login extends React.Component {
             <Button
               className="btn_blue"
               text="Login"
-              onClick={this.submitLogin}
+              onClick={this.handleSubmit}
             />
           </div>
           <div className="centerdiv">
