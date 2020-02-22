@@ -25,7 +25,7 @@ class Login extends React.Component {
         console.log(result);
         this.setState({ loginState: 1 });
         authenticate(result.sessId);
-        this.props.updateNavbar(result.sessId, result.uid);
+        this.props.updateNavbar(result.sessId, result.uid); // add recruiter/student here
       } else {
         this.setState({ loginState: -1 });
       }
@@ -63,7 +63,13 @@ class Login extends React.Component {
             onChange={e => this.setState({ password: e.target.value })}
             error={this.state.password.length < 6 && this.state.password !== ""}
           />
-
+          <div className="centerdiv">
+            {this.state.loginState === -1 && (
+              <div style={{ color: "red" }}>
+                Your login credentials could not be verified, please try again.
+              </div>
+            )}
+          </div>
           <div className="centerdiv">
             <Button
               className="btn_blue"
@@ -71,13 +77,7 @@ class Login extends React.Component {
               onClick={this.handleSubmit}
             />
           </div>
-          <div className="centerdiv">
-            {this.state.loginState === -1 && (
-              <div>
-                Your login credentials could not be verified, please try again.
-              </div>
-            )}
-          </div>
+
         </div>
       </div>
     );

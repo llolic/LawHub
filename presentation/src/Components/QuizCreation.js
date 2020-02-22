@@ -23,18 +23,48 @@ class QuizCreation extends React.Component {
       author: this.props.uid,
       tags: "", // TODO: CONVERT THIS INTO AN ARRAY WHEN SENDING?
       numQuestions: 3,
-      questions: [],
-      submitted: false,
+      questions: [{
+        questionType: "",
+        question: "",
+        answers: ["", "", "", ""],
+        correct: 0
+      },
+      {
+        questionType: "",
+        question: "",
+        answers: ["", "", "", ""],
+        correct: 0
+      },
+      {
+        questionType: "",
+        question: "",
+        answers: ["", "", "", ""],
+        correct: 0
+      }],
+      submitted: 0,
+      missingFields: false
     };
   }
 
   // instantiates questions at the beginning
-  componentWillMount() {
-    this.setNumQuestions(this.state.numQuestions);
-  }
+  // componentWillMount() {
+  //   this.setNumQuestions(this.state.numQuestions);
+  // }
 
-  // [ {questionType: [], question: "", answers: ["", ""], correct: 1} ]
-  // SEND SESSION ID THRU ALL REQUESTS
+  handleSubmit = () => {
+    if (!this.fieldsFilled()) {
+      this.setState({ missingFields: true });
+      return;
+    }
+    this.setState({ missingFields: false });
+    submitQuiz(this.state).then(result => {
+      if (result === true) {
+        this.setState({ submitted: 1 });
+      } else {
+        this.setState({ submitted: -1 });
+      }
+    });
+  };
 
   // updates numQuestions to be n
   // updates questions array to have n question objects
@@ -44,13 +74,35 @@ class QuizCreation extends React.Component {
       for (let i = 0; i < qs.length - n; i++) {
         qs.pop();
       }
-    }
-    else if (qs.length < n) {
+    } else if (qs.length < n) {
       for (let i = 0; i <= n - qs.length; i++) {
-        qs.push({ questionType: "", question: "", answers: ["", "", "", ""], correct: 0 });
+        qs.push({
+          questionType: "",
+          question: "",
+          answers: ["", "", "", ""],
+          correct: 0
+        });
       }
     }
     this.setState({ numQuestions: n });
+  };
+
+  fieldsFilled = () => {
+    var qs = this.state.questions;
+    if (this.state.title === "" || this.state.tags === "") {
+      return false;
+    }
+    for (let i = 0; i < this.state.numQuestions; i++) {
+      if (qs[i].questionType === "" || qs[i].question === "") {
+        return false;
+      }
+      for (let j = 0; j < 4; j++) {
+        if (qs[i].answers[j] === "") {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   // updates the question in the questions array at index qIndex
@@ -158,8 +210,7 @@ class QuizCreation extends React.Component {
   };
 
   render = () => {
-
-    if (this.state.submitted) {
+    if (this.state.submitted === 1) {
       return <Redirect push to="/mock" />;
     }
 
@@ -167,6 +218,8 @@ class QuizCreation extends React.Component {
       <div className="registration_container">
         <div className="card">
           <div className="subtitle">Quiz Creation</div>
+
+  
 
           <TextField
             id="title"
@@ -208,9 +261,29 @@ class QuizCreation extends React.Component {
 
           {this.getQuestionFields()}
 
+          {this.state.missingFields ? (
+            <div style={{ color: "red" }}> Please fill in all the fields. </div>
+          ) : (
+            <div></div>
+          )}
+
+          {this.state.submitted === -1 ? (
+            <div style={{ color: "red" }}>
+              An error has occurred, please try again.
+            </div>
+          ) : (
+            <div></div>
+          )}
+          
           <div className="centerdiv">
-            <Button className="btn_blue" text="SUBMIT" onClick={() => submitQuiz(this.state)}/>
+            <Button
+              className="btn_blue"
+              text="SUBMIT"
+              onClick={this.handleSubmit}
+            />
           </div>
+
+          
         </div>
       </div>
     );

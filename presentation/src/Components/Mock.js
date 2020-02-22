@@ -1,8 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import { authenticate } from "./Auth";
 
-import { TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
