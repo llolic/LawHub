@@ -1,4 +1,4 @@
-import mysql
+import mysql.connector
 
 class DatabaseMySql:
 
@@ -11,12 +11,11 @@ class DatabaseMySql:
         self.connection = None
 
     def connect(self):
-        self.connection = mysql.connect(
-            self.host,
-            self.name,
-            self.user,
-            self.password
-        ) #default port is 3306
+        self.connection = mysql.connector.connect(
+            host = self.host,
+            database = self.name,
+            user = self.user,
+            password = self.password) #default port is 3306
         return 1
     
     def close_connection(self):

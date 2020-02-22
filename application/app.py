@@ -15,6 +15,11 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+def reqParser(parser, args):
+    for i in range(len(args)):
+        parser.add_argument(args[i], required=True, location='json')
+    return
+
 
 class Index(Resource):
     def get(self):
@@ -29,8 +34,9 @@ class Login(Resource):
         # print("REQUEST HEADERS", request.headers)
         # return
         parser = reqparse.RequestParser()
-        parser.add_argument('email', required=True)
-        parser.add_argument('password', required=True)
+        reqParser(parser, ['email', 'password'])
+        # parser.add_argument('email', required=True)
+        # parser.add_argument('password', required=True)
 
         args = parser.parse_args()
         print(args)
@@ -62,21 +68,18 @@ class Register(Resource):
         # print("REQ DATA", request.data)
         
         parser = reqparse.RequestParser()
-        parser.add_argument('email', required=True, location='json')
-        parser.add_argument('password', required=True, location='json')
-        parser.add_argument('firstName', required=True, location='json')
-        parser.add_argument('lastName', required=True, location='json')
+        reqParser(parser, ['email', 'password', 'firstName', 'lastName'])
+       
+        # add non-required arguments
         parser.add_argument('country', location='json')
         parser.add_argument('state', location='json')
         parser.add_argument('city', location='json')
 
         args = parser.parse_args()
-        print(args)
-#         return {}
 
         db = database_mysql.DatabaseMySql()
         try:
-            val = db.connect()
+            db.connect()
         except:
             #return 500
             return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -103,18 +106,36 @@ class RegisterStudent(Register):
         super().post('student')
 
 class EditProfile(Resource):
-    def post(self, role, args):
-        print(args)
-        return args, status.HTTP_200_OK
+    def post(self, role, uid, args):
+        query = "UPDATE " + role + " SET "
+
+        for key in args.keys():
+            query += key + ' = "' + args[key] + '", '
+        
+        query = query[0:-2] #truncate extra comma and space
+        query += " WHERE uid = " + uid + ";"
+
+        db = database_mysql.DatabaseMySql()
+        try:
+            db.connect()
+            db.execute(query)
+            db.close_connection()
+        except:
+            #return 500
+            return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return {}, status.HTTP_200_OK
+
+        
 
 class EditProfileStudent(EditProfile):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('studyLevel', required=True, location='json')
-        parser.add_argument('school', required=True, location='json')
-        parser.add_argument('bio', required=True, location='json')
+        reqParser(parser, ['studyLevel', 'school', 'bio'])
         args = parser.parse_args()
-        super().post('Student', args)
+        parser.add_argument('userId', required=True, location='json')
+        uid = parser.parse_args()['userId']
+        return super().post('Student', uid, args)
 
 
     # add helper parse_args with for loop for adding arguments

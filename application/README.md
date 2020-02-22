@@ -69,7 +69,7 @@ Endpoints:
 {
     "userId": string,
     "sessId": string, 
-    "studyLevel": int,
+    "studyLevel": string,
     "school": string,
     "bio": string      
 }
