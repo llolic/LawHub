@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 
-import { TextField, MenuItem } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 //import { Redirect } from "react-router-dom";
 
 import "./studentregistration.css";
@@ -13,14 +13,8 @@ import "./studentregistration.css";
 
 //https://codepen.io/Daanist/pen/LjLoWV
 
-function Question(props) {
-    var style = {
-      color: "red",
-    }
-    return (
-      <h1 style={style}>{props.dataSet.question}</h1>
-    )
-  }
+
+
 
 function Answer(props) {
     var style = {
@@ -30,15 +24,25 @@ function Answer(props) {
     }
     return(
       <div>
-        <button style={style} onClick={() => props.handleClick(props.choice)}>{props.answer}</button>
+        <button style={style} onClick={() => props.handler(props.choice)}>{props.answer}</button>
       </div>
     )
   }
 
-function AnswerList(props) {
+
+  function Question(props) {
+    var style = {
+      color: "red",
+    }
+    return (
+      <h1 style={style}>{props.question.question}</h1>
+    )
+  }
+
+ function AnswerList(props) {
     var answers = []
-    for (let i = 0; i < props.dataSet.answers.length; i++) {
-      answers.push(<Answer choice={i} handleClick={props.handleClick} answer={props.dataSet.answers[i]} />)
+    for (let i = 0; i < props.question.answers.length; i++) {
+      answers.push(<Answer choice={i} handler={props.handler} answer={props.question.answers[i]} />)
     }
     return(
       <div>
@@ -47,168 +51,254 @@ function AnswerList(props) {
     )
   }
 
-function QuizArea(props) {
-    var style = {
-      //width: "25%",
-      //display: "block",
-      //textAlign: "center",
-      //boxSizing: "border-box",
-      //float: "left",
-      //padding: "0 2em"
-    }
+ function QuizArea(props) {
+
     return(
-      <div style={style}>
-        <Question dataSet={props.dataSet} />
-        <AnswerList dataSet={props.dataSet} handleClick={props.handleClick} />
+      <div>
+          { props.question.questionType === "0" ? (  // multiple choice question TODO: string 0
+            <div>
+                <Question question={props.question} />
+                <AnswerList question={props.question} handler={props.handler} />    
+            </div>
+          ) : ( // open response question
+            <div>
+                <Question question={props.question} />
+                <TextField 
+                    id="answer" 
+                    label="Answer"
+                    margin="normal"
+                    fullWidth
+                    variant="outlined"
+                    onChange={e => props.takeQuiz.setState({curr_answer: e.target.value})} // TODO: TakeQuiz.
+                />
+                <Button
+                    className="btn_blue"
+                    text="Submit Answer"
+                    onClick={props.takeQuiz.handleClick} // TODO: TakeQuiz.
+                />
+            </div>
+          ) // end open response question
+          } 
       </div>
     )
   }
+
+
+
+
 
 class TakeQuiz extends React.Component {
   constructor(props) {
     super(props);
 
-    var numQs = 9
-    var dataSet = [
-        {
-          question: "What is 8 x 1?",
-          answers: [
-            "1",
-            "8",
-            "16",
-            "9"
-          ],
-          correct: 1
-        },
-        {
-          question: "Who is Steve Jobs?",
-              answers: [
-                "CEO of Microsoft",
-                "Barber in NY",
-                "Movie Star",
-                "CEO of Apple"
-              ],
-              correct: 3
-        },
-         {
-              question: "Metallica is a ____ band",
-              answers: [
-                "Blues",
-                "Hard-Rock",
-                "Jazz",
-                "Metal"
-              ],
-              correct: 3
-            },
-            {
-              question: "IS is a ____",
-              answers: [
-                "Word",
-                "Band",
-                "Terror Group",
-                "Brand"
-              ],
-              correct: 2
-            },
-            {
-              question: "Who was Einstein",
-              answers: [
-                "A Scientist",
-                "A Dentist",
-                "A Serial Killer",
-                "None of the above"
-              ],
-              correct: 0
-            },
-            {
-              question: "JavaScript can be used in ____ development",
-              answers: [
-                "Back-End",
-                "Front-End",
-                "ReactJS",
-                "All of the Above"
-              ],
-              correct: 3
-            },
-            {
-              question: "Hitler was a",
-              answers: [
-                "Mass Murderer",
-                "Dictator",
-                "Jew",
-                "None of the above",
-                "All of the above"
-              ],
-              correct: 4
-            },
-            {
-              question: "Korn is a",
-              answers: [
-                "Nu-Metal band",
-                "Religion",
-                "Singer"
-              ],
-              correct: 0
-            },
-            {
-              question: "Windows computers are",
-              answers: [
-                "Horrible",
-                "Great",
-                "Cheap",
-                "Invented by Bill Gates"
-              ],
-              correct: 3
-            },
-            {
-              question: "The BigBan stands in",
-              answers: [
-                "Egypt",
-                "London",
-                "Amsterdam",
-                "NewYork"
-              ],
-              correct: 1
-            },
-      ];
+    var response = { // TODO: get from backend
+        quizId: "quiz1",
+        numQs: 12, // length(questions)-1
+        questions: 
+                [
+                    {
+                        questionId: "q0",
+                        questionType: "0", // 0 MC, 1 long answer TODO: string
+                        question: "What is 8 x 1?",
+                        answers: ["1","8","16","9"],
+                        correct: 1
+                    },
+                    
+                
+                    {
+                        questionId: "q1",
+                        questionType: "0",
+                        question: "Who is Steve Jobs?",
+                        answers: ["CEO of Microsoft","Barber in NY","Movie Star","CEO of Apple"],
+                        correct: 3
+                    },
 
-      this.state = {current:0, 
-                    dataSet:dataSet, 
-                    numQs:numQs,
+                    {
+                        questionId: "q2",
+                        questionType: "0",
+                        question: "Metallica is a ____ band",
+                        answers: ["Blues","Hard-Rock","Jazz","Metal"],
+                        correct: 3
+                    },
+
+                    {
+                        questionId: "q3",
+                        questionType: "0",
+                        question: "IS is a ____",
+                        answers: ["Word","Band","Terror Group","Brand"],
+                        correct: 2
+                    },
+
+                    {
+                        questionId: "q4",
+                        questionType: "0",
+                        question: "Who was Einstein",
+                        answers: ["A Scientist","A Dentist","A Serial Killer","None of the above"],
+                        correct: 0
+                    },
+
+                    {
+                        questionId: "q5",
+                        questionType: "0",
+                        question: "JavaScript can be used in ____ development",
+                        answers: ["Back-End","Front-End","ReactJS","All of the Above"],
+                        correct: 3
+                    },
+
+                    {
+                        questionId: "q6",
+                        questionType: "0",
+                        question: "Hitler was a",
+                        answers: ["Mass Murderer","Dictator","Jew","None of the above","All of the above"],
+                        correct: 4
+                    },
+
+                    {
+                        questionId: "q7",
+                        questionType: "0",
+                        question: "Korn is a",
+                        answers: ["Nu-Metal band","Religion","Singer"],
+                        correct: 0
+                    },
+
+                    {
+                        questionId: "q8",
+                        questionType: "0",
+                        question: "Windows computers are",
+                        answers: ["Horrible","Great","Cheap","Invented by Bill Gates"],
+                        correct: 3
+                    },
+
+                    {
+                        questionId: "q9",
+                        questionType: "0",
+                        question: "The BigBan stands in",
+                        answers: ["Egypt","London","Amsterdam","NewYork"],
+                        correct: 1
+                    },
+
+                    {
+                        questionId: "q10",
+                        questionType: "1",
+                        question: "Who made this quiz"
+                    },
+
+                    {
+                        questionId: "q11",
+                        questionType: "1",
+                        question: "What is the group name of this project"
+                    },
+
+                    {
+                        questionId: "q12",
+                        questionType: "1",
+                        question: "What did I have for dinner"
+                    }
+                ] // end questions
+            } // end response
+
+      this.state = {userId: "userId",
+                    quizId: "quiz1",
+                    user_answers: [], //TODO
+                    curr_answer: "",
+                    current:0, 
+                    dataSet:response.questions, 
+                    numQs:response.numQs,
                     correct:0, 
                     incorrect:0,
+                    numMultChoice:0, //TODO
                     done: false,
                     submitted: false,
                     error: false}
+
       this.handleClick = this.handleClick.bind(this)
     
   }
 
-  handleClick(choice) {
-    if (choice === this.state.dataSet[this.state.current].correct) {
-      this.setState({correct: this.state.correct + 1})
-    } else {
-      this.setState({incorrect: this.state.incorrect + 1})
-    }
+
+  addAnswerToList = (choice) => {
+    this.setState({curr_answer: choice})
+    //console.log(choice)
+    //console.log(this.state.curr_answer)
+    const new_arr = this.state.user_answers.concat(choice) //TODO: user_answers, const
+    //console.log(this.state.user_answers)
+    this.setState({user_answers: new_arr}, () => { //TODO: callbacks to guarantee since async
+        console.log(this.state.user_answers);
+    }) //Bracket placements
+    //console.log(new_arr)
     
-    if (this.state.current === this.state.numQs) {
-      //TODO: display results and prompt for redirect and submit to DB
-      this.setState({done: true})
-    } else {
-      this.setState({current: this.state.current + 1}) 
-    }
+    this.setState({current: this.state.current + 1}) 
+    this.setState({numMultChoice: this.numMultChoice + 1}) // TODO
+    //console.log(this.state.curr_answer)
+    
   }
 
-  restart = async() => {
-    if (this.state.done === true) {
-      this.setState({current: 0})
-      this.setState({correct: 0})
-      this.setState({incorrect: 0})
-      this.setState({done: false})
-      this.setState({error: false})
-      this.setState({submitted: false})
+  handleClick(choice) { 
+      
+    console.log(this.state.current)
+    console.log(this.state.numQs)
+    if (this.state.dataSet[this.state.current].questionType === "0") { // if we have a quiz
+        if (choice === this.state.dataSet[this.state.current].correct) {
+            this.setState({correct: this.state.correct + 1})
+        } else {
+            this.setState({incorrect: this.state.incorrect + 1})
+        }
+        
+        if (this.state.current === this.state.numQs) {
+            this.addAnswerToList(choice) //TODO: final add
+            this.setState({done: true})
+            this.submitQuiz()
+        } else {
+            //TODO
+            this.addAnswerToList(choice)
+            
+            //this.state.student_answers[this.state.current] = this.state.curr_answer;
+            //this.setState({student_answers: [...this.state.student_answers, this.state.curr_answer]}) // TODO: https://stackoverflow.com/questions/26505064/what-is-the-best-way-to-add-a-value-to-an-array-in-state
+        }
+    } else if (this.state.dataSet[this.state.current].questionType === "1") { //we have an open response
+        //this.setState({curr_answer: choice})
+        //console.log(choice)
+        //console.log(this.state.curr_answer)
+        if (this.state.current === this.state.numQs) {
+            this.setState({done: true})
+            this.submitQuiz()
+        } else {
+            const new_arr = this.state.user_answers.concat(this.state.curr_answer) //TODO: user_answers, const
+            //console.log(this.state.user_answers)
+            this.setState({user_answers: new_arr}, () => { //TODO: callbacks to guarantee since async
+                console.log(this.state.user_answers);
+            }) //Bracket placements
+            this.setState({current: this.state.current + 1}) 
+        }
     }
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   submitQuiz = async () => {
     console.log("Attempting to submit quiz results");
@@ -224,10 +314,10 @@ class TakeQuiz extends React.Component {
 
     if (response.ok) {
       this.setState({ submitted: true }); // change this later
-      console.log("Successfully updated profile");
-    } else {
+      console.log("Successfully submitted quiz results");
+    } else { // TODO: other error cases
       this.setState({ error: true});
-      console.log("Failed to update profile");
+      console.log("Failed to submit quiz results");
     }
     console.log(this.state);
   };
@@ -238,33 +328,25 @@ class TakeQuiz extends React.Component {
     return (
         <div className="takeQuizContainer">
           <div className="card">
-            
-
               <div className="centerdiv">
-                {this.state.done ? (
+                {this.state.done ? ( // quiz done
                   <div>
-                    You got {this.state.correct} questions correct out of {this.state.numQs + 1}
-                    {this.state.submitted ? (
-                        <div> Your results have been submitted </div>
-                    ) : (
+                      
+                    You got {this.state.correct} questions correct out of {this.state.numMultChoice}
+                    { this.state.submitted && <div> Your results have been submitted </div> }
+                    { this.state.error === true && 
                         <div className="centerdiv">
+                            <div>Your results could not submitted, please try again.</div> 
                             <Button
                                 className="btn_blue"
-                                text="Start Again"
-                                onClick={this.restart}
-                            />
-                            <Button
-                                className="btn_blue"
-                                text="Submit results"
+                                text="Submit Results"
                                 onClick={this.submitQuiz}
                             />
-                            { this.state.error === true && <div>Your results could not submitted, please try again.</div>}
-                        </div>
-                    )}
+                        </div> }
                   </div>
                 ) : ( //not done quiz yet
                   <div>
-                    <QuizArea handleClick={this.handleClick} dataSet={this.state.dataSet[this.state.current]} />
+                    <QuizArea handler={this.handleClick} question={this.state.dataSet[this.state.current]} takeQuiz={this}/> 
                   </div>
                 )}
               </div>
