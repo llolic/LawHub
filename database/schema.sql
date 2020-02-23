@@ -21,6 +21,9 @@ create table AppUser (
 
 
 
+
+
+
 create table QuizRecord (
     recordId SERIAL NOT NULL primary key,
     uid BIGINT UNSIGNED NOT NULL,
@@ -29,4 +32,13 @@ create table QuizRecord (
     hasLongAnswer BOOLEAN NOT NULL,
     FOREIGN KEY (uid) REFERENCES Student(uid),
     FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
+);
+
+create table HasLongAnswer (
+    recordId BIGINT UNSIGNED NOT NULL,
+    questionId BIGINT UNSIGNED NOT NULL,
+    answer varchar(3000) NOT NULL,
+    PRIMARY KEY(recordId, questionId),
+    FOREIGN KEY (recordId) REFERENCES QuizRecord(recordId),
+    FOREIGN KEY (questionId) REFERENCES Question(questionId)
 );
