@@ -17,3 +17,16 @@ create table AppUser (
 -- database name: 'lh_db'
 -- user: 'user1'
 -- password: 'Lamas123'
+
+
+create table Question (
+    questionId SERIAL NOT NULL primary key,
+    question varchar(10000) NOT NULL,
+    questionType INTEGER NOT NULL,
+    option1 varchar(1000),
+    option2 varchar(1000),
+    option3 varchar(1000),
+    option4 varchar(1000),
+    correctAnswer INT
+);
+-- questionType: 0: Multiple Choice, 1: Long Answer
