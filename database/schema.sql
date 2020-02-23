@@ -30,3 +30,19 @@ create table Question (
     correctAnswer INT
 );
 -- questionType: 0: Multiple Choice, 1: Long Answer
+
+create table QuizContains (
+    quizId BIGINT UNSIGNED NOT NULL,
+    questionId BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY(quizId, questionId),
+    FOREIGN KEY (quizId) REFERENCES Quiz(quizId),
+    FOREIGN KEY (questionId) REFERENCES Question(questionId)
+);
+
+create table Quiz (
+    quizId SERIAL NOT NULL primary key,
+    author BIGINT UNSIGNED NOT NULL,
+    title varchar(300) NOT NULL,
+    numQuestions INTEGER NOT NULL,
+    FOREIGN KEY (author) REFERENCES Recruiter(uid)
+);
