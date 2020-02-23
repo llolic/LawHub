@@ -46,3 +46,10 @@ create table Quiz (
     numQuestions INTEGER NOT NULL,
     FOREIGN KEY (author) REFERENCES Recruiter(uid)
 );
+
+create table HasTags (
+    quizId BIGINT UNSIGNED NOT NULL,
+    tag varchar(20) NOT NULL,
+    PRIMARY KEY(quizId, tag),
+    FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
+);
