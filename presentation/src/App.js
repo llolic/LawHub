@@ -3,7 +3,7 @@ import Navbar from './Components/Navbar';
 import StudentRegistration from './Components/StudentRegistration';
 import Login from './Components/Login';
 import StudentProfile from './Components/StudentProfile';
-import EmployerProfile from './Components/EmployerProfile';
+import RecruiterProfile from './Components/RecruiterProfile';
 import HomePage from './Components/HomePage';
 import Footer from './Components/Footer'
 
@@ -56,8 +56,8 @@ function App() {
             <StudentProfile />
           </Route>
 
-          <Route path="/employerProfile">
-            <EmployerProfile />
+          <Route path="/recruiterProfile">
+            <RecruiterProfile />
           </Route>
 
           <Route path="/">
