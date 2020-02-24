@@ -150,3 +150,44 @@ Endpoints:
 }
 ```
 depending on the role of the profile, *studyLevel* and *school* or *company* and *title* may be empty strings.
+
+# POST /api/v1/addQuiz
+
+**Request Body**
+```json
+{
+    "title": string,
+    "author": int,
+    "tags": string,
+    "numQuestions": int,
+    "questions": list of question object [
+        {
+            questionType:
+            question
+            answers
+            correct
+        }
+    ] 
+}
+```
+
+**Response**
+
+    - 200 OK for successful profile generation
+    - 400 BAD REQUEST if request body formatted incorrectly
+    - 500 INTERNAL SERVER ERROR for internal error (e.g. db down)
+
+**Response Body**
+```json
+{
+    "role": string,
+    "profilePicturePath": string,
+    "resumePath": string,
+    "bio": string,
+    "studyLevel": string,
+    "school": string,
+    "company": string,
+    "title": string
+}
+```
+depending on the role of the profile, *studyLevel* and *school* or *company* and *title* may be empty strings.
