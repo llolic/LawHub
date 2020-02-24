@@ -75,14 +75,21 @@ class StudentProfile extends React.Component {
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
-                <Button text = "Upload Picture" 
-                    onClick = {this.updateProfilePicturePath}
-                />
-                <Button text = "Upload Resume" 
-                    onClick = {this.updateResumePath}
-                />
             </div>
             
+            <div className = "center">
+              <Button 
+                  className="btn_blue"
+                  text = "Upload Picture" 
+                  onClick = {this.updateProfilePicturePath}
+              />
+              <Button 
+                className="btn_blue"
+                text = "Upload Resume" 
+                onClick = {this.updateResumePath}
+                
+              />
+            </div>
 
           <div className="row">
             <div className="width-60">
@@ -133,6 +140,7 @@ class StudentProfile extends React.Component {
             fullWidth
             variant="outlined"
             onChange={e => this.setState({ bio: e.target.value })}
+            multiline
           />
 
 
