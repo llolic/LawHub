@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './Components/Navbar';
 import StudentRegistration from './Components/StudentRegistration';
 import Login from './Components/Login';
+import TakeQuiz from './Components/TakeQuiz';
 import StudentProfile from './Components/StudentProfile';
 import HomePage from './Components/HomePage';
 import Footer from './Components/Footer'
@@ -53,6 +54,10 @@ function App() {
 
           <Route path="/studentProfile">
             <StudentProfile />
+          </Route>
+
+          <Route path="/takeQuiz">
+            <TakeQuiz />
           </Route>
 
           <Route path="/">
