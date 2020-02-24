@@ -94,6 +94,8 @@ class TakeQuiz extends React.Component {
     var response = { // TODO: get from backend
         quizId: "quiz1",
         numQs: 12, // length(questions)-1
+        author: "recruiterId1",
+        title: "Test Quiz",
         questions: 
                 [
                     {
