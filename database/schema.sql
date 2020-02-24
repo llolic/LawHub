@@ -28,7 +28,7 @@ create table QuizRecord (
     recordId SERIAL NOT NULL primary key,
     uid BIGINT UNSIGNED NOT NULL,
     quizId BIGINT UNSIGNED NOT NULL,
-    score INTEGER,
+    score FLOAT,
     hasLongAnswer BOOLEAN NOT NULL,
     FOREIGN KEY (uid) REFERENCES Student(uid),
     FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
