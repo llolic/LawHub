@@ -103,7 +103,11 @@ class Register(Resource):
 
 class RegisterStudent(Register):
     def post(self):
-        super().post('student')
+        return super().post('Student')
+
+class RegisterRecruiter(Register):
+    def post(self):
+        return super().post('Recruiter')
 
 class EditProfile(Resource):
     def post(self, role, uid, args):
@@ -144,6 +148,7 @@ class EditProfileStudent(EditProfile):
 api.add_resource(Index, '/')
 
 api.add_resource(RegisterStudent, '/api/v1/register/student')
+api.add_resource(RegisterStudent, '/api/v1/register/recruiter')
 api.add_resource(Login, '/api/v1/login')
 api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 
