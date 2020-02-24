@@ -5,18 +5,12 @@ import profileStats from "../Images/profileStats.png";
 import leaderboardImg from "../Images/leaderboard.png";
 
 
-import "./homepage.css";
+import "../Styles/homepage.css";
 
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: false
-    };
-  }
 
   render = () => {
     return (
@@ -35,18 +29,22 @@ class HomePage extends React.Component {
               <div style={{ textAlign: "end" }}> not <em>who</em> you know.</div>
             </Grid>
 
-            <Grid item xs={12}>
-              <div className="center">
-                <Link to="/register">
-                  <Button className="btn_yellow" text="JOIN NOW" />
-                </Link>
-              </div>
-              <div className="center">
-                <Link to="/registerRecruiter">
-                  <Button className="btn_small" text="I'm an Employer" />
-                </Link>
-              </div>
-            </Grid>
+            {this.props.loggedIn ?
+              <Grid item xs={12}/>
+              :
+              <Grid item xs={12}>
+                <div className="center">
+                  <Link to="/register">
+                    <Button className="btn_yellow" text="JOIN NOW" />
+                  </Link>
+                </div>
+                <div className="center">
+                  <Link to="/registerRecruiter">
+                    <Button className="btn_small" text="I'm an Employer" />
+                  </Link>
+                </div>
+              </Grid>
+            }
           </Grid>
         </div>
 
@@ -64,8 +62,8 @@ class HomePage extends React.Component {
           </div>
 
           <div className="half_card">
-              <div className="phrase">
-                Differentiate yourself from the crowd
+            <div className="phrase">
+              Differentiate yourself from the crowd
               </div>
             <div className="center">
               <img src={leaderboardImg} alt="stats" style={{ width: "60%" }} />
