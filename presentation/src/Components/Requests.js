@@ -3,8 +3,10 @@
  *
  */
 
+const path = "35.227.67.4";
+
 export const submitRegistration = async (state, type) => {
-  return fetch("http://104.196.152.154:5000/api/v1/register/" + type, {
+  return fetch(`http://${path}:5000/api/v1/register/${type}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -28,7 +30,7 @@ export const submitLogin = async state => {
   // grab state values here?? send to database
   //const request_body = {email: this.state.email, password: this.state.password}
   console.log("Attempting to login");
-  return fetch("http://104.196.152.154:5000/api/v1/login", {
+  return fetch(`http://${path}:5000/api/v1/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -43,7 +45,7 @@ export const submitLogin = async state => {
 };
 
 export const submitQuiz = async state => {
-  fetch("http://104.196.152.154:5000/api/v1/addQuiz", {
+  fetch(`http://${path}:5000/api/v1/addQuiz`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

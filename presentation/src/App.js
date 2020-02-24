@@ -71,7 +71,7 @@ class App extends React.Component {
             </Route>
 
             <Route path="/registerRecruiter">
-              <Registration type="recuiter" />
+              <Registration type="recruiter" />
             </Route>
 
             <Route path="/successfulRegistration">

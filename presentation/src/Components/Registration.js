@@ -25,13 +25,13 @@ class Registration extends React.Component {
       firstName: "",
       lastName: "",
       email: "",
-      school: "",
-      studylvl: "",
-      country: "",
-      stateOrProvince: "",
+      // school: "",
+      // studylvl: "",
+      // country: "",
+      // stateOrProvince: "",
       password: "",
       verifyPassword: "",
-      city: "toronto",
+      // city: "toronto",
       submitted: 0,
       sessId: -1
     };

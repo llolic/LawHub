@@ -21,7 +21,7 @@ class QuizCreation extends React.Component {
     this.state = {
       title: "",
       author: this.props.uid,
-      tags: "", // TODO: CONVERT THIS INTO AN ARRAY WHEN SENDING?
+      tags: "", // backend parses this by splitting commas
       numQuestions: 3,
       questions: [{
         questionType: "",
@@ -150,12 +150,12 @@ class QuizCreation extends React.Component {
               onChange={e => this.updateQType(e.target.value, i)}
             >
               <FormControlLabel
-                value="mc"
+                value="0"
                 control={<Radio style={{ color: "#E49C2F" }} />}
                 label="Multiple Choice"
               />
               <FormControlLabel
-                value="long"
+                value="1"
                 control={<Radio style={{ color: "#E49C2F" }} />}
                 label="Long Answer"
                 disabled
