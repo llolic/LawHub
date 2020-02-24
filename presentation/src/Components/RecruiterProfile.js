@@ -16,9 +16,9 @@ class RecruiterProfile extends React.Component {
     this.state = {
       userId: "userId",
       sessId: "sessId",
-      company: "Pearson-Spectre-Litt",
-      title: "Fraudulent Intern",
-      bio: "We fun",
+      company: "",
+      title: "",
+      bio: "",
       profilePicturePath: "",
       submitted: false,
       error: false,
