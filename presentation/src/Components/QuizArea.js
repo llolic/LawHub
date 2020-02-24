@@ -19,7 +19,7 @@ class QuizArea extends React.Component {
     render = () => {
       return(
         <div>
-            { this.props.question.questionType === "0" ? (  // multiple choice question TODO: string 0
+            { this.props.question.questionType === 0 ? (  // multiple choice question TODO: string 0
               <div>
                   <Question question={this.props.question} />
                   <AnswerList question={this.props.question} handler={this.props.handler} />    

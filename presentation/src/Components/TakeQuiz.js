@@ -16,15 +16,15 @@ class TakeQuiz extends React.Component {
     super(props);
 
     var response = { // TODO: get from backend
-        quizId: "quiz1",
+        quizId: 0,
         numQs: 9, // length(questions)-1
-        author: "recruiterId1",
+        author: 69,
         title: "Test Quiz",
         questions: 
                 [
                     {
-                        questionId: "q0",
-                        questionType: "0", // 0 MC, 1 long answer TODO: string
+                        questionId: 0,
+                        questionType: 0, // 0 MC, 1 long answer TODO: string
                         question: "What is 8 x 1?",
                         answers: ["1","8","16","9"],
                         correct: 1
@@ -32,72 +32,72 @@ class TakeQuiz extends React.Component {
                     
                 
                     {
-                        questionId: "q1",
-                        questionType: "0",
+                        questionId: 1,
+                        questionType: 0,
                         question: "Who is Steve Jobs?",
                         answers: ["CEO of Microsoft","Barber in NY","Movie Star","CEO of Apple"],
                         correct: 3
                     },
 
                     {
-                        questionId: "q2",
-                        questionType: "0",
+                        questionId: 2,
+                        questionType: 0,
                         question: "Metallica is a ____ band",
                         answers: ["Blues","Hard-Rock","Jazz","Metal"],
                         correct: 3
                     },
 
                     {
-                        questionId: "q3",
-                        questionType: "0",
+                        questionId: 3,
+                        questionType: 0,
                         question: "IS is a ____",
                         answers: ["Word","Band","Terror Group","Brand"],
                         correct: 2
                     },
 
                     {
-                        questionId: "q4",
-                        questionType: "0",
+                        questionId: 4,
+                        questionType: 0,
                         question: "Who was Einstein",
                         answers: ["A Scientist","A Dentist","A Serial Killer","None of the above"],
                         correct: 0
                     },
 
                     {
-                        questionId: "q5",
-                        questionType: "0",
+                        questionId: 5,
+                        questionType: 0,
                         question: "JavaScript can be used in ____ development",
                         answers: ["Back-End","Front-End","ReactJS","All of the Above"],
                         correct: 3
                     },
 
                     {
-                        questionId: "q6",
-                        questionType: "0",
+                        questionId: 6,
+                        questionType: 0,
                         question: "Hitler was a",
                         answers: ["Mass Murderer","Dictator","Jew","None of the above","All of the above"],
                         correct: 4
                     },
 
                     {
-                        questionId: "q7",
-                        questionType: "0",
+                        questionId: 7,
+                        questionType: 0,
                         question: "Korn is a",
                         answers: ["Nu-Metal band","Religion","Singer"],
                         correct: 0
                     },
 
                     {
-                        questionId: "q8",
-                        questionType: "0",
+                        questionId: 8,
+                        questionType: 0,
                         question: "Windows computers are",
                         answers: ["Horrible","Great","Cheap","Invented by Bill Gates"],
                         correct: 3
                     },
 
                     {
-                        questionId: "q9",
-                        questionType: "0",
+                        questionId: 9,
+                        questionType: 0,
                         question: "The BigBan stands in",
                         answers: ["Egypt","London","Amsterdam","NewYork"],
                         correct: 1
@@ -105,20 +105,20 @@ class TakeQuiz extends React.Component {
 
                     /*
                     {
-                        questionId: "q10",
-                        questionType: "1",
+                        questionId: 10,
+                        questionType: 1,
                         question: "Who made this quiz"
                     },
 
                     {
-                        questionId: "q11",
-                        questionType: "1",
+                        questionId: 11,
+                        questionType: 1,
                         question: "What is the group name of this project"
                     },
 
                     {
-                        questionId: "q12",
-                        questionType: "1",
+                        questionId: 12,
+                        questionType: 1,
                         question: "What did I have for dinner"
                     }
                     */
@@ -126,16 +126,16 @@ class TakeQuiz extends React.Component {
                 ] // end questions
             } // end response
 
-      this.state = {userId: "userId",
-                    quizId: "quiz1",
-                    user_answers: [], //TODO
+      this.state = {userId: props.uid, // get from App
+                    quizId: response.quizId, 
+                    user_answers: [], 
                     curr_answer: "",
                     current:0, 
                     dataSet:response.questions, 
                     numQs:response.numQs,
                     correct:0, 
                     incorrect:0,
-                    numMultChoice:0, //TODO
+                    numMultChoice:0, 
                     done: false,
                     submitted: false,
                     error: false}
@@ -147,27 +147,19 @@ class TakeQuiz extends React.Component {
 
   addAnswerToList = (choice) => {
     this.setState({curr_answer: choice})
-    //console.log(choice)
-    //console.log(this.state.curr_answer)
-    const new_arr = this.state.user_answers.concat(choice) //TODO: user_answers, const
-    //console.log(this.state.user_answers)
-    this.setState({user_answers: new_arr}, () => { //TODO: callbacks to guarantee since async
-        console.log(this.state.user_answers);
-    }) //Bracket placements
-    //console.log(new_arr)
+    var pair = {answer: choice, questionId: this.state.dataSet[this.state.current].questionId}
+    this.state.user_answers.push(pair) //TODO: user_answers, const
+
     
     this.setState({current: this.state.current + 1}) 
     this.setState({numMultChoice: this.state.numMultChoice + 1}) // TODO
-    console.log(this.state.numMultChoice)
-    //console.log(this.state.curr_answer)
+
     
   }
 
   handleClick = (choice) => { 
       
-    console.log(this.state.current)
-    console.log(this.state.numQs)
-    if (this.state.dataSet[this.state.current].questionType === "0") { // if we have a quiz
+    if (this.state.dataSet[this.state.current].questionType === 0) { // if we have a quiz
         if (choice === this.state.dataSet[this.state.current].correct) {
             this.setState({correct: this.state.correct + 1})
         } else {
@@ -185,20 +177,15 @@ class TakeQuiz extends React.Component {
             //this.state.student_answers[this.state.current] = this.state.curr_answer;
             //this.setState({student_answers: [...this.state.student_answers, this.state.curr_answer]}) // TODO: https://stackoverflow.com/questions/26505064/what-is-the-best-way-to-add-a-value-to-an-array-in-state
         }
-    } else if (this.state.dataSet[this.state.current].questionType === "1") { //we have an open response
-        //this.setState({curr_answer: choice})
-        //console.log(choice)
-        //console.log(this.state.curr_answer)
+    } else if (this.state.dataSet[this.state.current].questionType === 1) { //we have an open response
+
         if (this.state.current === this.state.numQs) {
             this.setState({done: true})
             this.submitQuiz()
         } else {
-            //const new_arr = this.state.user_answers.push(this.state.curr_answer)
-             const new_arr = this.state.user_answers.concat(this.state.curr_answer) //TODO: user_answers, const
-            //console.log(this.state.user_answers)
-             this.setState({user_answers: new_arr}, () => { //TODO: callbacks to guarantee since async
-                // console.log(this.state.user_answers);
-             }) //Bracket placements
+
+            var pair = {answer: this.state.curr_answer, questionId: this.state.dataSet[this.state.current].questionId}
+            this.state.user_answers.push(pair) 
             this.setState({current: this.state.current + 1, curr_answer: ""}) 
         }
     }
