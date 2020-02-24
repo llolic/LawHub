@@ -1,8 +1,6 @@
 import React from "react";
 import Button from "./Button";
-
-import { TextField } from "@material-ui/core";
-//import { Redirect } from "react-router-dom";
+import QuizArea from "./QuizArea";
 
 import "./studentregistration.css";
 
@@ -13,87 +11,13 @@ import "./studentregistration.css";
 
 //https://codepen.io/Daanist/pen/LjLoWV
 
-
-
-
-function Answer(props) {
-    var style = {
-      width: "100%",
-      height: 50,
-      color: "blue"
-    }
-    return(
-      <div>
-        <button style={style} onClick={() => props.handler(props.choice)}>{props.answer}</button>
-      </div>
-    )
-  }
-
-
-  function Question(props) {
-    var style = {
-      color: "red",
-    }
-    return (
-      <h1 style={style}>{props.question.question}</h1>
-    )
-  }
-
- function AnswerList(props) {
-    var answers = []
-    for (let i = 0; i < props.question.answers.length; i++) {
-      answers.push(<Answer choice={i} handler={props.handler} answer={props.question.answers[i]} />)
-    }
-    return(
-      <div>
-        {answers}
-      </div>
-    )
-  }
-
- function QuizArea(props) {
-
-    return(
-      <div>
-          { props.question.questionType === "0" ? (  // multiple choice question TODO: string 0
-            <div>
-                <Question question={props.question} />
-                <AnswerList question={props.question} handler={props.handler} />    
-            </div>
-          ) : ( // open response question
-            <div>
-                <Question question={props.question} />
-                <TextField 
-                    id="answer" 
-                    label="Answer"
-                    margin="normal"
-                    fullWidth
-                    variant="outlined"
-                    onChange={e => props.takeQuiz.setState({curr_answer: e.target.value})} // TODO: TakeQuiz.
-                />
-                <Button
-                    className="btn_blue"
-                    text="Submit Answer"
-                    onClick={props.takeQuiz.handleClick} // TODO: TakeQuiz.
-                />
-            </div>
-          ) // end open response question
-          } 
-      </div>
-    )
-  }
-
-
-
-
-
 class TakeQuiz extends React.Component {
   constructor(props) {
     super(props);
 
     var response = { // TODO: get from backend
         quizId: "quiz1",
-        numQs: 12, // length(questions)-1
+        numQs: 9, // length(questions)-1
         author: "recruiterId1",
         title: "Test Quiz",
         questions: 
@@ -179,6 +103,7 @@ class TakeQuiz extends React.Component {
                         correct: 1
                     },
 
+                    /*
                     {
                         questionId: "q10",
                         questionType: "1",
@@ -196,6 +121,8 @@ class TakeQuiz extends React.Component {
                         questionType: "1",
                         question: "What did I have for dinner"
                     }
+                    */
+
                 ] // end questions
             } // end response
 
@@ -230,12 +157,13 @@ class TakeQuiz extends React.Component {
     //console.log(new_arr)
     
     this.setState({current: this.state.current + 1}) 
-    this.setState({numMultChoice: this.numMultChoice + 1}) // TODO
+    this.setState({numMultChoice: this.state.numMultChoice + 1}) // TODO
+    console.log(this.state.numMultChoice)
     //console.log(this.state.curr_answer)
     
   }
 
-  handleClick(choice) { 
+  handleClick = (choice) => { 
       
     console.log(this.state.current)
     console.log(this.state.numQs)
@@ -265,12 +193,13 @@ class TakeQuiz extends React.Component {
             this.setState({done: true})
             this.submitQuiz()
         } else {
-            const new_arr = this.state.user_answers.concat(this.state.curr_answer) //TODO: user_answers, const
+            //const new_arr = this.state.user_answers.push(this.state.curr_answer)
+             const new_arr = this.state.user_answers.concat(this.state.curr_answer) //TODO: user_answers, const
             //console.log(this.state.user_answers)
-            this.setState({user_answers: new_arr}, () => { //TODO: callbacks to guarantee since async
-                console.log(this.state.user_answers);
-            }) //Bracket placements
-            this.setState({current: this.state.current + 1}) 
+             this.setState({user_answers: new_arr}, () => { //TODO: callbacks to guarantee since async
+                // console.log(this.state.user_answers);
+             }) //Bracket placements
+            this.setState({current: this.state.current + 1, curr_answer: ""}) 
         }
     }
 
@@ -324,6 +253,7 @@ class TakeQuiz extends React.Component {
     console.log(this.state);
   };
 
+  
 
   render() {
 
