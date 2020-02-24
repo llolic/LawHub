@@ -128,7 +128,7 @@ class TakeQuiz extends React.Component {
 
       this.state = {userId: props.uid, // get from App
                     quizId: response.quizId, 
-                    user_answers: [], 
+                    userAnswers: [], 
                     curr_answer: "",
                     current:0, 
                     dataSet:response.questions, 
