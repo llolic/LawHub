@@ -9,7 +9,9 @@ export const schools = [
     
 ]
 
-export const studyLevels = ['Undergraduate', 'Graduate']
+export const studyLevels = [{index: 0, value:'Undergraduate'}, 
+                            {index: 1, value: 'Grad School'}, 
+                            {index: 2, value: 'Graduated'}]
 
 export const countries = ['United States', 'Canada']
 
