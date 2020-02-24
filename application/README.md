@@ -160,16 +160,17 @@ depending on the role of the profile, *studyLevel* and *school* or *company* and
     "author": int,
     "tags": string,
     "numQuestions": int,
-    "questions": list of question object [
+    "questions": list of question objects:
         {
-            questionType:
-            question
-            answers
-            correct
+            "questionType": string,
+            "question": string,
+            "answers": list of strings,
+            "correct": int
         }
-    ] 
 }
 ```
+where *tags* is a string with each tag separated by a comma
+*questionType* is 0 if the question is multiple choice, 1 if long answer
 
 **Response**
 
@@ -180,14 +181,39 @@ depending on the role of the profile, *studyLevel* and *school* or *company* and
 **Response Body**
 ```json
 {
-    "role": string,
-    "profilePicturePath": string,
-    "resumePath": string,
-    "bio": string,
-    "studyLevel": string,
-    "school": string,
-    "company": string,
-    "title": string
+    "message": string
 }
 ```
-depending on the role of the profile, *studyLevel* and *school* or *company* and *title* may be empty strings.
+where *message* is potentially an empty string
+
+# POST /api/v1/submitQuiz
+
+**Request Body**
+```json
+{
+    "userId": int,
+    "quizId": int,
+    "userAnswers": list of answer objects:
+    {
+        "answer": int,
+        "questionId": int
+    },
+    "correct": int,
+    "numMultChoice": int
+}
+```
+where *correct* is number of correct answers and *numMultChoice* is the number of multiple choice answers in the quiz 
+
+**Response**
+
+    - 200 OK for successful profile generation
+    - 400 BAD REQUEST if request body formatted incorrectly
+    - 500 INTERNAL SERVER ERROR for internal error (e.g. db down)
+
+**Response Body**
+```json
+{
+    "message": string
+}
+```
+where *message* is potentially an empty string
