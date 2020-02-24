@@ -17,3 +17,26 @@ create table AppUser (
 -- database name: 'lh_db'
 -- user: 'user1'
 -- password: 'Lamas123'
+
+-- INSERT INTO User VALUES($1, $2, $3, $4, $5, 'student', $6, $7, $8);
+
+--NOTE: Trigger exists that will make a record with (uid, NULL, NULL, ...) 
+--      for Student or Recruiter after registration (insert into AppUser).
+create table Student (
+    uid BIGINT UNSIGNED NOT NULL primary key,
+    studyLevel varchar(20),
+    school varchar(300),
+    profilePicturePath varchar(1000),
+    resumePath varchar(1000),
+    bio varchar(3000),
+    FOREIGN KEY (uid) REFERENCES AppUser(uid)
+);
+
+create table Recruiter (
+    uid BIGINT UNSIGNED NOT NULL primary key,
+    company varchar(300),
+    title varchar(100),
+    profilePicturePath varchar(1000),
+    bio varchar(3000),
+    FOREIGN KEY (uid) REFERENCES AppUser(uid)
+);
