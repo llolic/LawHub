@@ -20,9 +20,9 @@ class StudentProfile extends React.Component {
     this.state = {
       userId: "userId",
       sessId: "sessId",
-      studyLevel: "Undergraduate", //TODO: integer values
-      school: "Harvard University",
-      bio: "I am Groot",
+      studyLevel: "",
+      school: "",
+      bio: "",
       profilePicturePath: "../Images/lawhub.png",
       resumePath: "",
       submitted: false,
