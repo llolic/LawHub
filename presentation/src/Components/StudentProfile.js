@@ -20,7 +20,7 @@ class StudentProfile extends React.Component {
     this.state = {
       userId: "userId",
       sessId: "sessId",
-      studyLevel: 0, //TODO: integer values
+      studyLevel: "Undergraduate", //TODO: integer values
       school: "Harvard University",
       bio: "I am Groot",
       profilePicturePath: "../Images/lawhub.png",
@@ -117,8 +117,10 @@ class StudentProfile extends React.Component {
                 select
                 margin="normal"
                 label="Level of Study"
-                value={studyLevels[this.state.studyLevel].value}
-                onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
+                //value={studyLevels[this.state.studyLevel].value}
+                //onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
+                value={this.state.studylvl}
+                onChange={e => this.setState({ studylvl: e.target.value })}
                 variant="outlined"
                 fullWidth
               >
