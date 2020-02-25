@@ -146,8 +146,14 @@ class EditProfileStudent(EditProfile):
         uid = parser.parse_args()['userId']
         return super().post('Student', uid, args)
 
+class addQuiz(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['title', 'author', 'tags', 'numQuestions', 'questions'])
+        args = parser.parse_args()
+        print(args)
+        return 200
 
-    # add helper parse_args with for loop for adding arguments
 
 
 api.add_resource(Index, '/')
@@ -155,6 +161,7 @@ api.add_resource(RegisterStudent, '/api/v1/register/student')
 api.add_resource(RegisterRecruiter, '/api/v1/register/recruiter')
 api.add_resource(Login, '/api/v1/login')
 api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
+api.add_resource(addQuiz, '/api/v1/addQuiz')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
