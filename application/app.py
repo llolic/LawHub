@@ -9,6 +9,7 @@ import markdown, os
 import database_lite
 import database_mysql
 import sqlite3
+import json
 
 
 app = Flask(__name__)
@@ -149,9 +150,14 @@ class EditProfileStudent(EditProfile):
 class addQuiz(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        reqParser(parser, ['title', 'author', 'tags', 'numQuestions', 'questions'])
+        print(parser)
+        reqParser(parser, ['title', 'author', 'tags', 'numQuestions'])
+        parser.add_argument('questions', action='append') # to parse an argument as a list, we add action='append'
         args = parser.parse_args()
-        print(args)
+        # questionIds = addQuestions(args['questions']) -> returns list of questionIds
+        # quizId = createQuiz(author, title, numQuestions)
+        # updateQuizContains(questionIds, quizId)
+        # addTags(quizId, args['tags'])
         return 200
 
 
