@@ -1,6 +1,12 @@
 import React from "react";
+import Button from "./Button";
+
+import { Grid } from "@material-ui/core";
+
 
 import "./studentregistration.css";
+import "./takequiz.css";
+import "./homepage.css";
 
 /**
  * Student Registration card for the student user.
@@ -11,15 +17,12 @@ import "./studentregistration.css";
 
 class Answer extends React.Component {
   render = () => {
-    var style = {
-      width: "100%",
-      height: 50,
-      color: "blue"
-    }
     return(
-      <div>
-        <button style={style} onClick={() => this.props.handler(this.props.choice)}>{this.props.answer}</button>
+      <Grid item xs={12} className="answer_card">
+      <div className="row_card">
+        <Button className="btn_blue" text={this.props.answer} onClick={() => this.props.handler(this.props.choice)}/>
       </div>
+      </Grid>
     )
   }
 }

@@ -1,0 +1,33 @@
+.takeQuizContainer {
+  padding: 2em;
+  width: 80%;
+  margin: auto;
+}
+
+.question_row {
+  padding-bottom: 2em;
+  /* display: flex; */
+  border-radius: 8px;
+  border: 3px solid rgb(207, 207, 207);
+  /* box-shadow: 5px 5px 5px rgb(184, 184, 184); */
+  padding: 1em;
+  margin: auto;
+}
+
+.question_card {
+  /* border-radius: 8px;
+    border: 1px solid #89A3CB;
+    box-shadow: 5px 5px 5px rgb(184, 184, 184);
+    padding: 1em;
+    margin: auto; */
+  padding: 2em;
+}
+
+.answer_card {
+  padding-bottom: 0.5em;
+  display: flex;
+  border-radius: 8px;
+}
+
+.answer_grid {
+}
