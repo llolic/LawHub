@@ -16,29 +16,49 @@ class Mock extends React.Component {
             Mock Quizzes
             {this.props.isRecruiter ? (
               <Link to="/quizCreation">
-              <Button className="btn_yellow_small" text="Create Quiz" />
+                <Button className="btn_yellow_small" text="Create Quiz" />
               </Link>
             ) : (
               <div></div>
             )}
           </div>
+         
         </div>
 
         <Grid container spacing={3}>
           <Grid item xs={12} className="quiz_card">
-            <div className="row_card">Filler Quiz</div>
+            <div className="quiz_row">
+              <div className="quiz_title">Test Quiz</div>
+              <Link to="/takeQuiz">
+              <Button className="btn_yellow_small" text="Start" />
+              </Link>
+            </div>
           </Grid>
           <Grid item xs={12} className="quiz_card">
-            <div className="row_card">Filler Quiz</div>
+            <div className="quiz_row">
+              <div className="quiz_title">BAR Mock Quiz</div>
+              <Button className="btn_yellow_small" text="Start" />
+              
+            </div>
+            
           </Grid>
           <Grid item xs={12} className="quiz_card">
-            <div className="row_card">Filler Quiz</div>
+            <div className="quiz_row">
+              <div className="quiz_title">LSAT Mock</div>
+              <Button className="btn_yellow_small" text="Start" />
+            </div>
           </Grid>
           <Grid item xs={12} className="quiz_card">
-            <div className="row_card">Filler Quiz</div>
+            <div className="quiz_row">
+              <div className="quiz_title">BAR and LSAT Questions</div>
+              <Button className="btn_yellow_small" text="Start" />
+            </div>
           </Grid>
           <Grid item xs={12} className="quiz_card">
-            <div className="row_card">Filler Quiz</div>
+            <div className="quiz_row">
+              <div className="quiz_title">LSAT Mock Quiz</div>
+              <Button className="btn_yellow_small" text="Start" />
+            </div>
           </Grid>
         </Grid>
       </div>

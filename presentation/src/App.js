@@ -34,6 +34,7 @@ class App extends React.Component {
           <Navbar
             loggedIn={this.state.loggedIn}
             updateNavbar={this.updateNavbar}
+            isRecruiter={this.state.isRecruiter}
           />
           <Switch>
             <Route path="/profile">
@@ -41,7 +42,7 @@ class App extends React.Component {
             </Route>
             <Route path="/login">
               <Login updateNavbar={this.updateNavbar} />
-              <div style={{ height: "8.3em" }}></div>
+              {/* <div style={{ height: "8.3em" }}></div> */}
             </Route>
 
             <Route path="/dashboard">

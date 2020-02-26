@@ -1,6 +1,5 @@
 /**
  * Export requests functions here.
- *
  */
 
 const path = "35.227.67.4";
@@ -45,7 +44,7 @@ export const submitLogin = async state => {
 };
 
 export const submitQuiz = async state => {
-  fetch(`http://${path}:5000/api/v1/addQuiz`, {
+  return fetch(`http://${path}:5000/api/v1/addQuiz`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -63,3 +62,25 @@ export const submitQuiz = async state => {
     }
   });
 };
+
+// do we need to send the type?
+export const verifyUser = async (sessId, type) => {
+  var jsonObj = { sessId: sessId, type: type };
+  return fetch(`http://${path}:5000/api/v1/verifyUser`, {
+    method: "GET", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    return result.ok;
+    // if (result.ok) {
+    //   return true;
+    // } else {
+    //   // redirect to login page
+    //   return false;
+    // }
+  });
+}
+
+

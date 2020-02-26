@@ -1,8 +1,14 @@
 import Cookies from "js-cookie";
+import { verifyUser } from "./Requests";
 
 export const getAccessToken = () => Cookies.get("access_token");
 export const getRefreshToken = () => Cookies.get("refresh_token");
 export const isAuthenticated = () => !!getAccessToken();
+
+// new authenticated method
+// export const isAuthenticated = (sessId, type) => {
+  // return verifyUser(sessId, type); // does this work??
+// };
 
 // TODO: 
 // - send sessId to backend
