@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <Router>
         <Navbar loggedIn={false} />
         <Switch>
@@ -66,6 +66,8 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <div className="filler">
+      </div>
       <Footer/>
     </div>
   );

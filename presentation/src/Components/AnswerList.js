@@ -3,7 +3,6 @@ import Answer from "./Answer";
 
 import { Grid } from "@material-ui/core";
 
-
 import "./studentregistration.css";
 
 /**
@@ -15,18 +14,24 @@ import "./studentregistration.css";
 
 class AnswerList extends React.Component {
   render = () => {
-    var answers = []
+    var answers = [];
     for (let i = 0; i < this.props.question.answers.length; i++) {
-      answers.push(<Answer choice={i} handler={this.props.handler} answer={this.props.question.answers[i]} key={i}/>) //key 
+      var sel = i === this.props.selected;
+      answers.push(
+        <Answer
+          selected={sel}
+          choice={i}
+          handler={this.props.handler}
+          answer={this.props.question.answers[i]}
+          key={i}
+        />
+      ); //key
     }
-    return(
-      // <div>
-        <Grid item xs={12} className="answer_grid">
+    return (
+      <Grid item xs={12} className="answer_grid">
         {answers}
-        </Grid>
-      // </div>
-    )
-  }
-  
+      </Grid>
+    );
+  };
 }
 export default AnswerList;

@@ -3,6 +3,7 @@ RUNNING CREATE-REACT-APP
 - npm install -g create-react-app
 - npm install @material-ui/core
 - npm install @material-ui/icons
+- npm install react-compound-timer
 - go to presentation folder and run "npm start" 
     - if this breaks, try "npm install" then "npm start"
 

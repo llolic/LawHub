@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 import QuizArea from "./QuizArea";
 
-import { Grid } from "@material-ui/core";
+import { response } from "../Constants/quiz";
 
 import "./studentregistration.css";
 import "./takequiz.css";
@@ -17,131 +17,6 @@ import "./takequiz.css";
 class TakeQuiz extends React.Component {
   constructor(props) {
     super(props);
-
-    var response = {
-      // TODO: get from backend
-      quizId: "quiz1",
-      numQs: 9, // length(questions)-1
-      author: "recruiterId1",
-      title: "Test Quiz",
-      questions: [
-        {
-          questionId: "q0",
-          questionType: "0", // 0 MC, 1 long answer TODO: string
-          question: "What is 8 x 1?",
-          answers: ["1", "8", "16", "9"],
-          correct: 1
-        },
-
-        {
-          questionId: "q1",
-          questionType: "0",
-          question: "Who is Steve Jobs?",
-          answers: [
-            "CEO of Microsoft",
-            "Barber in NY",
-            "Movie Star",
-            "CEO of Apple"
-          ],
-          correct: 3
-        },
-
-        {
-          questionId: "q2",
-          questionType: "0",
-          question: "Metallica is a ____ band",
-          answers: ["Blues", "Hard-Rock", "Jazz", "Metal"],
-          correct: 3
-        },
-
-        {
-          questionId: "q3",
-          questionType: "0",
-          question: "IS is a ____",
-          answers: ["Word", "Band", "Terror Group", "Brand"],
-          correct: 2
-        },
-
-        {
-          questionId: "q4",
-          questionType: "0",
-          question: "Who was Einstein",
-          answers: [
-            "A Scientist",
-            "A Dentist",
-            "A Serial Killer",
-            "None of the above"
-          ],
-          correct: 0
-        },
-
-        {
-          questionId: "q5",
-          questionType: "0",
-          question: "JavaScript can be used in ____ development",
-          answers: ["Back-End", "Front-End", "ReactJS", "All of the Above"],
-          correct: 3
-        },
-
-        {
-          questionId: "q6",
-          questionType: "0",
-          question: "Hitler was a",
-          answers: [
-            "Mass Murderer",
-            "Dictator",
-            "Jew",
-            "None of the above",
-            "All of the above"
-          ],
-          correct: 4
-        },
-
-        {
-          questionId: "q7",
-          questionType: "0",
-          question: "Korn is a",
-          answers: ["Nu-Metal band", "Religion", "Singer"],
-          correct: 0
-        },
-
-        {
-          questionId: "q8",
-          questionType: "0",
-          question: "Windows computers are",
-          answers: ["Horrible", "Great", "Cheap", "Invented by Bill Gates"],
-          correct: 3
-        },
-
-        {
-          questionId: "q9",
-          questionType: "0",
-          question: "The BigBan stands in",
-          answers: ["Egypt", "London", "Amsterdam", "NewYork"],
-          correct: 1
-        }
-
-        /*
-                    {
-                        questionId: "q10",
-                        questionType: "1",
-                        question: "Who made this quiz"
-                    },
-
-                    {
-                        questionId: "q11",
-                        questionType: "1",
-                        question: "What is the group name of this project"
-                    },
-
-                    {
-                        questionId: "q12",
-                        questionType: "1",
-                        question: "What did I have for dinner"
-                    }
-                    */
-      ] // end questions
-    }; // end response
 
     this.state = {
       userId: "userId",
@@ -160,7 +35,7 @@ class TakeQuiz extends React.Component {
       error: false
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   addAnswerToList = choice => {
@@ -251,21 +126,29 @@ class TakeQuiz extends React.Component {
     return (
       <div>
         {this.state.done ? ( // quiz done
-          <div className="centerdiv">
+          <div className="takeQuizContainer">
+            {/* <div className="centerdiv"> */}
             <div className="subtitle">
-              You got {this.state.correct} questions correct out of{" "}
-              {this.state.numMultChoice}
+              <div className="centerdiv">
+                You got {this.state.correct} questions correct out of{" "}
+                {this.state.numMultChoice}
+              </div>
               {this.state.submitted && (
                 <div> Your results have been submitted </div>
               )}
+
               {this.state.error === true && (
-                <div className="centerdiv">
-                  <div>Your results could not submitted, please try again.</div>
+                <div>
+                  <div className="centerdiv">
+                    Your results could not submitted, please try again.
+                  </div>
+                  <div className="centerdiv">
                   <Button
                     className="btn_blue"
                     text="Submit Results"
                     onClick={this.submitQuiz}
                   />
+                </div>
                 </div>
               )}
             </div>
@@ -273,12 +156,13 @@ class TakeQuiz extends React.Component {
         ) : (
           //not done quiz yet
           <div>
-            <div className="subtitle">{this.state.title} </div>
             <QuizArea
-              handler={this.handleClick}
+              handler={this.handleClick} // for next button
               qNum={this.state.current}
+              qTotal={this.state.numQs}
               question={this.state.dataSet[this.state.current]}
-              takeQuiz={this}
+              // takeQuiz={this}
+              title={this.state.title}
             />
           </div>
         )}

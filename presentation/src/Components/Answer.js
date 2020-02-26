@@ -1,8 +1,6 @@
 import React from "react";
-import Button from "./Button";
 
-import { Grid } from "@material-ui/core";
-
+import { Grid, Radio } from "@material-ui/core";
 
 import "./studentregistration.css";
 import "./takequiz.css";
@@ -17,13 +15,22 @@ import "./homepage.css";
 
 class Answer extends React.Component {
   render = () => {
-    return(
+    var selected = this.props.selected ? "--selected" : "";
+    return (
       <Grid item xs={12} className="answer_card">
-      <div className="row_card">
-        <Button className="btn_blue" text={this.props.answer} onClick={() => this.props.handler(this.props.choice)}/>
-      </div>
+        <div
+          className={"answer_row" + selected}
+          onClick={() => this.props.handler(this.props.choice)}
+        >
+          <Radio
+            className="radio_mc"
+            checked={this.props.selected}
+            style={{ color: "#EB5757" }}
+          />
+          {this.props.answer}
+        </div>
       </Grid>
-    )
-  }
+    );
+  };
 }
 export default Answer;
