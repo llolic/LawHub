@@ -104,7 +104,8 @@ class QuizArea extends React.Component {
                 onClick={this.resetState}
                 style={{textAlign: "right"}}
               />
-              </div>
+
+//               </div>
   
             </Grid>
           </div>
