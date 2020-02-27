@@ -7,6 +7,8 @@ import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
 import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
+import StudentProfile from './Components/StudentProfile';
+import EmployerProfile from './Components/EmployerProfile';
 
 import { isAuthenticated } from "./Components/Auth";
 
@@ -89,6 +91,14 @@ class App extends React.Component {
                 </div>
               </div>
             </Route>
+
+            <Route path="/employerProfile">
+            <EmployerProfile />
+          </Route>
+
+          <Route path="/studentProfile">
+            <StudentProfile />
+          </Route>
 
             <Route path="/">
               <HomePage loggedIn={this.state.loggedIn} />

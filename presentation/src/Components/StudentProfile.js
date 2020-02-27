@@ -1,57 +1,66 @@
 import React from "react";
 import Button from "./Button";
-import profilePic from "../Images/lawhub.png";
 import {
   schools,
   studyLevels,
   countries,
   stateprovinces
 } from "../Constants/registration";
+import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
-//import { Redirect } from "react-router-dom";
 
-import "../Styles/registration.css";
+import "../Styles/studentprofile.css"; //TODO
 
 /**
- * Student Registration card for the student user.
+ * Student Profile card for the student profile customization.
  * Includes logic to send/receive requests to the flask server
  */
 class StudentProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "Fonzy",
-      lastName: "Wonzy",
-      email: "fonzywonzy@gmail.com",
+      userId: "userId",
+      sessId: "sessId",
+      studyLevel: 0, //TODO: integer values
       school: "Harvard University",
-      studylvl: "Undergraduate",
-      country: "Canada",
-      stateOrProvince: "Texas",
-      biography: "I am",
-      city: "toronto",
+      bio: "I am Groot",
+      profilePicturePath: "../Images/lawhub.png",
+      resumePath: "",
       submitted: false,
-      sessId: -1
+      error: false
     };
   }
 
+  updateProfilePicturePath() { //TODO
+    alert("Just kidding, you can't upload pictures yet!")
+  }
+
+  updateResumePath() {
+      alert("Just kidding, you can't upload resumes yet!")
+  }
+
   submitStudentProfileUpdates = async () => {
-    console.log("Attempting to update profile");
-    const response = fetch("http://104.196.152.154:5000/api/v1/update", {
-      method: "POST",
+    console.log("Attempting to update student profile");
+    const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/student", {
+      method: 'POST',
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
     }).then(result => {
-      console.log(result);
+      console.log(result)
     });
 
     if (response.ok) {
       this.setState({ submitted: true }); // change this later
-      console.log("Successfully updated profile");
-    } else {
-      console.log("Failed to update profile");
+      console.log("Successfully updated student profile");
+    } else { 
+      //TODO: add different error cases
+        //400 BAD REQUEST if request body formatted incorrectly, string too long
+        //500 INTERNAL SERVER ERROR for internal error (db down)
+      this.setState({ error: true });
+      console.log("Failed to update student profile");
     }
     console.log(this.state);
   };
@@ -62,15 +71,21 @@ class StudentProfile extends React.Component {
         <div className="card">
           <div className="subtitle">Customize Your Student Profile </div>
 
-          {this.state.submitted && <div>Your changes have been saved.</div>}
+          { this.state.submitted && <div>Your changes have been saved.</div>}
+          { this.state.error && <div>Your changes could not be saved. Please try again.</div> }
 
-          <div className="center">
-            <img
-              src={profilePic}
-              alt="your pic here"
-              style={{ width: "150px", height: "150px" }}
-            />
-          </div>
+            <div className = "center">
+                <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
+                
+            </div>
+            <div className="center">
+            <Button className="btn_yellow_small" text="Upload Picture" 
+                    onClick = {this.updateProfilePicturePath}
+                />
+                <Button className="btn_yellow_small" text="Upload Resume" 
+                    onClick = {this.updateResumePath}
+                />
+            </div>
 
           <TextField
             id="firstname"
@@ -91,7 +106,7 @@ class StudentProfile extends React.Component {
             variant="outlined"
             onChange={e => this.setState({ lastName: e.target.value })}
           />
-
+{/* 
           <TextField
             id="email"
             label="Email"
@@ -101,7 +116,7 @@ class StudentProfile extends React.Component {
             variant="outlined"
             onChange={e => this.setState({ email: e.target.value })}
             error={!this.state.email.includes("@") && this.state.email !== ""}
-          />
+          /> */}
 
           <div className="row">
             <div className="width-60">
@@ -125,7 +140,7 @@ class StudentProfile extends React.Component {
 
             <div className="width-40">
               <TextField
-                id="studylvl"
+                id="studyLevel"
                 select
                 margin="normal"
                 label="Level of Study"
@@ -134,9 +149,9 @@ class StudentProfile extends React.Component {
                 variant="outlined"
                 fullWidth
               >
-                {studyLevels.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+                {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
+                  <MenuItem key={option.index} value={option.value}>
+                    {option.value}
                   </MenuItem>
                 ))}
               </TextField>
@@ -173,9 +188,17 @@ class StudentProfile extends React.Component {
                 onChange={e =>
                   this.setState({ stateOrProvince: e.target.value })
                 }
+                // value={studyLevels[this.state.studyLevel].value}
+                // onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
                 variant="outlined"
                 fullWidth
               >
+                {/* {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
+                  <MenuItem key={option.index} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))} */}
+
                 {stateprovinces.map(option => (
                   <MenuItem key={option} value={option}>
                     {option}
@@ -186,14 +209,14 @@ class StudentProfile extends React.Component {
           </div>
 
           <TextField
-            id="biography"
+            id="bio"
             label="About Me"
             helperText="Feel free to enter your biography here"
-            value={this.state.biography}
+            value={this.state.bio}
             margin="normal"
             fullWidth
             variant="outlined"
-            onChange={e => this.setState({ biography: e.target.value })}
+            onChange={e => this.setState({ bio: e.target.value })}
           />
 
           <div className="centerdiv">

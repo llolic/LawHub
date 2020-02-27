@@ -14,14 +14,6 @@ export const submitRegistration = async (state, type) => {
   }).then(result => {
     console.log(result);
     return result.ok;
-    // if (result.ok) {
-    //   console.log("Created new user");
-    //   return result.ok;
-    //   // this.setState({ submitted: true }); // change this later
-    // } else {
-    //   console.log("Failed to create user");
-    //   return result.ok;
-    // }
   });
 };
 
@@ -74,12 +66,6 @@ export const verifyUser = async (sessId, type) => {
     body: JSON.stringify(jsonObj)
   }).then(result => {
     return result.ok;
-    // if (result.ok) {
-    //   return true;
-    // } else {
-    //   // redirect to login page
-    //   return false;
-    // }
   });
 }
 

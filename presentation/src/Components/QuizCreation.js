@@ -23,24 +23,26 @@ class QuizCreation extends React.Component {
       author: this.props.uid,
       tags: "", // backend parses this by splitting commas
       numQuestions: 3,
-      questions: [{
-        questionType: "",
-        question: "",
-        answers: ["", "", "", ""],
-        correct: 0
-      },
-      {
-        questionType: "",
-        question: "",
-        answers: ["", "", "", ""],
-        correct: 0
-      },
-      {
-        questionType: "",
-        question: "",
-        answers: ["", "", "", ""],
-        correct: 0
-      }],
+      questions: [
+        {
+          questionType: "",
+          question: "",
+          answers: ["", "", "", ""],
+          correct: 0
+        },
+        {
+          questionType: "",
+          question: "",
+          answers: ["", "", "", ""],
+          correct: 0
+        },
+        {
+          questionType: "",
+          question: "",
+          answers: ["", "", "", ""],
+          correct: 0
+        }
+      ],
       submitted: 0,
       missingFields: false
     };
@@ -219,8 +221,6 @@ class QuizCreation extends React.Component {
         <div className="card">
           <div className="subtitle">Quiz Creation</div>
 
-  
-
           <TextField
             id="title"
             label="Title"
@@ -274,7 +274,7 @@ class QuizCreation extends React.Component {
           ) : (
             <div></div>
           )}
-          
+
           <div className="centerdiv">
             <Button
               className="btn_blue"
@@ -282,8 +282,6 @@ class QuizCreation extends React.Component {
               onClick={this.handleSubmit}
             />
           </div>
-
-          
         </div>
       </div>
     );
