@@ -71,8 +71,7 @@ class StudentProfile extends React.Component {
         <div className="card">
           <div className="subtitle">Customize Your Student Profile </div>
 
-          { this.state.submitted && <div>Your changes have been saved.</div>}
-          { this.state.error && <div>Your changes could not be saved. Please try again.</div> }
+          
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
@@ -218,6 +217,12 @@ class StudentProfile extends React.Component {
             variant="outlined"
             onChange={e => this.setState({ bio: e.target.value })}
           />
+
+<div className="centerdiv">
+{ this.state.submitted && <div  style={{color: 'green'}}>Your changes have been saved.</div>}
+          { this.state.error && <div  style={{color: 'red'}}> Your changes could not be saved. Please try again.</div> }
+
+</div>
 
           <div className="centerdiv">
             <Button

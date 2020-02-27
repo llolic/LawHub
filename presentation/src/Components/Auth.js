@@ -7,7 +7,7 @@ export const isAuthenticated = () => !!getAccessToken();
 
 // new authenticated method
 // export const isAuthenticated = (sessId, type) => {
-  // return verifyUser(sessId, type); // does this work??
+  // return verifyUser(sessId, type); // need type??
 // };
 
 // TODO: 
