@@ -11,11 +11,6 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 - Priority: 4
 - Point Estimate: 16
 
-#### __4. As a student, I would like to customize/update my profile by adding a biography, a resume, and a showcase of quiz scores so that my profile can stand out more to employers and change my skills as I develop as a professional.__
-
-- Priority: 4
-- Point Estimate: 8
-
 #### __5. As a student, I want to be able to import my profile from LinkedIn instead of manually filling in my profile.__
 
 - Priority: 2
@@ -25,11 +20,6 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 
 - Priority: 2
 - Point Estimate: 16
-
-#### __7. As a student, I want to be able to complete a selected quiz so that my score can be saved and made public to other students and most importantly, the recruiters.__
-
-- Priority: 5
-- Point Estimate: 32
 
 #### __8. As a student, I would like to see the results of my quizzes on a leaderboard in order to see where I stand in comparison to other applicants (percentile).__
    
@@ -51,19 +41,10 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 - Priority: 2
 - Point Estimate: 32
 
-#### __12. As a non-registered recruiter, I want to register as a recruiter so that I can post quizzes.__
-   
-- Priority: 5
-- Point Estimate: 4
-
 #### __13. As a recruiter, I want to be able to filter all students by categories so I can find students that meet my requirements.__
    
 - Priority: 4
 - Point Estimate: 32
-
-#### __14. As a recruiter, I would like to create a quiz with my own custom questions so that I can have questions tailored to the job requirements associated with my job offer(s). Questions can be multiple choice or written answers.__
-- Priority: 4
-- Point Estimate: 64
 
 #### __15. As a recruiter, I would like to include questions from a question bank in my quizzes (in case I don’t want to upload my own questions).__
 - Priority: 3
@@ -76,7 +57,3 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 #### __17. As a recruiter, I would like employee suggestions based on my preferences in order to save time.__
 - Priority: 1
 - Point Estimate: 64
-
-#### __21. As developers, we would like to ensure users have proper authentication to various pages on the website so that we can allow certain users to access certain parts of our application.__
-- Priority: 5
-- Point Estimate: 32
