@@ -18,7 +18,6 @@ create table AppUser (
 -- user: 'user1'
 -- password: 'Lamas123'
 
-
 create table Question (
     questionId SERIAL NOT NULL primary key,
     question varchar(10000) NOT NULL,
@@ -52,4 +51,24 @@ create table HasTags (
     tag varchar(20) NOT NULL,
     PRIMARY KEY(quizId, tag),
     FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
+
+
+
+create table QuizRecord (
+    recordId SERIAL NOT NULL primary key,
+    uid BIGINT UNSIGNED NOT NULL,
+    quizId BIGINT UNSIGNED NOT NULL,
+    score FLOAT,
+    hasLongAnswer BOOLEAN NOT NULL,
+    FOREIGN KEY (uid) REFERENCES Student(uid),
+    FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
+);
+
+create table HasLongAnswer (
+    recordId BIGINT UNSIGNED NOT NULL,
+    questionId BIGINT UNSIGNED NOT NULL,
+    answer varchar(3000) NOT NULL,
+    PRIMARY KEY(recordId, questionId),
+    FOREIGN KEY (recordId) REFERENCES QuizRecord(recordId),
+    FOREIGN KEY (questionId) REFERENCES Question(questionId)
 );

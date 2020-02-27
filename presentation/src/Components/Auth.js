@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { verifyUser } from "./Requests";
+// import { verifyUser } from "./Requests";
 
 export const getAccessToken = () => Cookies.get("access_token");
 export const getRefreshToken = () => Cookies.get("refresh_token");

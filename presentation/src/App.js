@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Components/Navbar";
 import Registration from "./Components/Registration";
+import TakeQuiz from './Components/TakeQuiz';
 import Login from "./Components/Login";
 import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
@@ -29,7 +30,7 @@ class App extends React.Component {
 
   render = () => {
     return (
-      <div>
+      <div className="container">
         <Router>
           <Navbar
             loggedIn={this.state.loggedIn}
@@ -61,6 +62,10 @@ class App extends React.Component {
               />
             </Route>
 
+            <Route path="/takeQuiz">
+            <TakeQuiz />
+          </Route>
+
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
@@ -91,6 +96,8 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
+        <div className="filler">
+      </div>
         <Footer />
       </div>
     );
