@@ -118,7 +118,7 @@ Since our system is a website and is being hosted on Google Cloud Platform, it i
 
 ### _Software Architecture Diagram_
 
-![](architecture.png)
+![](../architecture.png)
 
 Reference: https://www.linuxjournal.com/article/3508
 
