@@ -1,6 +1,6 @@
-import sqlite3, os, time
+import sqlite3, os, time, math
 
-class DatabaseAuth():
+class DatabaseAuth:
 
 	def __init__(self):
 		self.path = os.getcwd() + r'/auth_db'
@@ -11,7 +11,8 @@ class DatabaseAuth():
 		table_query = """create table IF NOT EXISTS AuthTable (
 							uid INTEGER NOT NULL,
 							token varchar(255) NOT NULL, 
-							timestamp INTEGER NOT NULL
+							timestamp INTEGER NOT NULL,
+							CONSTRAINT prim_key PRIMARY KEY (uid)
 						); """
 		self.execute(table_query)
 		return
@@ -42,10 +43,9 @@ if __name__ == '__main__':
 	db = DatabaseAuth()
 	db.connect()
 	db.create_auth_table()
-	insert_query = f'INSERT INTO AuthTable (uid, token, timestamp) VALUES (0, "testtoken", {time.time()})'
-	select_query = 'SELECT * FROM AuthTable;'
-	db.execute(insert_query)
+	insert_query = f'INSERT INTO AuthTable (uid, token, timestamp) VALUES (0, "testtoken", {math.ceil(time.time())})'
+	select_query = 'SELECT * FROM AuthTable WHERE uid = 0 AND token = "testtoken123";'
+	# db.execute(insert_query)
 	rows = db.execute(select_query)
-	for row in rows:
-		print(row)
+	print(rows)
 	db.close_connection()

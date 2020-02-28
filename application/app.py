@@ -8,6 +8,7 @@ import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
 import database_mysql
+import database_auth
 import sqlite3
 
 
