@@ -2,11 +2,13 @@ import React from "react";
 import Button from "./Button";
 import {
   schools,
+
   studyLevels
   // countries,
   // stateprovinces
 } from "../Constants/registration";
 import { submitRegistration } from "./Requests";
+
 
 import { TextField, MenuItem } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
@@ -25,6 +27,7 @@ class Registration extends React.Component {
       firstName: "",
       lastName: "",
       email: "",
+
       // school: "",
       // studylvl: "",
       // country: "",
@@ -33,9 +36,11 @@ class Registration extends React.Component {
       verifyPassword: "",
       // city: "toronto",
       submitted: 0,
+
       sessId: -1
     };
   }
+
 
   handleSumbit = () => {
     submitRegistration(this.state, this.props.type).then(result => {
@@ -43,6 +48,7 @@ class Registration extends React.Component {
         this.setState({ submitted: 1 });
       } else {
         this.setState({ submitted: -1 });
+
       }
     });
   };
@@ -51,6 +57,7 @@ class Registration extends React.Component {
     if (this.props.type === "student") {
       return (
         <div className="row">
+
           <div className="width-60">
             <TextField
               id="school"
@@ -90,11 +97,14 @@ class Registration extends React.Component {
           </div>
         </div>
       );
+
     }
   }
 
   render = () => {
+
     if (this.state.submitted === 1) {
+
       return <Redirect push to="/successfulRegistration" />;
     }
 
@@ -105,11 +115,13 @@ class Registration extends React.Component {
         <div className="card">
           <div className="subtitle">LawHub {title} Registration</div>
 
+
           {this.state.submitted === -1 ? (
             <div style={{color: "red"}}> An error has occurred, please try again </div>
           ) : (
             <div></div>
           )}
+
 
           <TextField
             id="firstname"
@@ -137,8 +149,10 @@ class Registration extends React.Component {
             error={!this.state.email.includes("@") && this.state.email !== ""}
           />
 
+
           {/* {this.getFields()} */}
           {/* 
+
           <div className="row">
             <div className="width-50">
               <TextField
@@ -179,7 +193,9 @@ class Registration extends React.Component {
                 ))}
               </TextField>
             </div>
+
           </div> */}
+
 
           <TextField
             id="password"
@@ -225,7 +241,9 @@ class Registration extends React.Component {
                   ? false
                   : true
               }
+
               onClick={this.handleSumbit}
+
             />
           </div>
         </div>

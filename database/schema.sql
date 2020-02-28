@@ -18,7 +18,6 @@ create table AppUser (
 -- user: 'user1'
 -- password: 'Lamas123'
 
-
 create table Question (
     questionId SERIAL NOT NULL primary key,
     question varchar(10000) NOT NULL,
