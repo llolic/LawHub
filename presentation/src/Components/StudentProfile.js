@@ -6,91 +6,116 @@ import {
   countries,
   stateprovinces
 } from "../Constants/registration";
+import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
-import { Redirect } from "react-router-dom";
 
-import "./studentregistration.css";
+import "../Styles/studentprofile.css"; //TODO
 
 /**
- * Student Registration card for the student user.
+ * Student Profile card for the student profile customization.
  * Includes logic to send/receive requests to the flask server
  */
-class StudentRegistration extends React.Component {
+class StudentProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      school: "",
-      studylvl: "",
-      country: "",
-      stateOrProvince: "",
-      password: "",
-      verifyPassword: "",
-      city: "toronto",
+      userId: "userId",
+      sessId: "sessId",
+      studyLevel: 0, //TODO: integer values
+      school: "Harvard University",
+      bio: "I am Groot",
+      profilePicturePath: "../Images/lawhub.png",
+      resumePath: "",
       submitted: false,
-      sessId: -1
+      error: false
     };
   }
 
-  submitRegistration = async () => {
-    console.log("Created new user");
-    const response = fetch("http://104.196.152.154:5000/api/v1/register/student", {
+  updateProfilePicturePath() { //TODO
+    alert("Just kidding, you can't upload pictures yet!")
+  }
+
+  updateResumePath() {
+      alert("Just kidding, you can't upload resumes yet!")
+  }
+
+  submitStudentProfileUpdates = async () => {
+    console.log("Attempting to update student profile");
+    const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/student", {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
-  }).then(result => {
+    }).then(result => {
       console.log(result)
-  });
+    });
 
     if (response.ok) {
-      console.log("Created new user");
-    } else {
-      console.log("Failed to create user");
+      this.setState({ submitted: true }); // change this later
+      console.log("Successfully updated student profile");
+    } else { 
+      //TODO: add different error cases
+        //400 BAD REQUEST if request body formatted incorrectly, string too long
+        //500 INTERNAL SERVER ERROR for internal error (db down)
+      this.setState({ error: true });
+      console.log("Failed to update student profile");
     }
     console.log(this.state);
-    this.setState({ submitted: true }); // change this later
   };
 
   render = () => {
-    if (this.state.submitted) {
-      return <Redirect push to="/successfulRegistration" />;
-    }
-
     return (
-      <div className="registration_container">
+      <div className="studentprofile_container">
         <div className="card">
-          <div className="subtitle">LawHub Account Registration</div>
+          <div className="subtitle">Customize Your Student Profile </div>
+
+          
+
+            <div className = "center">
+                <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
+                
+            </div>
+            <div className="center">
+            <Button className="btn_yellow_small" text="Upload Picture" 
+                    onClick = {this.updateProfilePicturePath}
+                />
+                <Button className="btn_yellow_small" text="Upload Resume" 
+                    onClick = {this.updateResumePath}
+                />
+            </div>
 
           <TextField
             id="firstname"
             label="First Name"
+            value={this.state.firstName}
             margin="normal"
             fullWidth
             variant="outlined"
             onChange={e => this.setState({ firstName: e.target.value })}
           />
+
           <TextField
             id="lastname"
             label="Last Name"
+            value={this.state.lastName}
             margin="normal"
             fullWidth
             variant="outlined"
             onChange={e => this.setState({ lastName: e.target.value })}
           />
+{/* 
           <TextField
             id="email"
             label="Email"
             margin="normal"
+            value={this.state.email}
             fullWidth
             variant="outlined"
             onChange={e => this.setState({ email: e.target.value })}
             error={!this.state.email.includes("@") && this.state.email !== ""}
-          />
+          /> */}
 
           <div className="row">
             <div className="width-60">
@@ -114,7 +139,7 @@ class StudentRegistration extends React.Component {
 
             <div className="width-40">
               <TextField
-                id="studylvl"
+                id="studyLevel"
                 select
                 margin="normal"
                 label="Level of Study"
@@ -123,9 +148,9 @@ class StudentRegistration extends React.Component {
                 variant="outlined"
                 fullWidth
               >
-                {studyLevels.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+                {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
+                  <MenuItem key={option.index} value={option.value}>
+                    {option.value}
                   </MenuItem>
                 ))}
               </TextField>
@@ -159,10 +184,20 @@ class StudentRegistration extends React.Component {
                 margin="normal"
                 label="State/Province"
                 value={this.state.stateOrProvince}
-                onChange={e => this.setState({ stateOrProvince: e.target.value })}
+                onChange={e =>
+                  this.setState({ stateOrProvince: e.target.value })
+                }
+                // value={studyLevels[this.state.studyLevel].value}
+                // onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
                 variant="outlined"
                 fullWidth
               >
+                {/* {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
+                  <MenuItem key={option.index} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))} */}
+
                 {stateprovinces.map(option => (
                   <MenuItem key={option} value={option}>
                     {option}
@@ -173,53 +208,28 @@ class StudentRegistration extends React.Component {
           </div>
 
           <TextField
-            id="password"
-            label="Password"
-            helperText="Minimum 6 characters"
+            id="bio"
+            label="About Me"
+            helperText="Feel free to enter your biography here"
+            value={this.state.bio}
             margin="normal"
             fullWidth
             variant="outlined"
-            type="password"
-            value={this.state.password}
-            onChange={e => this.setState({ password: e.target.value })}
-            error={this.state.password.length < 6 && this.state.password !== ""}
+            onChange={e => this.setState({ bio: e.target.value })}
           />
 
-          <TextField
-            id="verify-password"
-            label="Confirm Password"
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            type="password"
-            value={this.state.verifyPassword}
-            onChange={e => this.setState({ verifyPassword: e.target.value })}
-            helperText={
-              this.state.password !== this.state.verifyPassword &&
-              this.state.verifyPassword !== ""
-                ? "Passwords do not match"
-                : ""
-            }
-            error={
-              this.state.password !== this.state.verifyPassword &&
-              this.state.verifyPassword !== ""
-            }
-          />
+<div className="centerdiv">
+{ this.state.submitted && <div  style={{color: 'green'}}>Your changes have been saved.</div>}
+          { this.state.error && <div  style={{color: 'red'}}> Your changes could not be saved. Please try again.</div> }
+
+</div>
 
           <div className="centerdiv">
-            {/* <Link to="/successfulRegistration"> */}
             <Button
               className="btn_blue"
-              text="Submit"
-              disabled={
-                this.state.password.length > 6 &&
-                this.state.password === this.state.verifyPassword
-                  ? false
-                  : true
-              }
-              onClick={this.submitRegistration}
+              text="Save Changes"
+              onClick={this.submitStudentProfileUpdates}
             />
-            {/* </Link> */}
           </div>
         </div>
       </div>
@@ -227,4 +237,4 @@ class StudentRegistration extends React.Component {
   };
 }
 
-export default StudentRegistration;
+export default StudentProfile;

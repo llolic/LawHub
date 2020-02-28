@@ -1,0 +1,52 @@
+.mock_container {
+  padding: 2em;
+  width: 80%;
+  margin: auto;
+}
+
+.title_row {
+  padding-bottom: 2em;
+  display: flex;
+}
+
+.title {
+  color: #446598;
+
+  font-style: bold;
+  font-weight: 700;
+  font-size: 36px;
+
+  padding-bottom: 0.5em;
+  padding-right: 1em;
+}
+
+.quiz_card {
+  padding: 2em;
+  
+}
+
+.quiz_row {
+  display: flex;
+  /* width: 92.5%; */
+  border-radius: 8px;
+  border: 1px solid #89A3CB;
+  padding: 1em;
+  margin: auto;
+  justify-content: space-evenly;
+}
+
+.quiz_row:hover {
+  box-shadow: 2px 2px 8px rgb(228, 228, 228);
+}
+
+.quiz_title {
+  width: 100%;
+  color: #446598;
+
+  font-family: 'Roboto', sans-serif;
+  font-style: bold;
+  font-weight: 700;
+  font-size: 24px;
+
+  /* padding-bottom: 0.5em; */
+}

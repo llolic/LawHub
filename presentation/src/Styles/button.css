@@ -45,10 +45,23 @@ button {
   font-weight: 700;
   font-size: 28px;
   box-shadow: 3px 3px rgb(184, 184, 184);
+}
 
+.btn_yellow_small {
+  background-color: #E49C2F;
+  padding: 0.3em;
+  color: #FFFFFF;
+  font-style: bold;
+  font-weight: 700;
+  font-size: 20px;
+  box-shadow: 2px 2px rgb(184, 184, 184);
 }
 
 .btn_yellow:hover {
+  background-color: rgb(218, 147, 42);
+}
+
+.btn_yellow_small:hover {
   background-color: rgb(218, 147, 42);
 }
 
@@ -61,4 +74,5 @@ button {
 .btn_small:hover {
   color: rgb(138, 138, 138);
 }
+
   
