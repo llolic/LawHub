@@ -22,7 +22,7 @@ class TakeQuiz extends React.Component {
       userId: "userId",
       quizId: "quiz1",
       title: response.title,
-      user_answers: [], //TODO
+      userAnswers: [], //TODO
       curr_answer: "",
       current: 0,
       dataSet: response.questions,
