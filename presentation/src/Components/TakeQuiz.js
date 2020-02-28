@@ -45,11 +45,11 @@ class TakeQuiz extends React.Component {
     var temp = {answer: choice,
                 questionId: this.state.dataSet[this.state.current].questionId,
                 questionType: this.state.dataSet[this.state.current].questionType}
-    const new_arr = this.state.user_answers.concat(temp); //TODO: user_answers, const
+    const new_arr = this.state.userAnswers.concat(temp); //TODO: user_answers, const
     //console.log(this.state.user_answers)
-    this.setState({ user_answers: new_arr }, () => {
+    this.setState({ userAnswers: new_arr }, () => {
       //TODO: callbacks to guarantee since async
-      console.log(this.state.user_answers);
+      console.log(this.state.userAnswers);
     }); //Bracket placements
     //console.log(new_arr)
 
@@ -94,9 +94,9 @@ class TakeQuiz extends React.Component {
         var temp = {answer: choice,
                     questionId: this.state.dataSet[this.state.current].questionId,
                     questionType: this.state.dataSet[this.state.current].questionType}
-        const new_arr = this.state.user_answers.concat(temp); //TODO: user_answers, const
+        const new_arr = this.state.userAnswers.push(temp); //TODO: user_answers, const
         //console.log(this.state.user_answers)
-        this.setState({ user_answers: new_arr }, () => {
+        this.setState({ userAnswers: new_arr }, () => {
           //TODO: callbacks to guarantee since async
           // console.log(this.state.user_answers);
         }); //Bracket placements
