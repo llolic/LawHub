@@ -12,6 +12,7 @@ def addQuestions(questions):
     try:
             db.connect()
     except:
+            print("connection failed")
             return -1
 
     for i in range(len(questions)):
@@ -19,17 +20,12 @@ def addQuestions(questions):
         questionType = int(questions[i]['questionType'])
 
         if questionType == 1:
-            option1 = "NULL"
-            option2 = "NULL"
-            option3 = "NULL"
-            option4 = "NULL"
-            correctAnswer = "NULL"
-            insert = '''INSERT INTO Question (question, questionType, option1, option2, option3, option4, correctAnswer) 
-                VALUES ("{}", {}, {}, {}, {}, {}, {});
-                '''.format(question, questionType, option1, option2, option3, option4, correctAnswer)
+            insert = '''INSERT INTO Question (question, questionType) 
+                VALUES ("{}", {});
+                '''.format(question, questionType)
             select = '''SELECT questionID FROM Question 
-                    WHERE question = "{}" AND questionType = {} AND option1 = {} AND option2 = {} AND option3 = {} AND option4 = {} AND correctAnswer = {};
-                    '''.format(question, questionType, option1, option2, option3, option4, correctAnswer)
+                    WHERE question = "{}" AND questionType = {};
+                    '''.format(question, questionType)
         else:
             option1 = questions[i]['answers'][0]
             option2 = questions[i]['answers'][1]
@@ -45,14 +41,17 @@ def addQuestions(questions):
 
         #queries made twice here since if option1-4 is null, then we need to set to NULL, not "NULL".  option columns is varchar.
         try:
-            db.execute(insert)
-            row = db.execute(select)
-            db.close_connection()
+                db.execute(insert)
+                row = db.execute(select)
         except:
-            return -1
-        
+                return -1         
+                
         questionIds.append(row[0][0])
 
+    try:
+            db.close_connection()
+    except:
+            return -1
     return questionIds
 
 '''
