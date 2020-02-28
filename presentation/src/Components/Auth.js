@@ -4,6 +4,9 @@ export const getAccessToken = () => Cookies.get("access_token");
 export const getRefreshToken = () => Cookies.get("refresh_token");
 export const isAuthenticated = () => !!getAccessToken();
 
+
+
+
 // for testing, to make sure all cookies are removed
 export const removeAccessToken = () => {
   Object.keys(Cookies.get()).forEach(function(cookieName) {

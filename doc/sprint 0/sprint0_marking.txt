@@ -81,5 +81,9 @@ User experience: (max 4 marks)
    
    User experience mark: 4
    
+   Remarked by Ilir:
+   The item "-All user stories identify goal/desire and all identify why/benefit (max 2 marks) [0 marks = no user story identifies goals, 1 mark = part of the stories
+   do not identify goals, 2 marks = all user stories identify goals]
+   Your mark: 1" reamrked to 2 marks. Total mark changed from 36 to 37.
    
-Total mark for phase 1 : 36/42 
+Total mark for phase 1 : 37/42 

@@ -6,19 +6,10 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 
 ## User Stories
 
-#### __1. As a registered user, I want to login, so I can access my profile.__   
-- Priority: 5
-- Point Estimate: 4
-
 #### __2. As a user, I want to see detailed statistics of another user’s history so I have a better understanding of the applicant.__
    
 - Priority: 4
 - Point Estimate: 16
-
-#### __3. As a non-registered student, I want to register as a student so that I can complete quizzes.__
-   
-- Priority: 5
-- Point Estimate: 4
 
 #### __4. As a student, I would like to customize/update my profile by adding a biography, a resume, and a showcase of quiz scores so that my profile can stand out more to employers and change my skills as I develop as a professional.__
 
@@ -86,14 +77,6 @@ We elected to use the Powers of 2 numerical series for estimating the user story
 - Priority: 1
 - Point Estimate: 64
 
-#### __18. As a developer, I want to learn how to use React in order to develop the front end for the project and learn valuable skills for industry.
+#### __21. As developers, we would like to ensure users have proper authentication to various pages on the website so that we can allow certain users to access certain parts of our application.__
 - Priority: 5
 - Point Estimate: 32
-
-#### __19. As a developer, I want to learn how to create an effective architectural design in order to effectively run our website.
-- Priority: 5
-- Point Estimate: 16
-
-#### __20. As a user, I would like a navigation bar to navigate throughout the website in order to access different pages.
-- Priorty: 5
-- Point Estimate: 8

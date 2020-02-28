@@ -18,3 +18,37 @@ create table AppUser (
 -- user: 'user1'
 -- password: 'Lamas123'
 
+create table Question (
+    questionId SERIAL NOT NULL primary key,
+    question varchar(10000) NOT NULL,
+    questionType INTEGER NOT NULL,
+    option1 varchar(1000),
+    option2 varchar(1000),
+    option3 varchar(1000),
+    option4 varchar(1000),
+    correctAnswer INT
+);
+-- questionType: 0: Multiple Choice, 1: Long Answer
+
+create table QuizContains (
+    quizId BIGINT UNSIGNED NOT NULL,
+    questionId BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY(quizId, questionId),
+    FOREIGN KEY (quizId) REFERENCES Quiz(quizId),
+    FOREIGN KEY (questionId) REFERENCES Question(questionId)
+);
+
+create table Quiz (
+    quizId SERIAL NOT NULL primary key,
+    author BIGINT UNSIGNED NOT NULL,
+    title varchar(300) NOT NULL,
+    numQuestions INTEGER NOT NULL,
+    FOREIGN KEY (author) REFERENCES Recruiter(uid)
+);
+
+create table HasTags (
+    quizId BIGINT UNSIGNED NOT NULL,
+    tag varchar(20) NOT NULL,
+    PRIMARY KEY(quizId, tag),
+    FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
+);

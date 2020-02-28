@@ -2,10 +2,13 @@ import React from "react";
 import Button from "./Button";
 import {
   schools,
-  studyLevels,
-  countries,
-  stateprovinces
+
+  studyLevels
+  // countries,
+  // stateprovinces
 } from "../Constants/registration";
+import { submitRegistration } from "./Requests";
+
 
 import { TextField, MenuItem } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
@@ -24,35 +27,28 @@ class Registration extends React.Component {
       firstName: "",
       lastName: "",
       email: "",
-      school: "",
-      studylvl: "",
-      country: "",
-      stateOrProvince: "",
+
+      // school: "",
+      // studylvl: "",
+      // country: "",
+      // stateOrProvince: "",
       password: "",
       verifyPassword: "",
-      city: "toronto",
-      submitted: false,
+      // city: "toronto",
+      submitted: 0,
+
       sessId: -1
     };
   }
 
-  submitRegistration = async () => {
-    fetch(
-      "http://104.196.152.154:5000/api/v1/register/" + this.props.type,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.state)
-      }
-    ).then(result => {
-      console.log(result);
-      if (result.ok) {
-        console.log("Created new user");
-        this.setState({ submitted: true }); // change this later
+
+  handleSumbit = () => {
+    submitRegistration(this.state, this.props.type).then(result => {
+      if (result === true) {
+        this.setState({ submitted: 1 });
       } else {
-        console.log("Failed to create user");
+        this.setState({ submitted: -1 });
+
       }
     });
   };
@@ -61,50 +57,54 @@ class Registration extends React.Component {
     if (this.props.type === "student") {
       return (
         <div className="row">
-            <div className="width-60">
-              <TextField
-                id="school"
-                select
-                margin="normal"
-                label="Post-secondary Institution"
-                value={this.state.school}
-                onChange={e => this.setState({ school: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {schools.map(school => (
-                  <MenuItem key={school} value={school}>
-                    {school}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
 
-            <div className="width-40">
-              <TextField
-                id="studylvl"
-                select
-                margin="normal"
-                label="Level of Study"
-                value={this.state.studylvl}
-                onChange={e => this.setState({ studylvl: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {studyLevels.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
+          <div className="width-60">
+            <TextField
+              id="school"
+              select
+              margin="normal"
+              label="Post-secondary Institution"
+              value={this.state.school}
+              onChange={e => this.setState({ school: e.target.value })}
+              variant="outlined"
+              fullWidth
+            >
+              {schools.map(school => (
+                <MenuItem key={school} value={school}>
+                  {school}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
-      )
+
+          <div className="width-40">
+            <TextField
+              id="studylvl"
+              select
+              margin="normal"
+              label="Level of Study"
+              value={this.state.studylvl}
+              onChange={e => this.setState({ studylvl: e.target.value })}
+              variant="outlined"
+              fullWidth
+            >
+              {studyLevels.map(option => (
+                <MenuItem key={option.index} value={option.value}>
+                  {option.value}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+        </div>
+      );
+
     }
   }
 
   render = () => {
-    if (this.state.submitted) {
+
+    if (this.state.submitted === 1) {
+
       return <Redirect push to="/successfulRegistration" />;
     }
 
@@ -114,6 +114,14 @@ class Registration extends React.Component {
       <div className="registration_container">
         <div className="card">
           <div className="subtitle">LawHub {title} Registration</div>
+
+
+          {this.state.submitted === -1 ? (
+            <div style={{color: "red"}}> An error has occurred, please try again </div>
+          ) : (
+            <div></div>
+          )}
+
 
           <TextField
             id="firstname"
@@ -141,7 +149,9 @@ class Registration extends React.Component {
             error={!this.state.email.includes("@") && this.state.email !== ""}
           />
 
-          {this.getFields()}
+
+          {/* {this.getFields()} */}
+          {/* 
 
           <div className="row">
             <div className="width-50">
@@ -183,7 +193,9 @@ class Registration extends React.Component {
                 ))}
               </TextField>
             </div>
-          </div>
+
+          </div> */}
+
 
           <TextField
             id="password"
@@ -229,7 +241,9 @@ class Registration extends React.Component {
                   ? false
                   : true
               }
-              onClick={this.submitRegistration}
+
+              onClick={this.handleSumbit}
+
             />
           </div>
         </div>

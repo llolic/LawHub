@@ -1,0 +1,25 @@
+.mock_container {
+  padding: 2em;
+  width: 80%;
+  margin: auto;
+}
+
+.title_row {
+  padding-bottom: 2em;
+  display: flex;
+}
+
+.title {
+  color: #446598;
+
+  font-style: bold;
+  font-weight: 700;
+  font-size: 36px;
+
+  padding-bottom: 0.5em;
+  padding-right: 1em;
+}
+
+.quiz_card {
+  padding: 2em;
+}
