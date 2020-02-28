@@ -1,4 +1,4 @@
-import time, math
+import time, math, random, string
 from database_auth import DatabaseAuth
 
 def is_authenticated(uid, token, timeout):
@@ -6,15 +6,15 @@ def is_authenticated(uid, token, timeout):
     Checks if the supplied uid has been (re)authenticated within the past timeout mins.
     Accesses the Authentication Database
     '''
-    auth = get_auth(uid, token)
 
+    auth = get_auth(uid, token)
     # exists is the rows in the return statement
     if (auth == []):
         return False
 
     last_authenticated = auth[0][2]
     if (((time.time() - last_authenticated) // 60) > timeout):
-        remove_uid(uid)
+        remove_auth_uid(uid)
         return False
     else:
         update_auth_timestamp(uid)
@@ -23,12 +23,12 @@ def is_authenticated(uid, token, timeout):
 def get_auth(uid, token):
     db = DatabaseAuth()
     db.connect()
-    select_query = f'SELECT * FROM AuthTable WHERE uid = {uid} AND token = "{token}";'
+    select_query = f'SELECT * FROM AuthTable WHERE uid = "{uid}" AND token = "{token}";'
     rows = db.execute(select_query)
     db.close_connection()
     return rows
 
-def insert_uid(uid, token):
+def insert_auth_uid(uid, token):
 
     db = DatabaseAuth()
     db.connect()
@@ -41,7 +41,7 @@ def insert_uid(uid, token):
     db.close_connection()
     return
 
-def remove_uid(uid):
+def remove_auth_uid(uid):
     db = DatabaseAuth()
     db.connect()
     delete_query = f'DELETE FROM AuthTable WHERE uid = {uid};'
@@ -56,3 +56,6 @@ def update_auth_timestamp(uid):
     db.execute(update_query)
     db.close_connection()
     return
+
+def generate_auth_token():
+    return ''.join(random.choice(string.ascii_letters) for m in range(50))

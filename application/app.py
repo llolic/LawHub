@@ -9,8 +9,10 @@ import markdown, os
 import database_lite
 import database_mysql
 import database_auth
+from helpers import *
 import sqlite3
 
+TIMEOUT_MINS = 5
 
 app = Flask(__name__)
 CORS(app)
@@ -60,7 +62,9 @@ class Login(Resource):
         password_hash = row[0][1]
         if bcrypt.check_password_hash(password_hash.encode(), args['password']):
             #return 200 ok
-            return {"uid": uid, "sessId": "0"}
+            sessId = generate_auth_token()
+            insert_auth_uid(uid, sessId)
+            return {"uid": uid, "sessId": sessId}
         
         #return 401 unauthorized
         return {}, status.HTTP_401_UNAUTHORIZED
@@ -148,14 +152,25 @@ class EditProfileStudent(EditProfile):
         return super().post('Student', uid, args)
 
 
-    # add helper parse_args with for loop for adding arguments
+class VerifyUser(Resource):
+    def post(self):
+        # return {}, status.HTTP_200_OK
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['userId', 'sessId'])
+        args = parser.parse_args()
+        if (is_authenticated(args['userId'], args['sessId'], TIMEOUT_MINS)):
+            return {}, status.HTTP_200_OK
+        return {}, status.HTTP_401_UNAUTHORIZED
 
 
+# add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
 api.add_resource(RegisterStudent, '/api/v1/register/student')
 api.add_resource(RegisterRecruiter, '/api/v1/register/recruiter')
 api.add_resource(Login, '/api/v1/login')
 api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
+api.add_resource(VerifyUser, '/api/v1/verifyUser')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
