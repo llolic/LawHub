@@ -14,14 +14,6 @@ export const submitRegistration = async (state, type) => {
   }).then(result => {
     console.log(result);
     return result.ok;
-    // if (result.ok) {
-    //   console.log("Created new user");
-    //   return result.ok;
-    //   // this.setState({ submitted: true }); // change this later
-    // } else {
-    //   console.log("Failed to create user");
-    //   return result.ok;
-    // }
   });
 };
 
@@ -64,22 +56,16 @@ export const submitQuiz = async state => {
 };
 
 // do we need to send the type?
-export const verifyUser = async (sessId, type) => {
-  var jsonObj = { sessId: sessId, type: type };
+export const verifyUser = async (sessId, uid) => {
+  var jsonObj = { sessId: sessId, uid: uid };
   return fetch(`http://${path}:5000/api/v1/verifyUser`, {
-    method: "GET", // ??
+    method: "POST", // ??
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(jsonObj)
   }).then(result => {
     return result.ok;
-    // if (result.ok) {
-    //   return true;
-    // } else {
-    //   // redirect to login page
-    //   return false;
-    // }
   });
 }
 

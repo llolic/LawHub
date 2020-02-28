@@ -23,26 +23,29 @@ class QuizCreation extends React.Component {
       author: this.props.uid,
       tags: "", // backend parses this by splitting commas
       numQuestions: 3,
-      questions: [{
-        questionType: "",
-        question: "",
-        answers: ["", "", "", ""],
-        correct: 0
-      },
-      {
-        questionType: "",
-        question: "",
-        answers: ["", "", "", ""],
-        correct: 0
-      },
-      {
-        questionType: "",
-        question: "",
-        answers: ["", "", "", ""],
-        correct: 0
-      }],
+      questions: [
+        {
+          questionType: "",
+          question: "",
+          answers: ["", "", "", ""],
+          correct: 0
+        },
+        {
+          questionType: "",
+          question: "",
+          answers: ["", "", "", ""],
+          correct: 0
+        },
+        {
+          questionType: "",
+          question: "",
+          answers: ["", "", "", ""],
+          correct: 0
+        }
+      ],
       submitted: 0,
-      missingFields: false
+      missingFields: false,
+      authorized: true,
     };
   }
 
@@ -214,12 +217,14 @@ class QuizCreation extends React.Component {
       return <Redirect push to="/mock" />;
     }
 
+    if (this.state.authorized === false) {
+      return <Redirect push to="/login" />;
+    }
+
     return (
       <div className="registration_container">
         <div className="card">
           <div className="subtitle">Quiz Creation</div>
-
-  
 
           <TextField
             id="title"
@@ -274,7 +279,7 @@ class QuizCreation extends React.Component {
           ) : (
             <div></div>
           )}
-          
+
           <div className="centerdiv">
             <Button
               className="btn_blue"
@@ -282,8 +287,6 @@ class QuizCreation extends React.Component {
               onClick={this.handleSubmit}
             />
           </div>
-
-          
         </div>
       </div>
     );
