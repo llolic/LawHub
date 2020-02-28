@@ -151,6 +151,30 @@ Responsibilities | Passes the POST request to the Register class along with the 
 Collaborators | Shahmeer
 -------------------------
 
+Class Name | EditProfile
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | EditProfileStudent, EditProfileRecruiter
+Responsibilities | Receives a POST request to update a row in the specified role table. It will receive a role of either student or recruiter, then updates the necessary columns with the given arguments.
+Collaborators | Ahmad
+-------------------------
+
+Class Name | EditProfileStudent
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | EditProfileStudent, EditProfileRecruiter
+Responsibilities | Passes the POST request to parent class EditProfile with the role as Student and the necessary fields that must be updated in the Student table.
+Collaborators | Ahmad
+-------------------------
+
+Class Name | addQuiz
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Parses the POST request for adding a quiz. It parses the title, author, tags, number of questions, and questions then executes the necessary queries to add the quiz and the questions into the database. 
+Collaborators | Ahmad
+-------------------------
+
 ## Architecture
 
 ### _System Interaction_
