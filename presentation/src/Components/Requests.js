@@ -14,6 +14,8 @@ export const submitRegistration = async (state, type) => {
   }).then(result => {
     console.log(result);
     return result.ok;
+  }, function(error) { // idk if this works
+    return false;
   });
 };
 
@@ -29,19 +31,21 @@ export const submitLogin = async state => {
     body: JSON.stringify(state)
   }).then(result => {
     if (result.ok) {
-      return result.json(); // uid and sessId, need stu/recruiter id??
+      return result.json(); // userId and sessId ??and userType
     }
     return -1;
   });
 };
 
-export const submitQuiz = async state => {
+export const submitQuiz = async (state, sessId, userId) => {
+  var jsonObj = {...state, sessId: sessId, userId: userId };
+  console.log(jsonObj);
   return fetch(`http://${path}:5000/api/v1/addQuiz`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(state)
+    body: JSON.stringify(jsonObj)
   }).then(result => {
     console.log(result);
     if (result.ok) {
@@ -56,8 +60,8 @@ export const submitQuiz = async state => {
 };
 
 // do we need to send the type?
-export const verifyUser = async (sessId, uid) => {
-  var jsonObj = { sessId: sessId, uid: uid };
+export const verifyUser = async (sessId, userId) => {
+  var jsonObj = { sessId: sessId, userId: userId };
   return fetch(`http://${path}:5000/api/v1/verifyUser`, {
     method: "POST", // ??
     headers: {

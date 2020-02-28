@@ -31,7 +31,7 @@ class Login extends React.Component {
         console.log(result);
         this.setState({ loginState: 1 });
         authenticate(result.sessId);
-        this.props.updateNavbar(result.sessId, result.uid); // add recruiter/student here
+        this.props.updateNavbar(result.sessId, result.userId); // add recruiter/student here
       } else {
         this.setState({ loginState: -1 });
       }

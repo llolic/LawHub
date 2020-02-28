@@ -24,14 +24,14 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       sessId: null,
-      uid: null,
+      userId: null,
       userType: "recruiter" //testing
     };
   }
 
-  updateNavbar = (sessId, uid) => {
-    console.log("component updated", sessId, uid);
-    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, uid: uid }); // replace this?
+  updateNavbar = (sessId, userId) => {
+    console.log("component updated", sessId, userId);
+    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, userId: userId }); // replace this?
   };
 
   render = () => {
