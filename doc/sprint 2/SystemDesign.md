@@ -116,6 +116,69 @@ Collaborators | Michelle
 -------------------------
 
 
+Class Name | Answer
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) Grid, Radio
+Responsibilities | Create a button corresponding to a possible answer for a multiple choice question in the quiz completion UI.
+Collaborators | Alfonso
+-------------------------
+
+
+Class Name | AnswerList
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) Grid
+Responsibilities | Create a grid for all the possible answers for a multiple choice question in the quiz completion UI.
+Collaborators | Alfonso
+-------------------------
+
+
+Class Name | Question
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) Grid
+Responsibilities | Display the question in different text for a multiple question in the quiz completion UI.
+Collaborators | Alfonso
+-------------------------
+
+
+Class Name | QuizArea
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) LinearProgress, Grid, TextField, (React-Compound-Timer) Timer
+Responsibilities | Create the display for each question in the quiz completion UI. Include a timer, progress bar, and a “Next” button to proceed to the next question after a student has selected their answer to a multiple choice question (so it doesn’t automatically proceed after they click an answer by accident).
+Collaborators | Alfonso, Michelle
+-------------------------
+
+
+Class Name | TakeQuiz
+------------ | -------------
+Parent class | React.Component
+Classname subclasses |
+Responsibilities | Create the page that will handle quiz completion for student users. Handle HTTP requests with the backend for quiz retrieval, quiz result submission, handling errors and handling click events.
+Collaborators | Alfonso
+-------------------------
+
+
+Class Name | StudentProfile
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) TextField, MenuItem
+Responsibilities | Create the page for student profile customization. Includes buttons for profile picture and resume file uploading (not functional yet, just placeholders). Also include drop-down menus for indicating their post-secondary institution, level of study, and a text field for a biography.
+Collaborators | Alfonso
+-------------------------
+
+
+Class Name | RecruiterProfile
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) TextField
+Responsibilities | Create the page for recruiter profile customization. Includes a button for profile picture file uploading (not functional yet, just a placeholder). Also include text fields for the company name, title, and a biography.
+Collaborators | Alfonso
+-------------------------
+
+
 ### _Back-end Components_
 
 
@@ -149,30 +212,6 @@ Parent class | Register
 Classname subclasses | N/A
 Responsibilities | Passes the POST request to the Register class along with the role “recruiter” to the Register class to indicate a student account to be created.
 Collaborators | Shahmeer
--------------------------
-
-Class Name | EditProfile
------------- | -------------
-Parent class | Resource (abstract RESTful resource)
-Classname subclasses | EditProfileStudent, EditProfileRecruiter
-Responsibilities | Receives a POST request to update a row in the specified role table. It will receive a role of either student or recruiter, then updates the necessary columns with the given arguments.
-Collaborators | Ahmad
--------------------------
-
-Class Name | EditProfileStudent
------------- | -------------
-Parent class | Resource (abstract RESTful resource)
-Classname subclasses | EditProfileStudent, EditProfileRecruiter
-Responsibilities | Passes the POST request to parent class EditProfile with the role as Student and the necessary fields that must be updated in the Student table.
-Collaborators | Ahmad
--------------------------
-
-Class Name | addQuiz
------------- | -------------
-Parent class | Resource (abstract RESTful resource)
-Classname subclasses | -
-Responsibilities | Parses the POST request for adding a quiz. It parses the title, author, tags, number of questions, and questions then executes the necessary queries to add the quiz and the questions into the database. 
-Collaborators | Ahmad
 -------------------------
 
 ## Architecture
