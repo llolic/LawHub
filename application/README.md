@@ -193,11 +193,11 @@ where *message* is potentially an empty string
 {
     "userId": int,
     "quizId": int,
-    "userAnswers": list of answer objects:
-    {
+    "userAnswers": [{
         "answer": int,
+        "questionType": int,
         "questionId": int
-    },
+    }],
     "correct": int,
     "numMultChoice": int
 }
