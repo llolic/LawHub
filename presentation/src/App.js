@@ -1,18 +1,22 @@
 import React from "react";
 import Navbar from "./Components/Navbar";
 import Registration from "./Components/Registration";
-import TakeQuiz from './Components/TakeQuiz';
+import TakeQuiz from "./Components/TakeQuiz";
 import Login from "./Components/Login";
 import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
 import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
-import StudentProfile from './Components/StudentProfile';
-import EmployerProfile from './Components/EmployerProfile';
+import StudentProfile from "./Components/StudentProfile";
+import EmployerProfile from "./Components/EmployerProfile";
 
 import { isAuthenticated } from "./Components/Auth";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +25,7 @@ class App extends React.Component {
       loggedIn: false,
       sessId: null,
       uid: null,
-      isRecruiter: true // for testing
+      userType: "recruiter" //testing
     };
   }
 
@@ -40,9 +44,6 @@ class App extends React.Component {
             isRecruiter={this.state.isRecruiter}
           />
           <Switch>
-            <Route path="/profile">
-              {/* profile here, prob need to + userId here */}
-            </Route>
             <Route path="/login">
               <Login updateNavbar={this.updateNavbar} />
               {/* <div style={{ height: "8.3em" }}></div> */}
@@ -58,15 +59,16 @@ class App extends React.Component {
 
             <Route path="/mock">
               <Mock
-                isRecruiter={this.state.isRecruiter}
+                // isRecruiter={this.state.isRecruiter}
                 sessId={this.state.sessId}
                 uid={this.state.uid}
+                userType={this.state.userType}
               />
             </Route>
 
             <Route path="/takeQuiz">
-            <TakeQuiz />
-          </Route>
+              <TakeQuiz />
+            </Route>
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
@@ -93,12 +95,12 @@ class App extends React.Component {
             </Route>
 
             <Route path="/employerProfile">
-            <EmployerProfile />
-          </Route>
+              <EmployerProfile />
+            </Route>
 
-          <Route path="/studentProfile">
-            <StudentProfile />
-          </Route>
+            <Route path="/studentProfile">
+              <StudentProfile />
+            </Route>
 
             <Route path="/">
               <HomePage loggedIn={this.state.loggedIn} />
@@ -106,8 +108,7 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
-        <div className="filler">
-      </div>
+        <div className="filler"></div>
         <Footer />
       </div>
     );

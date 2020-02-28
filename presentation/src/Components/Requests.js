@@ -56,10 +56,10 @@ export const submitQuiz = async state => {
 };
 
 // do we need to send the type?
-export const verifyUser = async (sessId, type) => {
-  var jsonObj = { sessId: sessId, type: type };
+export const verifyUser = async (sessId, uid) => {
+  var jsonObj = { sessId: sessId, uid: uid };
   return fetch(`http://${path}:5000/api/v1/verifyUser`, {
-    method: "GET", // ??
+    method: "POST", // ??
     headers: {
       "Content-Type": "application/json"
     },

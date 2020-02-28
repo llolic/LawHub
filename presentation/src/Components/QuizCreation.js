@@ -44,7 +44,8 @@ class QuizCreation extends React.Component {
         }
       ],
       submitted: 0,
-      missingFields: false
+      missingFields: false,
+      authorized: true,
     };
   }
 
@@ -214,6 +215,10 @@ class QuizCreation extends React.Component {
   render = () => {
     if (this.state.submitted === 1) {
       return <Redirect push to="/mock" />;
+    }
+
+    if (this.state.authorized === false) {
+      return <Redirect push to="/login" />;
     }
 
     return (

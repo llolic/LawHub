@@ -21,10 +21,10 @@ class Login extends React.Component {
 
   handleSubmit = () => {
     // DEMO 
-    this.setState({ loginState: 1 });
-        authenticate(123);
-        this.props.updateNavbar(123, 10); // add recruiter/student here
-        return;
+    // this.setState({ loginState: 1 });
+    //     authenticate(123);
+    //     this.props.updateNavbar(123, 10); // add recruiter/student here
+    //     return;
         
     submitLogin(this.state).then(result => {
       if (result !== -1) {

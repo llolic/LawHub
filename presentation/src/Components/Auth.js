@@ -6,8 +6,8 @@ export const getRefreshToken = () => Cookies.get("refresh_token");
 export const isAuthenticated = () => !!getAccessToken();
 
 // new authenticated method
-// export const isAuthenticated = (sessId, type) => {
-  // return verifyUser(sessId, type); // need type??
+// export const isAuthenticated = (sessId, uid) => {
+  // return verifyUser(sessId, uid); // need type??
 // };
 
 // TODO: 
