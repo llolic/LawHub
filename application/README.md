@@ -150,3 +150,25 @@ Endpoints:
 }
 ```
 depending on the role of the profile, *studyLevel* and *school* or *company* and *title* may be empty strings.
+
+# POST /api/v1/verifyUser
+
+**Request Body**
+```json
+{
+    "userId": string,
+    "sessId": string  
+}
+```
+
+**Response**
+
+    - 200 OK if user is currently authenticated
+    - 401 unauthorized if user is not authorized (redirect to login page)
+
+**Response Body**
+```json
+{
+    "message": string
+}
+```

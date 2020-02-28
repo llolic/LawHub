@@ -8,8 +8,11 @@ import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
 import database_mysql
+import database_auth
+from helpers import *
 import sqlite3
 
+TIMEOUT_MINS = 5
 
 app = Flask(__name__)
 CORS(app)
@@ -45,19 +48,23 @@ class Login(Resource):
         try:
             val = db.connect()
             #sanitize email input here, learn to escape the input
+            print("about to query db")
             row = db.execute("SELECT uid, password FROM AppUser WHERE email = '{}'".format(args['email']))
             db.close_connection()
+            print("done querying db")
         except:
             #return 500
             return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
-        if len(row) == 0:
+        if row == []:
             return {}, status.HTTP_401_UNAUTHORIZED
         uid = row[0][0]
         password_hash = row[0][1]
         if bcrypt.check_password_hash(password_hash.encode(), args['password']):
             #return 200 ok
-            return {"uid": uid, "sessId": "0"}
+            sessId = generate_auth_token()
+            insert_auth_uid(uid, sessId)
+            return {"uid": uid, "sessId": sessId}
         
         #return 401 unauthorized
         return {}, status.HTTP_401_UNAUTHORIZED
@@ -65,15 +72,15 @@ class Login(Resource):
 
 class Register(Resource):
     def post(self, role):
-        # print("REQ DATA", request.data)
+        print("REQ DATA", request.data)
         
         parser = reqparse.RequestParser()
         reqParser(parser, ['email', 'password', 'firstName', 'lastName'])
        
         # add non-required arguments
-        parser.add_argument('country', location='json')
-        parser.add_argument('state', location='json')
-        parser.add_argument('city', location='json')
+        # parser.add_argument('country', location='json')
+        # parser.add_argument('state', location='json')
+        # parser.add_argument('city', location='json')
 
         args = parser.parse_args()
 
@@ -86,12 +93,15 @@ class Register(Resource):
 
         # return {"sup":"alfonso"}, status.HTTP_200_OK
         password_hash = bcrypt.generate_password_hash(args['password']).decode('utf-8')
-        try:
-            row = db.execute('''INSERT INTO appuser (password, firstName, lastName, email, role, country, stateOrProvince, city) 
-                            VALUES ("{}", "{}", "{}", "{}", "{}", "{}", "{}", "{}");'''
-                            .format(password_hash, args['firstName'], args['lastName'], args['email'], role, args['country'], args['state'], args['city']))
-        except:
-             return {}, status.HTTP_401_UNAUTHORIZED
+        print(password_hash, args['firstName'], args['lastName'], args['email'])
+        
+        # try:
+        row = db.execute('''INSERT INTO AppUser (password, firstName, lastName, email, role, country, stateOrProvince, city) 
+                        VALUES ("{}", "{}", "{}", "{}", "{}", "{}", "{}", "{}");'''
+                        .format(password_hash, args['firstName'], args['lastName'], args['email'], role, "country", "state", "city"))
+        # except Exception as e:
+        #     print(e)
+        #     return {}, status.HTTP_401_UNAUTHORIZED
         
         try:
             db.close_connection()
@@ -103,7 +113,11 @@ class Register(Resource):
 
 class RegisterStudent(Register):
     def post(self):
-        super().post('student')
+        return super().post('Student')
+
+class RegisterRecruiter(Register):
+    def post(self):
+        return super().post('Recruiter')
 
 class EditProfile(Resource):
     def post(self, role, uid, args):
@@ -138,14 +152,25 @@ class EditProfileStudent(EditProfile):
         return super().post('Student', uid, args)
 
 
-    # add helper parse_args with for loop for adding arguments
+class VerifyUser(Resource):
+    def post(self):
+        # return {}, status.HTTP_200_OK
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['userId', 'sessId'])
+        args = parser.parse_args()
+        if (is_authenticated(args['userId'], args['sessId'], TIMEOUT_MINS)):
+            return {}, status.HTTP_200_OK
+        return {}, status.HTTP_401_UNAUTHORIZED
 
 
+# add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
-
 api.add_resource(RegisterStudent, '/api/v1/register/student')
+api.add_resource(RegisterRecruiter, '/api/v1/register/recruiter')
 api.add_resource(Login, '/api/v1/login')
 api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
+api.add_resource(VerifyUser, '/api/v1/verifyUser')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
