@@ -4,8 +4,7 @@ import profilePic from "../Images/lawhub.png";
 
 import { TextField } from "@material-ui/core";
 
-import "./recruiterprofile.css";
-
+import "../Styles/employerprofile.css";
 /**
  * Recruiter Profile card for recruiter profile customization.
  * Includes logic to send/receive requests to the flask server

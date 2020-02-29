@@ -1,6 +1,6 @@
 .navbar {
   position: relative;
-  height: 90px;
+  height: 5em;
   background-color: #446598;
   left: 0px;
   top: 0px;
@@ -9,16 +9,17 @@
   padding-left: 1em;
   padding-right: 1em;
   justify-content: space-between;
+  flex: 0 1 auto;
 }
   
 .leftnav {
-  height: 90px;
+  height: 5em;
   display: flex;
   align-items: flex-end;
 }
 
 .rightnav {
-  height: 90px;
+  height: 5em;
   display: flex;
   align-items: flex-end;
 }

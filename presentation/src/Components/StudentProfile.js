@@ -2,13 +2,15 @@ import React from "react";
 import Button from "./Button";
 import {
   schools,
-  studyLevels
+  studyLevels,
+  countries,
+  stateprovinces
 } from "../Constants/registration";
 import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
 
-import "./studentprofile.css"; //TODO
+import "../Styles/studentprofile.css"; //TODO
 
 /**
  * Student Profile card for the student profile customization.
@@ -43,7 +45,7 @@ class StudentProfile extends React.Component {
     const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/student", {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
     }).then(result => {
@@ -64,32 +66,56 @@ class StudentProfile extends React.Component {
   };
 
   render = () => {
-
     return (
       <div className="studentprofile_container">
         <div className="card">
-            <div className="subtitle">Customize Your Student Profile </div>
+          <div className="subtitle">Customize Your Student Profile </div>
+
           
-            { this.state.submitted && <div>Your changes have been saved.</div>}
-            { this.state.error && <div>Your changes could not be saved. Please try again.</div> }
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
-            </div>
-            
-            <div className = "center">
-              <Button 
-                  className="btn_blue"
-                  text = "Upload Picture" 
-                  onClick = {this.updateProfilePicturePath}
-              />
-              <Button 
-                className="btn_blue"
-                text = "Upload Resume" 
-                onClick = {this.updateResumePath}
                 
-              />
             </div>
+            <div className="center">
+            <Button className="btn_yellow_small" text="Upload Picture" 
+                    onClick = {this.updateProfilePicturePath}
+                />
+                <Button className="btn_yellow_small" text="Upload Resume" 
+                    onClick = {this.updateResumePath}
+                />
+            </div>
+
+          <TextField
+            id="firstname"
+            label="First Name"
+            value={this.state.firstName}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ firstName: e.target.value })}
+          />
+
+          <TextField
+            id="lastname"
+            label="Last Name"
+            value={this.state.lastName}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ lastName: e.target.value })}
+          />
+{/* 
+          <TextField
+            id="email"
+            label="Email"
+            margin="normal"
+            value={this.state.email}
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ email: e.target.value })}
+            error={!this.state.email.includes("@") && this.state.email !== ""}
+          /> */}
 
           <div className="row">
             <div className="width-60">
@@ -117,8 +143,6 @@ class StudentProfile extends React.Component {
                 select
                 margin="normal"
                 label="Level of Study"
-                //value={studyLevels[this.state.studyLevel].value}
-                //onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
                 value={this.state.studylvl}
                 onChange={e => this.setState({ studylvl: e.target.value })}
                 variant="outlined"
@@ -127,6 +151,56 @@ class StudentProfile extends React.Component {
                 {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
                   <MenuItem key={option.index} value={option.value}>
                     {option.value}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="width-50">
+              <TextField
+                id="country"
+                select
+                margin="normal"
+                label="Country"
+                value={this.state.country}
+                onChange={e => this.setState({ country: e.target.value })}
+                variant="outlined"
+                fullWidth
+              >
+                {countries.map(option => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+
+            <div className="width-50">
+              <TextField
+                id="state-province"
+                select
+                margin="normal"
+                label="State/Province"
+                value={this.state.stateOrProvince}
+                onChange={e =>
+                  this.setState({ stateOrProvince: e.target.value })
+                }
+                // value={studyLevels[this.state.studyLevel].value}
+                // onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
+                variant="outlined"
+                fullWidth
+              >
+                {/* {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
+                  <MenuItem key={option.index} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))} */}
+
+                {stateprovinces.map(option => (
+                  <MenuItem key={option} value={option}>
+                    {option}
                   </MenuItem>
                 ))}
               </TextField>
@@ -145,6 +219,11 @@ class StudentProfile extends React.Component {
             multiline
           />
 
+<div className="centerdiv">
+{ this.state.submitted && <div  style={{color: 'green'}}>Your changes have been saved.</div>}
+          { this.state.error && <div  style={{color: 'red'}}> Your changes could not be saved. Please try again.</div> }
+
+</div>
 
           <div className="centerdiv">
             <Button

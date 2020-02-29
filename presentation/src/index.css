@@ -1,4 +1,5 @@
 body {
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -16,7 +17,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.width-70 {
+  width: 70%;
+}
 .width-60 {
   width: 60%;
 }
@@ -28,6 +31,11 @@ code {
 .width-40 {
   width: 35%;
 }
+
+.width-30 {
+  width: 21%;
+}
+
 
 .row {
   display: flex;
@@ -42,8 +50,17 @@ code {
   justify-content: center;
 }
 
-.login_container {
-  padding: 5em;
-  width: 70%;
-  margin: auto
+.filler {
+  height: 82.2vh;
+}
+
+
+.filler {
+  flex-grow: 1;
+}
+
+.container {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
 }

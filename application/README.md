@@ -186,6 +186,7 @@ where *tags* is a string with each tag separated by a comma
 ```
 where *message* is potentially an empty string
 
+
 # POST /api/v1/submitQuiz
 
 **Request Body**
@@ -193,11 +194,11 @@ where *message* is potentially an empty string
 {
     "userId": int,
     "quizId": int,
-    "userAnswers": list of answer objects:
-    {
+    "userAnswers": [{
         "answer": int,
+        "questionType": int,
         "questionId": int
-    },
+    }],
     "correct": int,
     "numMultChoice": int
 }
@@ -217,3 +218,27 @@ where *correct* is number of correct answers and *numMultChoice* is the number o
 }
 ```
 where *message* is potentially an empty string
+
+
+
+# POST /api/v1/verifyUser
+
+**Request Body**
+```json
+{
+    "userId": string,
+    "sessId": string  
+}
+```
+**Response**
+
+    - 200 OK if user is currently authenticated
+    - 401 unauthorized if user is not authorized (redirect to login page)
+    
+**Response Body**
+```json
+{
+    "message": string
+}
+
+

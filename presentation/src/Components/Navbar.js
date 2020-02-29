@@ -1,10 +1,13 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import Button from "./Button";
+import { removeAccessToken } from "./Auth";
+
 import { Link } from "react-router-dom";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import logo from "../Images/lawhub.png";
-import "./navbar.css";
+import "../Styles/navbar.css";
 
 /**
  * Navigation bar for the web application.
@@ -13,14 +16,6 @@ import "./navbar.css";
  * styles for the buttons/searchbar are in index.css
  */
 class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: props.loggedIn,
-      hoverIndex: -1
-    };
-  }
-
   render = () => {
     return (
       <div className="navbar">
@@ -47,13 +42,36 @@ class Navbar extends React.Component {
         <div className="rightnav">
           <SearchBar />
 
-          <Link to="/register">
-            <Button className="btn_header" text="Sign Up" />
-          </Link>
+          {this.props.loggedIn ? (
+            <div className="row">
+              <Link to="/studentProfile">
 
-          <Link to="/login">
-            <Button className="btn_header" text="Login" />
-          </Link>
+                <AccountCircleIcon
+                  style={{ color: "#FFFFFF", fontSize: "2.5em" }}
+                />
+              </Link>
+              <Link to="/">
+                <Button
+                  className="btn_header"
+                  text="Logout"
+                  onClick={() => {
+                    removeAccessToken();
+                    this.props.updateNavbar();
+                  }}
+                />
+              </Link>
+            </div>
+          ) : (
+            <div className="row">
+              <Link to="/register">
+                <Button className="btn_header" text="Sign Up" />
+              </Link>
+
+              <Link to="/login">
+                <Button className="btn_header" text="Login" />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     );
