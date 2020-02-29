@@ -173,8 +173,26 @@ class addQuiz(Resource):
         retval = query_helpers.addTags(quizId, args['tags'])
         if retval == -1:
             return {"message": "internal server error in addTags"}, status.HTTP_500_INTERNAL_SERVER_ERROR
-            
-        return 200
+        return {}, status.HTTP_200_OK
+
+class SubmitQuiz(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['userId', 'quizId', 'userAnswers', 'correct', 'numMultChoice'])
+        args = parser.parse_args()
+
+        if (int(args['score']) == 0):
+            retval = query_helpers.submitEmptyQuiz('userId', 'quizId')
+        else:
+            score = int(args['numMultChoice']) / int(args['correct'])
+            retval = query_helpers.submitQuiz('userId', 'quizId', score)
+
+        if (retval == -1):
+            return {"message": "error submitting quiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        return {}, status.HTTP_200_OK
+        
+
 
 class VerifyUser(Resource):
     def post(self):
@@ -195,6 +213,8 @@ api.add_resource(Login, '/api/v1/login')
 api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
+api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

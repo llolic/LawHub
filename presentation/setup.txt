@@ -3,10 +3,15 @@ RUNNING CREATE-REACT-APP
 - npm install -g create-react-app
 - npm install @material-ui/core
 - npm install @material-ui/icons
+<<<<<<< HEAD
 - npm install js-cookie *NEW*
 - npm install react-compound-timer *NEW*
 
 
+=======
+- npm install react-compound-timer
+- npm install js-cookie *NEW*
+>>>>>>> LAM-3
 - go to presentation folder and run "npm start" 
     - if this breaks, try "npm install" then "npm start"
 
