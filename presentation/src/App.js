@@ -1,42 +1,52 @@
 import React from "react";
 import Navbar from "./Components/Navbar";
 import Registration from "./Components/Registration";
+import TakeQuiz from "./Components/TakeQuiz";
 import Login from "./Components/Login";
 import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
+import Mock from "./Components/Mock";
+import QuizCreation from "./Components/QuizCreation";
+import StudentProfile from "./Components/StudentProfile";
+import EmployerProfile from "./Components/EmployerProfile";
 
 import { isAuthenticated } from "./Components/Auth";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      sessId: null,
+      userId: null,
+      userType: "recruiter" //testing
     };
   }
 
-  updateNavbar() {
-    console.log("component updated");
-    this.setState({ loggedIn: isAuthenticated() });
-  }
+  updateNavbar = (sessId, userId) => {
+    console.log("component updated", sessId, userId);
+    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, userId: userId }); // replace this?
+  };
 
   render = () => {
     return (
-      <div>
+      <div className="container">
         <Router>
           <Navbar
             loggedIn={this.state.loggedIn}
-            updateNavbar={() => this.updateNavbar()}
+            updateNavbar={this.updateNavbar}
+            isRecruiter={this.state.isRecruiter}
           />
           <Switch>
-            <Route path="/profile">
-              {/* profile here, prob need to + userId here */}
-            </Route>
             <Route path="/login">
-              <Login updateNavbar={() => this.updateNavbar()} />
-              <div style={{ height: "8.3em" }}></div>
+              <Login updateNavbar={this.updateNavbar} />
+              {/* <div style={{ height: "8.3em" }}></div> */}
             </Route>
 
             <Route path="/dashboard">
@@ -48,7 +58,20 @@ class App extends React.Component {
             <Route path="/search">{/* search results here */}</Route>
 
             <Route path="/mock">
-              {/* mock quizzes here, feel free to change this name */}
+              <Mock
+                // isRecruiter={this.state.isRecruiter}
+                sessId={this.state.sessId}
+                uid={this.state.uid}
+                userType={this.state.userType}
+              />
+            </Route>
+
+            <Route path="/takeQuiz">
+              <TakeQuiz />
+            </Route>
+
+            <Route path="/quizCreation">
+              <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/explore">{/* explore here */}</Route>
@@ -58,7 +81,7 @@ class App extends React.Component {
             </Route>
 
             <Route path="/registerRecruiter">
-              <Registration type="recuiter" />
+              <Registration type="recruiter" />
             </Route>
 
             <Route path="/successfulRegistration">
@@ -71,12 +94,22 @@ class App extends React.Component {
               </div>
             </Route>
 
+            <Route path="/employerProfile">
+              <EmployerProfile />
+            </Route>
+
+            <Route path="/studentProfile">
+              <StudentProfile />
+            </Route>
+
             <Route path="/">
-              <HomePage loggedIn={this.state.loggedIn}/>
+              <HomePage loggedIn={this.state.loggedIn} />
               {/* {this.state.loggedIn ? <Redirect to="/dashboard" /> : <HomePage />} */}
             </Route>
           </Switch>
         </Router>
+        <div className="filler"></div>
+
         <Footer />
       </div>
     );
