@@ -55,6 +55,7 @@ button {
   font-weight: 700;
   font-size: 20px;
   box-shadow: 2px 2px rgb(184, 184, 184);
+
 }
 
 .btn_yellow:hover {
@@ -65,6 +66,7 @@ button {
   background-color: rgb(218, 147, 42);
 }
 
+
 .btn_small {
   background: none;
   color: rgb(165, 165, 165);
@@ -74,5 +76,4 @@ button {
 .btn_small:hover {
   color: rgb(138, 138, 138);
 }
-
   

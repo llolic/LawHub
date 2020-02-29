@@ -3,8 +3,6 @@ import Button from "./Button";
 import {
   schools,
   studyLevels
-  // countries,
-  // stateprovinces
 } from "../Constants/registration";
 import { submitRegistration } from "./Requests";
 
@@ -33,6 +31,14 @@ class Registration extends React.Component {
       verifyPassword: "",
       // city: "toronto",
       submitted: 0,
+      school: "",
+      studylvl: "",
+      country: "",
+      stateOrProvince: "",
+      password: "",
+      verifyPassword: "",
+      city: "toronto",
+      submitted: false,
       sessId: -1
     };
   }
@@ -111,6 +117,7 @@ class Registration extends React.Component {
             <div></div>
           )}
 
+
           <TextField
             id="firstname"
             label="First Name"
@@ -138,48 +145,6 @@ class Registration extends React.Component {
           />
 
           {/* {this.getFields()} */}
-          {/* 
-          <div className="row">
-            <div className="width-50">
-              <TextField
-                id="country"
-                select
-                margin="normal"
-                label="Country"
-                value={this.state.country}
-                onChange={e => this.setState({ country: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {countries.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-
-            <div className="width-50">
-              <TextField
-                id="state-province"
-                select
-                margin="normal"
-                label="State/Province"
-                value={this.state.stateOrProvince}
-                onChange={e =>
-                  this.setState({ stateOrProvince: e.target.value })
-                }
-                variant="outlined"
-                fullWidth
-              >
-                {stateprovinces.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-          </div> */}
 
           <TextField
             id="password"

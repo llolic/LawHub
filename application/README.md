@@ -151,6 +151,76 @@ Endpoints:
 ```
 depending on the role of the profile, *studyLevel* and *school* or *company* and *title* may be empty strings.
 
+# POST /api/v1/addQuiz
+
+**Request Body**
+```json
+{
+    "title": string,
+    "author": int,
+    "tags": string,
+    "numQuestions": int,
+    "questions": list of question objects:
+        {
+            "questionType": string,
+            "question": string,
+            "answers": list of strings,
+            "correct": int
+        }
+}
+```
+where *tags* is a string with each tag separated by a comma
+*questionType* is 0 if the question is multiple choice, 1 if long answer
+
+**Response**
+
+    - 200 OK for successful profile generation
+    - 400 BAD REQUEST if request body formatted incorrectly
+    - 500 INTERNAL SERVER ERROR for internal error (e.g. db down)
+
+**Response Body**
+```json
+{
+    "message": string
+}
+```
+where *message* is potentially an empty string
+
+
+# POST /api/v1/submitQuiz
+
+**Request Body**
+```json
+{
+    "userId": int,
+    "quizId": int,
+    "userAnswers": [{
+        "answer": int,
+        "questionType": int,
+        "questionId": int
+    }],
+    "correct": int,
+    "numMultChoice": int
+}
+```
+where *correct* is number of correct answers and *numMultChoice* is the number of multiple choice answers in the quiz 
+
+**Response**
+
+    - 200 OK for successful profile generation
+    - 400 BAD REQUEST if request body formatted incorrectly
+    - 500 INTERNAL SERVER ERROR for internal error (e.g. db down)
+
+**Response Body**
+```json
+{
+    "message": string
+}
+```
+where *message* is potentially an empty string
+
+
+
 # POST /api/v1/verifyUser
 
 **Request Body**
@@ -160,15 +230,15 @@ depending on the role of the profile, *studyLevel* and *school* or *company* and
     "sessId": string  
 }
 ```
-
 **Response**
 
     - 200 OK if user is currently authenticated
     - 401 unauthorized if user is not authorized (redirect to login page)
-
+    
 **Response Body**
 ```json
 {
     "message": string
 }
-```
+
+

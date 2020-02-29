@@ -83,7 +83,6 @@ class Login extends React.Component {
               onClick={this.handleSubmit}
             />
           </div>
-
         </div>
       </div>
     );

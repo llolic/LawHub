@@ -109,6 +109,7 @@ class App extends React.Component {
           </Switch>
         </Router>
         <div className="filler"></div>
+
         <Footer />
       </div>
     );
