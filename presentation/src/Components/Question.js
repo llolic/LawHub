@@ -2,8 +2,8 @@ import React from "react";
 
 import { Grid } from "@material-ui/core";
 
-import "./studentregistration.css";
-import "./takequiz.css";
+import "../Styles/registration.css";
+import "../Styles/takequiz.css";
 
 /**
  * Student Registration card for the student user.

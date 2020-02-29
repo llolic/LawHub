@@ -2,9 +2,9 @@ import React from "react";
 
 import { Grid, Radio } from "@material-ui/core";
 
-import "./studentregistration.css";
-import "./takequiz.css";
-import "./homepage.css";
+import "../Styles/registration.css";
+import "../Styles/takequiz.css";
+import "../Styles/homepage.css";
 
 /**
  * Student Registration card for the student user.

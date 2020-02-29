@@ -10,7 +10,7 @@ import Timer from "react-compound-timer";
 
 //import { Redirect } from "react-router-dom";
 
-import "./studentregistration.css";
+import "../Styles/registration.css";
 
 /**
  * Student Registration card for the student user.

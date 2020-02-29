@@ -4,6 +4,7 @@ RUNNING CREATE-REACT-APP
 - npm install @material-ui/core
 - npm install @material-ui/icons
 - npm install react-compound-timer
+- npm install js-cookie *NEW*
 - go to presentation folder and run "npm start" 
     - if this breaks, try "npm install" then "npm start"
 
@@ -34,7 +35,6 @@ Components
 
 Styles (index.css and material-ui)
 - using material-ui is easier since they have preset styles (also better functionality)
-- all project defined styles are all in index.css
 - .[CLASSNAME] in index.css will be applied to components with the prop className=[CLASSNAME]
 - try to not position and size components based on 'px' since it won't scale
 

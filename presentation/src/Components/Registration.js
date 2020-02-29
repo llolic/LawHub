@@ -2,69 +2,126 @@ import React from "react";
 import Button from "./Button";
 import {
   schools,
-  studyLevels,
-  countries,
-  stateprovinces
+
+  studyLevels
+  // countries,
+  // stateprovinces
 } from "../Constants/registration";
+import { submitRegistration } from "./Requests";
+
 
 import { TextField, MenuItem } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 
-import "./studentregistration.css";
+import "../Styles/registration.css";
 
 /**
- * Student Registration card for the student user.
+ * Registration card component.
+ * props.type determines which registration (student/recruiter) to render.
  * Includes logic to send/receive requests to the flask server
  */
-class StudentRegistration extends React.Component {
+class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       firstName: "",
       lastName: "",
       email: "",
-      school: "",
-      studylvl: "",
-      country: "",
-      stateOrProvince: "",
+
+      // school: "",
+      // studylvl: "",
+      // country: "",
+      // stateOrProvince: "",
       password: "",
       verifyPassword: "",
-      city: "toronto",
-      submitted: false,
+      // city: "toronto",
+      submitted: 0,
+
       sessId: -1
     };
   }
 
-  submitRegistration = async () => {
-    console.log("Created new user");
-    const response = fetch("http://104.196.152.154:5000/api/v1/register/student", {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-  }).then(result => {
-      console.log(result)
-  });
 
-    if (response.ok) {
-      console.log("Created new user");
-    } else {
-      console.log("Failed to create user");
-    }
-    console.log(this.state);
-    this.setState({ submitted: true }); // change this later
+  handleSumbit = () => {
+    submitRegistration(this.state, this.props.type).then(result => {
+      if (result === true) {
+        this.setState({ submitted: 1 });
+      } else {
+        this.setState({ submitted: -1 });
+
+      }
+    });
   };
 
+  getFields() {
+    if (this.props.type === "student") {
+      return (
+        <div className="row">
+
+          <div className="width-60">
+            <TextField
+              id="school"
+              select
+              margin="normal"
+              label="Post-secondary Institution"
+              value={this.state.school}
+              onChange={e => this.setState({ school: e.target.value })}
+              variant="outlined"
+              fullWidth
+            >
+              {schools.map(school => (
+                <MenuItem key={school} value={school}>
+                  {school}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+
+          <div className="width-40">
+            <TextField
+              id="studylvl"
+              select
+              margin="normal"
+              label="Level of Study"
+              value={this.state.studylvl}
+              onChange={e => this.setState({ studylvl: e.target.value })}
+              variant="outlined"
+              fullWidth
+            >
+              {studyLevels.map(option => (
+                <MenuItem key={option.index} value={option.value}>
+                  {option.value}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+        </div>
+      );
+
+    }
+  }
+
   render = () => {
-    if (this.state.submitted) {
+
+    if (this.state.submitted === 1) {
+
       return <Redirect push to="/successfulRegistration" />;
     }
+
+    const title = this.props.type === "student" ? "Account" : "Recruiter";
 
     return (
       <div className="registration_container">
         <div className="card">
-          <div className="subtitle">LawHub Account Registration</div>
+          <div className="subtitle">LawHub {title} Registration</div>
+
+
+          {this.state.submitted === -1 ? (
+            <div style={{color: "red"}}> An error has occurred, please try again </div>
+          ) : (
+            <div></div>
+          )}
+
 
           <TextField
             id="firstname"
@@ -92,45 +149,9 @@ class StudentRegistration extends React.Component {
             error={!this.state.email.includes("@") && this.state.email !== ""}
           />
 
-          <div className="row">
-            <div className="width-60">
-              <TextField
-                id="school"
-                select
-                margin="normal"
-                label="Post-secondary Institution"
-                value={this.state.school}
-                onChange={e => this.setState({ school: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {schools.map(school => (
-                  <MenuItem key={school} value={school}>
-                    {school}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
 
-            <div className="width-40">
-              <TextField
-                id="studylvl"
-                select
-                margin="normal"
-                label="Level of Study"
-                value={this.state.studylvl}
-                onChange={e => this.setState({ studylvl: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {studyLevels.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-          </div>
+          {/* {this.getFields()} */}
+          {/* 
 
           <div className="row">
             <div className="width-50">
@@ -159,7 +180,9 @@ class StudentRegistration extends React.Component {
                 margin="normal"
                 label="State/Province"
                 value={this.state.stateOrProvince}
-                onChange={e => this.setState({ stateOrProvince: e.target.value })}
+                onChange={e =>
+                  this.setState({ stateOrProvince: e.target.value })
+                }
                 variant="outlined"
                 fullWidth
               >
@@ -170,7 +193,9 @@ class StudentRegistration extends React.Component {
                 ))}
               </TextField>
             </div>
-          </div>
+
+          </div> */}
+
 
           <TextField
             id="password"
@@ -207,7 +232,6 @@ class StudentRegistration extends React.Component {
           />
 
           <div className="centerdiv">
-            {/* <Link to="/successfulRegistration"> */}
             <Button
               className="btn_blue"
               text="Submit"
@@ -217,9 +241,10 @@ class StudentRegistration extends React.Component {
                   ? false
                   : true
               }
-              onClick={this.submitRegistration}
+
+              onClick={this.handleSumbit}
+
             />
-            {/* </Link> */}
           </div>
         </div>
       </div>
@@ -227,4 +252,4 @@ class StudentRegistration extends React.Component {
   };
 }
 
-export default StudentRegistration;
+export default Registration;
