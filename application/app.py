@@ -10,7 +10,9 @@ import database_lite
 import database_mysql
 import database_auth
 from helpers import *
+import query_helpers
 import sqlite3
+import json
 
 TIMEOUT_MINS = 5
 
@@ -76,7 +78,6 @@ class Register(Resource):
         
         parser = reqparse.RequestParser()
         reqParser(parser, ['email', 'password', 'firstName', 'lastName'])
-       
         # add non-required arguments
         # parser.add_argument('country', location='json')
         # parser.add_argument('state', location='json')
@@ -91,7 +92,6 @@ class Register(Resource):
             #return 500
             return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
-        # return {"sup":"alfonso"}, status.HTTP_200_OK
         password_hash = bcrypt.generate_password_hash(args['password']).decode('utf-8')
         print(password_hash, args['firstName'], args['lastName'], args['email'])
         
@@ -151,6 +151,30 @@ class EditProfileStudent(EditProfile):
         uid = parser.parse_args()['userId']
         return super().post('Student', uid, args)
 
+class addQuiz(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['title', 'author', 'tags', 'numQuestions'])
+        parser.add_argument('questions', action='append', type=dict) # to parse an argument as a list and convert the values to dicts
+        args = parser.parse_args()
+        
+        questionIds = query_helpers.addQuestions(args['questions']) # -> returns list of questionIds
+        if questionIds == -1:
+            return {"message": "internal server error in addQuestions"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        quizId = query_helpers.createQuiz(args['author'], args['title'], args['numQuestions'])
+        if quizId == -1:
+            return {"message": "internal server error in createQuiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        retval = query_helpers.updateQuizContains(quizId, questionIds)
+        if retval == -1:
+            return {"message": "internal server error in updateQuizContains"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        retval = query_helpers.addTags(quizId, args['tags'])
+        if retval == -1:
+            return {"message": "internal server error in addTags"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+            
+        return 200
 
 class VerifyUser(Resource):
     def post(self):
@@ -170,7 +194,7 @@ api.add_resource(RegisterRecruiter, '/api/v1/register/recruiter')
 api.add_resource(Login, '/api/v1/login')
 api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 api.add_resource(VerifyUser, '/api/v1/verifyUser')
-
+api.add_resource(addQuiz, '/api/v1/addQuiz')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

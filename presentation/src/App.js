@@ -22,6 +22,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
       loggedIn: false,
       sessId: null,
       userId: null,
@@ -34,6 +35,7 @@ class App extends React.Component {
     this.setState({ loggedIn: isAuthenticated(), sessId: sessId, userId: userId }); // replace this?
   };
 
+
   render = () => {
     return (
       <div className="container">
@@ -45,6 +47,7 @@ class App extends React.Component {
           />
           <Switch>
             <Route path="/login">
+
               <Login updateNavbar={this.updateNavbar} />
               {/* <div style={{ height: "8.3em" }}></div> */}
             </Route>
@@ -58,6 +61,9 @@ class App extends React.Component {
             <Route path="/search">{/* search results here */}</Route>
 
             <Route path="/mock">
+
+              {/* mock quizzes here, feel free to change this name */}
+
               <Mock
                 // isRecruiter={this.state.isRecruiter}
                 sessId={this.state.sessId}
@@ -72,6 +78,7 @@ class App extends React.Component {
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
+
             </Route>
 
             <Route path="/explore">{/* explore here */}</Route>
@@ -81,7 +88,9 @@ class App extends React.Component {
             </Route>
 
             <Route path="/registerRecruiter">
-              <Registration type="recruiter" />
+
+              <Registration type="recuiter" />
+
             </Route>
 
             <Route path="/successfulRegistration">
@@ -103,7 +112,9 @@ class App extends React.Component {
             </Route>
 
             <Route path="/">
+
               <HomePage loggedIn={this.state.loggedIn} />
+
               {/* {this.state.loggedIn ? <Redirect to="/dashboard" /> : <HomePage />} */}
             </Route>
           </Switch>
