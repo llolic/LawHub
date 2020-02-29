@@ -10,13 +10,14 @@ import {
 import { TextField, MenuItem } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 
-import "./studentregistration.css";
+import "../Styles/registration.css";
 
 /**
- * Student Registration card for the student user.
+ * Registration card component.
+ * props.type determines which registration (student/recruiter) to render.
  * Includes logic to send/receive requests to the flask server
  */
-class StudentRegistration extends React.Component {
+class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,63 +37,30 @@ class StudentRegistration extends React.Component {
   }
 
   submitRegistration = async () => {
-    console.log("Created new user");
-    const response = fetch("http://104.196.152.154:5000/api/v1/register/student", {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-  }).then(result => {
-      console.log(result)
-  });
-
-    if (response.ok) {
-      console.log("Created new user");
-    } else {
-      console.log("Failed to create user");
-    }
-    console.log(this.state);
-    this.setState({ submitted: true }); // change this later
+    fetch(
+      "http://104.196.152.154:5000/api/v1/register/" + this.props.type,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.state)
+      }
+    ).then(result => {
+      console.log(result);
+      if (result.ok) {
+        console.log("Created new user");
+        this.setState({ submitted: true }); // change this later
+      } else {
+        console.log("Failed to create user");
+      }
+    });
   };
 
-  render = () => {
-    if (this.state.submitted) {
-      return <Redirect push to="/successfulRegistration" />;
-    }
-
-    return (
-      <div className="registration_container">
-        <div className="card">
-          <div className="subtitle">LawHub Account Registration</div>
-
-          <TextField
-            id="firstname"
-            label="First Name"
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ firstName: e.target.value })}
-          />
-          <TextField
-            id="lastname"
-            label="Last Name"
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ lastName: e.target.value })}
-          />
-          <TextField
-            id="email"
-            label="Email"
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ email: e.target.value })}
-            error={!this.state.email.includes("@") && this.state.email !== ""}
-          />
-
-          <div className="row">
+  getFields() {
+    if (this.props.type === "student") {
+      return (
+        <div className="row">
             <div className="width-60">
               <TextField
                 id="school"
@@ -131,6 +99,49 @@ class StudentRegistration extends React.Component {
               </TextField>
             </div>
           </div>
+      )
+    }
+  }
+
+  render = () => {
+    if (this.state.submitted) {
+      return <Redirect push to="/successfulRegistration" />;
+    }
+
+    const title = this.props.type === "student" ? "Account" : "Recruiter";
+
+    return (
+      <div className="registration_container">
+        <div className="card">
+          <div className="subtitle">LawHub {title} Registration</div>
+
+          <TextField
+            id="firstname"
+            label="First Name"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ firstName: e.target.value })}
+          />
+          <TextField
+            id="lastname"
+            label="Last Name"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ lastName: e.target.value })}
+          />
+          <TextField
+            id="email"
+            label="Email"
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ email: e.target.value })}
+            error={!this.state.email.includes("@") && this.state.email !== ""}
+          />
+
+          {this.getFields()}
 
           <div className="row">
             <div className="width-50">
@@ -159,7 +170,9 @@ class StudentRegistration extends React.Component {
                 margin="normal"
                 label="State/Province"
                 value={this.state.stateOrProvince}
-                onChange={e => this.setState({ stateOrProvince: e.target.value })}
+                onChange={e =>
+                  this.setState({ stateOrProvince: e.target.value })
+                }
                 variant="outlined"
                 fullWidth
               >
@@ -207,7 +220,6 @@ class StudentRegistration extends React.Component {
           />
 
           <div className="centerdiv">
-            {/* <Link to="/successfulRegistration"> */}
             <Button
               className="btn_blue"
               text="Submit"
@@ -219,7 +231,6 @@ class StudentRegistration extends React.Component {
               }
               onClick={this.submitRegistration}
             />
-            {/* </Link> */}
           </div>
         </div>
       </div>
@@ -227,4 +238,4 @@ class StudentRegistration extends React.Component {
   };
 }
 
-export default StudentRegistration;
+export default Registration;

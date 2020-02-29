@@ -17,3 +17,4 @@ create table AppUser (
 -- database name: 'lh_db'
 -- user: 'user1'
 -- password: 'Lamas123'
+
