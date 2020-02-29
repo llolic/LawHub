@@ -238,6 +238,23 @@ Responsibilities | Parses the POST request for adding a quiz. It parses the titl
 Collaborators | Ahmad
 -------------------------
 
+Class Name | SubmitQuiz
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Receives a POST register request and parses the necessary arguments. It will calculate the score of the quiz that was submitted based on the number of correct multiple choice questions. It will then create a QuizRecord in the MySQL database, which signifies an attempt at some quiz by some user.
+Collaborators | Shahmeer
+-------------------------
+
+Class Name | VerifyUser
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Receives a POST register request and parses the necessary arguments. It will check a local database which has user IDs, tokens assosciated with a session ID, and the timestamp of the token. The class will check if the supplied user has been authenticated within the last 5 minutes, ie if the local authentication database has a token for that user with a timestamp of within the last 5 minutes, and will return HTTP 200 if it does, or HTTP 401 if it does not/the token is older than 5 minutes. Everytime this happens, the timestamp of tokens are updated.
+Collaborators | Shahmeer
+-------------------------
+
+
 ## Architecture
 
 ### _System Interaction_
