@@ -9,6 +9,7 @@ import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
 import StudentProfile from "./Components/StudentProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
+import Profile from "./Components/Profile.js";
 
 import { isAuthenticated } from "./Components/Auth";
 
@@ -98,8 +99,13 @@ class App extends React.Component {
               <EmployerProfile />
             </Route> */}
 
-            <Route path="/studentProfile">
+            <Route path="/editProfile">
               <StudentProfile />
+            </Route>
+
+
+            <Route path="/studentProfile">
+              <Profile />
             </Route>
 
 
