@@ -35,7 +35,13 @@ class App extends React.Component {
     this.setState({ loggedIn: isAuthenticated(), sessId: sessId, userId: userId }); // replace this?
   };
 
+  componentDidUpdate() {
+    window.scrollTo(0,0);
+  }
+
   render = () => {
+
+    
     return (
       <div className="container">
         <Router>

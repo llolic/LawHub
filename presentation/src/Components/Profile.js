@@ -4,10 +4,12 @@ import ProfileStats from "./ProfileStats";
 
 import profilePic from "../Images/groot.jpg";
 
+import { harry } from "../Constants/profile";
+
 import SchoolIcon from "@material-ui/icons/School";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 
 import { Link } from "react-router-dom";
 
@@ -19,7 +21,8 @@ class Profile extends React.Component {
     this.state = {
       userId: "userId",
       sessId: "sessId",
-      userType: "student"
+      userType: "student",
+      profileId: "userId"
     };
   }
 
@@ -30,9 +33,14 @@ class Profile extends React.Component {
       <div className="profile_container">
         <div className="left_profile_container">
           <div className="profile_card">
-            <div className="profile_name">Harry Gunther 
-
-            {this.state.userType === "student" && <Link to="/editProfile"><EditIcon/></Link>}</div>
+            <div className="profile_name">
+              {`${harry.firstName} ${harry.lastName}`}
+              {this.state.userType === "student" && (
+                <Link to="/editProfile">
+                  {this.state.userId === this.state.profileId && <EditIcon />}
+                </Link>
+              )}
+            </div>
             <div className="center">
               <img
                 src={profilePic}
@@ -44,41 +52,38 @@ class Profile extends React.Component {
 
             <ul className="profile_list">
               <li className="profile_list_item">
-                <LocationCityIcon /> Yale University
+                <LocationCityIcon /> {`${harry.school}`}
               </li>
 
               <li className="profile_list_item">
                 {" "}
-                <SchoolIcon /> Undergraduate, 4th year
+                <SchoolIcon /> {`${harry.studyLevel}`}
               </li>
               <li className="profile_list_item">
                 {" "}
-                <LocationOnIcon /> Hartford, Connecticut, United States
+                <LocationOnIcon />{" "}
+                {`${harry.city}, ${harry.stateOrProvince}, ${harry.country}`}
               </li>
             </ul>
 
             <div className="about_me_title">About me</div>
-            <div className="about_me">
-              Law school undergraduate looking to apply knowledge of laws, legal
-              codes, and court proceedings and precedents to an attorney
-              position.
-            </div>
-            <div className="about_me">
-              Four-time 4A State Police Debate State Champion.
-            </div>
+            <div className="about_me">{`${harry.bio}`}</div>
           </div>
           <div className="similar_card">
             <div className="subtitle">Similar Candidates </div>
 
             <div className="row">
-              <div className="candidate">
-                <img
-                  src={profilePic}
-                  alt="your pic here"
-                  className="similar_icon"
-                />
-                Barry Gunther
-              </div>
+              {/* THIS DOESN'T SCROLL TO TOP */}
+              <Link to="/">
+                <div className="candidate">
+                  <img
+                    src={profilePic}
+                    alt="your pic here"
+                    className="similar_icon"
+                  />
+                  <Button className="btn_small_blk" text="Barry Gunther" />
+                </div>
+              </Link>
               <div className="candidate">
                 <img
                   src={profilePic}

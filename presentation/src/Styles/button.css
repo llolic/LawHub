@@ -78,4 +78,13 @@ button {
 .btn_small:hover {
   color: rgb(138, 138, 138);
 }
+
+.btn_small_blk {
+  background: none;
+  font-size: 16px;
+}
+
+.btn_small_blk:hover {
+  color: rgb(32, 32, 32);
+}
   
