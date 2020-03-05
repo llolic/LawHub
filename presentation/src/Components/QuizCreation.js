@@ -21,6 +21,7 @@ class QuizCreation extends React.Component {
     this.state = {
       title: "",
       author: this.props.uid,
+      sessId: this.props.sessId,
       tags: "", // backend parses this by splitting commas
       numQuestions: 3,
       questions: [

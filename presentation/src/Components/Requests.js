@@ -79,6 +79,8 @@ export const submitQuizAnswers = async (state) => {
 // do we need to send the type?
 export const verifyUser = async (sessId, userId) => {
   var jsonObj = { sessId: sessId, userId: userId };
+  console.log(jsonObj);
+
   return fetch(`http://${path}:5000/api/v1/verifyUser`, {
     method: "POST", // ??
     headers: {
@@ -88,6 +90,21 @@ export const verifyUser = async (sessId, userId) => {
   }).then(result => {
     return result.ok;
   });
+}
+
+
+export const updateProfile = async (state) => {
+  console.log("Attempting to update student profile");
+  return fetch(`http://${path}:5000/api/v1/editProfile/student`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(state)
+  }).then(result => {
+    return result.ok;
+  });
+
 }
 
 

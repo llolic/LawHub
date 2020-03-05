@@ -18,8 +18,8 @@ class Mock extends React.Component {
   }
 
   clickCreate = () => {
-    this.setState({ createQuiz: 1 });
-    return;
+    // this.setState({ createQuiz: 1 });
+    // return;
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ createQuiz: -1 });
@@ -31,8 +31,8 @@ class Mock extends React.Component {
   }
 
   clickStartQuiz = () => {
-    this.setState({ startQuiz: 1 });
-    return;
+    // this.setState({ startQuiz: 1 });
+    // return;
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ startQuiz: -1 });

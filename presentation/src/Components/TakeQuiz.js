@@ -21,7 +21,7 @@ class TakeQuiz extends React.Component {
 
     this.state = {
       uid: this.props.uid,
-      // sessId
+      sessId: this.props.sessId,
       quizId: 16, // for testing
       title: response.title,
       userAnswers: [], //TODO
@@ -35,8 +35,6 @@ class TakeQuiz extends React.Component {
       done: false,
       submitted: false,
       error: false,
-      // remove this later
-      // score: 5
     };
 
     // this.handleClick = this.handleClick.bind(this);
@@ -90,10 +88,7 @@ class TakeQuiz extends React.Component {
                     questionId: this.state.dataSet[this.state.current].questionId,
                     questionType: this.state.dataSet[this.state.current].questionType}
         const new_arr = this.state.userAnswers.push(temp); //TODO: user_answers, const
-        //console.log(this.state.user_answers)
         this.setState({ userAnswers: new_arr }, () => {
-          //TODO: callbacks to guarantee since async
-          // console.log(this.state.user_answers);
         }); //Bracket placements
         this.setState({ current: this.state.current + 1, curr_answer: "" });
       }

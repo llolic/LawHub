@@ -35,6 +35,8 @@ class App extends React.Component {
     console.log(this.state);
   };
 
+  // need to update navbar after being unauthenticated
+
   render = () => {
     return (
       <div className="container">

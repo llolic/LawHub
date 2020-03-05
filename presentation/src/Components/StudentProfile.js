@@ -6,6 +6,7 @@ import {
   countries,
   stateprovinces
 } from "../Constants/registration";
+import { updateProfile } from "./Requests";
 import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
@@ -41,28 +42,14 @@ class StudentProfile extends React.Component {
   }
 
   submitStudentProfileUpdates = async () => {
-    console.log("Attempting to update student profile");
-    const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/student", {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    }).then(result => {
-      console.log(result)
-    });
-
-    if (response.ok) {
+    updateProfile(this.state).then(result => {
+      if (result === false) {
+        this.setState({ error: true });
+        
+        return
+      }
       this.setState({ submitted: true }); // change this later
-      console.log("Successfully updated student profile");
-    } else { 
-      //TODO: add different error cases
-        //400 BAD REQUEST if request body formatted incorrectly, string too long
-        //500 INTERNAL SERVER ERROR for internal error (db down)
-      this.setState({ error: true });
-      console.log("Failed to update student profile");
-    }
-    console.log(this.state);
+    })
   };
 
   render = () => {
