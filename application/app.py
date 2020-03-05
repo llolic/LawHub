@@ -50,10 +50,8 @@ class Login(Resource):
         try:
             val = db.connect()
             #sanitize email input here, learn to escape the input
-            print("about to query db")
             row = db.execute("SELECT uid, password FROM AppUser WHERE email = '{}'".format(args['email']))
             db.close_connection()
-            print("done querying db")
         except:
             #return 500
             return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -147,8 +145,8 @@ class EditProfileStudent(EditProfile):
         parser = reqparse.RequestParser()
         reqParser(parser, ['studyLevel', 'school', 'bio'])
         args = parser.parse_args()
-        parser.add_argument('userId', required=True, location='json')
-        uid = parser.parse_args()['userId']
+        parser.add_argument('uid', required=True, location='json')
+        uid = parser.parse_args()['uid']
         return super().post('Student', uid, args)
 
 class addQuiz(Resource):
@@ -178,14 +176,14 @@ class addQuiz(Resource):
 class SubmitQuiz(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        reqParser(parser, ['userId', 'quizId', 'userAnswers', 'correct', 'numMultChoice'])
+        reqParser(parser, ['uid', 'quizId', 'userAnswers', 'correct', 'numMultChoice'])
         args = parser.parse_args()
 
-        if (int(args['score']) == 0):
-            retval = query_helpers.submitEmptyQuiz('userId', 'quizId')
-        else:
-            score = int(args['numMultChoice']) / int(args['correct'])
-            retval = query_helpers.submitQuiz('userId', 'quizId', score)
+        # if (int(args['score']) == 0):
+        #     retval = query_helpers.submitEmptyQuiz('userId', 'quizId')
+        # else:
+        score = int(args['correct']) / int(args['numMultChoice'])
+        retval = query_helpers.submitQuiz('uid', 'quizId', score)
 
         if (retval == -1):
             return {"message": "error submitting quiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -198,9 +196,9 @@ class VerifyUser(Resource):
     def post(self):
         # return {}, status.HTTP_200_OK
         parser = reqparse.RequestParser()
-        reqParser(parser, ['userId', 'sessId'])
+        reqParser(parser, ['uid', 'sessId'])
         args = parser.parse_args()
-        if (is_authenticated(args['userId'], args['sessId'], TIMEOUT_MINS)):
+        if (is_authenticated(args['uid'], args['sessId'], TIMEOUT_MINS)):
             return {}, status.HTTP_200_OK
         return {}, status.HTTP_401_UNAUTHORIZED
 

@@ -70,7 +70,8 @@ def createQuiz(author, title, numQuestions):
 			row = db.execute(select)
 			quizId = row[0][0]
 			db.close_connection()
-	except:
+	except Exception as e:
+			print(e)
 			return -1
 	
 	return quizId
@@ -139,11 +140,12 @@ def submitQuiz(userId, quizId, score):
 	insertQuery = f"INSERT INTO QuizRecord (uid, quizId, score, hasLongAnswer) VALUES ({userId}, {quizId}, {score}, FALSE)"
 	try:
 		db.execute(insertQuery)
-	except:
+	except Exception as e:
+		print(e)
 		return -1
 	return 1
 
-def submitQuizEmptyQui(userId, quizId):
+def submitEmptyQuiz(userId, quizId):
 	db = database_mysql.DatabaseMySql()
 	try:
 		db.connect()
