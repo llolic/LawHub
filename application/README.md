@@ -54,7 +54,7 @@ Endpoints:
 **Response Body**
 ```json
 {
-    "userId": string,
+    "uid": string,
     "sessId": string,
     "message": string
 }
@@ -67,7 +67,7 @@ Endpoints:
 **Request Body**
 ```json
 {
-    "userId": string,
+    "uid": string,
     "sessId": string, 
     "studyLevel": string,
     "school": string,
@@ -96,7 +96,7 @@ Endpoints:
 **Request Body**
 ```json
 {
-    "userId": string,
+    "uid": string,
     "sessId": string, 
     "company": string,
     "title": string,
@@ -126,7 +126,7 @@ Endpoints:
 **Request Body**
 ```json
 {
-    "userId": string,   
+    "uid": string,   
 }
 ```
 
@@ -192,7 +192,7 @@ where *message* is potentially an empty string
 **Request Body**
 ```json
 {
-    "userId": int,
+    "uid": int,
     "quizId": int,
     "userAnswers": [{
         "answer": int,
@@ -226,7 +226,7 @@ where *message* is potentially an empty string
 **Request Body**
 ```json
 {
-    "userId": string,
+    "uid": string,
     "sessId": string  
 }
 ```
