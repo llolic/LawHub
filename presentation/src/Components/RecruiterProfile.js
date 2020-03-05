@@ -13,7 +13,7 @@ class RecruiterProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "userId",
+      uid: this.props.uid,
       sessId: "sessId",
       company: "",
       title: "",

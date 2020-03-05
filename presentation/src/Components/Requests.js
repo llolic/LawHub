@@ -37,8 +37,9 @@ export const submitLogin = async state => {
   });
 };
 
-export const submitQuiz = async (state, sessId, userId) => {
+export const submitNewQuiz = async (state, sessId, userId) => {
   var jsonObj = {...state, sessId: sessId, userId: userId };
+  
   console.log(jsonObj);
   return fetch(`http://${path}:5000/api/v1/addQuiz`, {
     method: "POST",
@@ -57,6 +58,22 @@ export const submitQuiz = async (state, sessId, userId) => {
       return false;
     }
   });
+};
+
+export const submitQuizAnswers = async (state) => {
+  console.log("Attempting to submit quiz results");
+  return fetch(`http://${path}:5000/api/v1/submitQuiz`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(state)
+  }).then(result => {
+    console.log(result);
+    return result.ok;
+  });
+
+
 };
 
 // do we need to send the type?

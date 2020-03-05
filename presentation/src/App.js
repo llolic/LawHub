@@ -24,14 +24,15 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       sessId: null,
-      userId: null,
+      uid: null,
       userType: "recruiter" //testing
     };
   }
 
-  updateNavbar = (sessId, userId) => {
-    console.log("component updated", sessId, userId);
-    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, userId: userId }); // replace this?
+  updateNavbar = (sessId, uid) => {
+    console.log("login successful", sessId, uid);
+    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, uid: uid }); // replace this?
+    console.log(this.state);
   };
 
   render = () => {
@@ -46,7 +47,6 @@ class App extends React.Component {
           <Switch>
             <Route path="/login">
               <Login updateNavbar={this.updateNavbar} />
-              {/* <div style={{ height: "8.3em" }}></div> */}
             </Route>
 
             <Route path="/dashboard">
@@ -59,7 +59,6 @@ class App extends React.Component {
 
             <Route path="/mock">
               <Mock
-                // isRecruiter={this.state.isRecruiter}
                 sessId={this.state.sessId}
                 uid={this.state.uid}
                 userType={this.state.userType}
@@ -67,7 +66,7 @@ class App extends React.Component {
             </Route>
 
             <Route path="/takeQuiz">
-              <TakeQuiz />
+              <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/quizCreation">
@@ -99,7 +98,7 @@ class App extends React.Component {
             </Route> */}
 
             <Route path="/studentProfile">
-              <StudentProfile />
+              <StudentProfile sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
 

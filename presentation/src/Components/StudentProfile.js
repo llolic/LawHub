@@ -20,8 +20,8 @@ class StudentProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "userId",
-      sessId: "sessId",
+      uid: this.props.uid,
+      sessId: this.props.sessId,
       studyLevel: "",
       school: "",
       bio: "",
