@@ -6,6 +6,7 @@ import {
   countries,
   stateprovinces
 } from "../Constants/registration";
+import { updateProfile } from "../Util/Requests";
 import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
@@ -22,9 +23,6 @@ class StudentProfile extends React.Component {
     this.state = {
       userId: "userId",
       sessId: "sessId",
-      studyLevel: "",
-      school: "",
-      bio: "",
       profilePicturePath: "../Images/lawhub.png",
       resumePath: "",
       submitted: false,
@@ -40,29 +38,64 @@ class StudentProfile extends React.Component {
       alert("Just kidding, you can't upload resumes yet!")
   }
 
-  submitStudentProfileUpdates = async () => {
-    console.log("Attempting to update student profile");
-    const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/student", {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    }).then(result => {
-      console.log(result)
-    });
-
-    if (response.ok) {
-      this.setState({ submitted: true }); // change this later
-      console.log("Successfully updated student profile");
-    } else { 
-      //TODO: add different error cases
-        //400 BAD REQUEST if request body formatted incorrectly, string too long
-        //500 INTERNAL SERVER ERROR for internal error (db down)
-      this.setState({ error: true });
-      console.log("Failed to update student profile");
+    // fetch user data...
+    componentWillMount() {
+      // fetchProfile(this.state.sessId, this.state.userId).then(result => {
+        // console.log(result);
+        // this.setState({
+        //   firstName: result.firstName,
+        //   lastName: result.lastName,
+        //   studyLevel: result.studyLevel,
+        //   school: result.school,
+        //   bio: result.bio,
+        //   city: result.city,
+        //   stateOrProvince: result.stateOrProvince,
+        //   country: result.country
+        // });
+        this.setState({
+          firstName: "Harry",
+          lastName: "Gunther",
+          studyLevel: "Undergraduate",
+          school: "Yale University",
+          bio: "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
+          city: "Hartford",
+          stateOrProvince: "Connecticut",
+          country: "United States"
+        });
+      // });
     }
-    console.log(this.state);
+
+  submitStudentProfileUpdates = async () => {
+    updateProfile(this.state).then(result => {
+      if (result === false) {
+        this.setState({ error: true });
+        
+        return
+      }
+      this.setState({ submitted: true }); // change this later
+    })
+    // console.log("Attempting to update student profile");
+    // const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/student", {
+    //   method: 'POST',
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(this.state)
+    // }).then(result => {
+    //   console.log(result)
+    // });
+
+    // if (response.ok) {
+    //   this.setState({ submitted: true }); // change this later
+    //   console.log("Successfully updated student profile");
+    // } else { 
+    //   //TODO: add different error cases
+    //     //400 BAD REQUEST if request body formatted incorrectly, string too long
+    //     //500 INTERNAL SERVER ERROR for internal error (db down)
+    //   this.setState({ error: true });
+    //   console.log("Failed to update student profile");
+    // }
+    // console.log(this.state);
   };
 
   render = () => {
@@ -70,8 +103,6 @@ class StudentProfile extends React.Component {
       <div className="studentprofile_container">
         <div className="card">
           <div className="subtitle">Customize Your Student Profile </div>
-
-          
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
@@ -143,12 +174,12 @@ class StudentProfile extends React.Component {
                 select
                 margin="normal"
                 label="Level of Study"
-                value={this.state.studylvl}
-                onChange={e => this.setState({ studylvl: e.target.value })}
+                value={this.state.studyLevel}
+                onChange={e => this.setState({ studyLevel: e.target.value })}
                 variant="outlined"
                 fullWidth
               >
-                {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
+                {studyLevels.map(option => (
                   <MenuItem key={option.index} value={option.value}>
                     {option.value}
                   </MenuItem>
@@ -187,17 +218,9 @@ class StudentProfile extends React.Component {
                 onChange={e =>
                   this.setState({ stateOrProvince: e.target.value })
                 }
-                // value={studyLevels[this.state.studyLevel].value}
-                // onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
                 variant="outlined"
                 fullWidth
               >
-                {/* {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
-                  <MenuItem key={option.index} value={option.value}>
-                    {option.value}
-                  </MenuItem>
-                ))} */}
-
                 {stateprovinces.map(option => (
                   <MenuItem key={option} value={option}>
                     {option}

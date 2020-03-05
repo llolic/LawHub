@@ -2,9 +2,11 @@ import React from "react";
 import Button from "./Button";
 import ProfileStats from "./ProfileStats";
 
+import { fetchProfile } from "../Util/Requests";
+
 import profilePic from "../Images/groot.jpg";
 
-import { harry } from "../Constants/profile";
+// import { harry } from "../Constants/profile";
 
 import SchoolIcon from "@material-ui/icons/School";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
@@ -27,6 +29,31 @@ class Profile extends React.Component {
   }
 
   // fetch user data...
+  componentWillMount() {
+    // fetchProfile(this.state.sessId, this.state.userId).then(result => {
+      // console.log(result);
+      // this.setState({
+      //   firstName: result.firstName,
+      //   lastName: result.lastName,
+      //   studyLevel: result.studyLevel,
+      //   school: result.school,
+      //   bio: result.bio,
+      //   city: result.city,
+      //   stateOrProvince: result.stateOrProvince,
+      //   country: result.country
+      // });
+      this.setState({
+        firstName: "Harry",
+        lastName: "Gunther",
+        studyLevel: "Undergraduate, 4th year",
+        school: "Yale University",
+        bio: "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
+        city: "Hartford",
+        stateOrProvince: "Connecticut",
+        country: "United States"
+      });
+    // });
+  }
 
   render = () => {
     return (
@@ -34,7 +61,7 @@ class Profile extends React.Component {
         <div className="left_profile_container">
           <div className="profile_card">
             <div className="profile_name">
-              {`${harry.firstName} ${harry.lastName}`}
+              {`${this.state.firstName} ${this.state.lastName}`}
               {this.state.userType === "student" && (
                 <Link to="/editProfile">
                   {this.state.userId === this.state.profileId && <EditIcon />}
@@ -52,22 +79,22 @@ class Profile extends React.Component {
 
             <ul className="profile_list">
               <li className="profile_list_item">
-                <LocationCityIcon /> {`${harry.school}`}
+                <LocationCityIcon /> {`${this.state.school}`}
               </li>
 
               <li className="profile_list_item">
                 {" "}
-                <SchoolIcon /> {`${harry.studyLevel}`}
+                <SchoolIcon /> {`${this.state.studyLevel}`}
               </li>
               <li className="profile_list_item">
                 {" "}
                 <LocationOnIcon />{" "}
-                {`${harry.city}, ${harry.stateOrProvince}, ${harry.country}`}
+                {`${this.state.city}, ${this.state.stateOrProvince}, ${this.state.country}`}
               </li>
             </ul>
 
             <div className="about_me_title">About me</div>
-            <div className="about_me">{`${harry.bio}`}</div>
+            <div className="about_me">{`${this.state.bio}`}</div>
           </div>
           <div className="similar_card">
             <div className="subtitle">Similar Candidates </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import { submitQuiz } from "./Requests";
+import { submitNewQuiz } from "../Util/Requests";
 
 import {
   TextField,
@@ -49,18 +49,13 @@ class QuizCreation extends React.Component {
     };
   }
 
-  // instantiates questions at the beginning
-  // componentWillMount() {
-  //   this.setNumQuestions(this.state.numQuestions);
-  // }
-
   handleSubmit = () => {
     if (!this.fieldsFilled()) {
       this.setState({ missingFields: true });
       return;
     }
     this.setState({ missingFields: false });
-    submitQuiz(this.state).then(result => {
+    submitNewQuiz(this.state).then(result => {
       if (result === true) {
         this.setState({ submitted: 1 });
       } else {

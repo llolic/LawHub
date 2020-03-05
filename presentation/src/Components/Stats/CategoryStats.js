@@ -12,7 +12,6 @@ import {
 } from "recharts";
 
 import {
-  overallStats,
   categories,
 } from "../../Constants/stats";
 
@@ -44,6 +43,22 @@ class CategoryStats extends React.Component {
                 fillOpacity={0.5}
               />
             </RadarChart>
+
+            <ul className="stats_list">
+              <li className="stats_list_item">
+                {`Most popular category this month: ${"Criminal"}`}
+              </li>
+              <li className="stats_list_item">
+                {`Average categories per quiz: ${2}`}
+              </li>
+              <li className="stats_list_item">
+                {`Percentage of categories covered: ${68}%`}
+              </li>
+              <li className="stats_list_item">
+                {`All categories covered: ${"Corporate, Tax, Criminal, Civil Rights, Immigration, Health"}`}
+              </li>
+   
+            </ul>
           </Box>
         )}
       </Typography>);

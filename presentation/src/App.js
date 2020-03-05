@@ -11,7 +11,7 @@ import StudentProfile from "./Components/StudentProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
 import Profile from "./Components/Profile.js";
 
-import { isAuthenticated } from "./Components/Auth";
+import { isAuthenticated } from "./Util/Auth";
 
 import {
   BrowserRouter as Router,

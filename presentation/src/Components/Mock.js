@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "./Button";
-import { verifyUser } from "./Requests";
+import { verifyUser } from "../Util/Requests";
 
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
 import "../Styles/mock.css";
