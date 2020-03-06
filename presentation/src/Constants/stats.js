@@ -44,6 +44,44 @@ export const summaryStats = {
   joinDate: "January 6 2020",
 };
 
+export const historyStats = [
+  {
+    quizTitle: "Test Quiz",
+    date: "2020-03-03",
+    score: 84.9
+  },
+  {
+    quizTitle: "LSAT Mock Quiz",
+    date: "2020-03-01",
+    score: 65.2
+  },
+  {
+    quizTitle: "BAR Example Test Feb 2020",
+    date: "2020-02-27",
+    score: 79.2
+  },
+  {
+    quizTitle: "Criminal Law Quiz",
+    date: "2020-02-16",
+    score: 86.1
+  },
+  {
+    quizTitle: "Immigration Law",
+    date: "2020-02-09",
+    score: 100
+  },
+  {
+    quizTitle: "Corporate and Business Law",
+    date: "2020-03-03",
+    score: 71.7
+  },
+  {
+    quizTitle: "Health Law Practice Quiz",
+    date: "2020-03-03",
+    score: 58.9
+  }
+]
+
 export const COLORS = [
     "#446598",
     "#E49C2F",

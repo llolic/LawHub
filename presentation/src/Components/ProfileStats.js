@@ -1,7 +1,8 @@
 import React from "react";
 import OverallStats from "./Stats/OverallStats";
-import SpeedStats from "./Stats/SpeedStats";
-import AccuracyStats from "./Stats/AccuracyStats";
+// import SpeedStats from "./Stats/SpeedStats";
+import History from "./Stats/History";
+// import AccuracyStats from "./Stats/AccuracyStats";
 import CategoryStats from "./Stats/CategoryStats";
 
 import Paper from "@material-ui/core/Paper";
@@ -17,7 +18,7 @@ class ProfileStats extends React.Component {
       userId: "userId",
       sessId: "sessId",
       userType: "student",
-      tab: 0
+      tab: 1
     };
   }
 
@@ -39,17 +40,20 @@ class ProfileStats extends React.Component {
             centered
           >
             <Tab label="Overall" />
-            <Tab label="Speed" />
-            <Tab label="Accuracy" />
+            <Tab label="History" />
+            {/* <Tab label="Speed" /> */}
+            {/* <Tab label="Accuracy" /> */}
             <Tab label="Categories" />
           </Tabs>
         </Paper>
 
         <OverallStats tab={this.state.tab} />
 
-        <SpeedStats tab={this.state.tab} />
+        <History tab={this.state.tab} />
 
-        <AccuracyStats tab={this.state.tab} />
+        {/* <SpeedStats tab={this.state.tab} /> */}
+
+        {/* <AccuracyStats tab={this.state.tab} /> */}
 
         <CategoryStats tab={this.state.tab} />
       </div>

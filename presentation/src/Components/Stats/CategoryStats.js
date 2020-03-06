@@ -23,9 +23,9 @@ class CategoryStats extends React.Component {
         <Typography
         component="div"
         role="tabpanel"
-        hidden={3 !== this.props.tab}
+        hidden={2 !== this.props.tab}
       >
-        {3 === this.props.tab && (
+        {2 === this.props.tab && (
           <Box p={3}>
             <RadarChart
               outerRadius={120}
