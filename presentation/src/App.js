@@ -7,7 +7,7 @@ import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
 import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
-import StudentProfile from "./Components/StudentProfile";
+import EditProfile from "./Components/EditProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
 import Profile from "./Components/Profile.js";
 
@@ -106,7 +106,7 @@ class App extends React.Component {
             </Route> */}
 
             <Route path="/editProfile">
-              <StudentProfile />
+              <EditProfile />
             </Route>
 
 

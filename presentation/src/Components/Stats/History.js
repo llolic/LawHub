@@ -12,11 +12,59 @@ import "../../Styles/history.css"; //TODO
 
 class History extends React.Component {
 
+    componentWillMount() {
     // fetch user history here
+      // getUserHistory(this.props.sessId, this.props.uid).then(data => {
+        // this.setState({
+          // history: data
+        // });
+      // })
+      this.setState({
+        history: [
+          {
+            title: "Test Quiz",
+            date: "2020-03-03",
+            score: 84.9
+          },
+          {
+            title: "LSAT Mock Quiz",
+            date: "2020-03-01",
+            score: 65.2
+          },
+          {
+            title: "BAR Example Test Feb 2020",
+            date: "2020-02-27",
+            score: 79.2
+          },
+          {
+            title: "Criminal Law Quiz",
+            date: "2020-02-16",
+            score: 86.1
+          },
+          {
+            title: "Immigration Law",
+            date: "2020-02-09",
+            score: 100
+          },
+        ]
+      });
+    }
+
+    renderQuizHistories = () => {
+      let rows = [];
+      for (let i = 0; i < this.state.history.length; i++) {
+        rows.push(<QuizHistory className={`history_row_${i%2}`}
+        quizTitle={this.state.history[i].title}
+        date={this.state.history[i].date}
+        score={this.state.history[i].score}/>)
+      }
+      return rows;
+    }
 
     // use history stats here??
 
   render = () => {
+
     return (
       <Typography component="div" role="tabpanel" hidden={1 !== this.props.tab}>
         {1 === this.props.tab && (
@@ -33,37 +81,7 @@ class History extends React.Component {
                   <div className="center">Score</div>
                 </Grid>
               </Grid>
-              <QuizHistory
-                className="history_row_0"
-                quizTitle="Test Quiz"
-                date="2020-03-03"
-                score={84.9}
-              />
-              <QuizHistory
-                className="history_row_1"
-                quizTitle="LSAT Mock Quiz"
-                date="2020-03-01"
-                score={65.2}
-              />
-              <QuizHistory
-                className="history_row_0"
-                quizTitle="BAR Example Test Feb 2020"
-                date="2020-02-27"
-                score={79.2}
-              />
-
-              <QuizHistory
-                className="history_row_1"
-                quizTitle="Criminal Law Quiz"
-                date="2020-02-16"
-                score={86.1}
-              />
-              <QuizHistory
-                className="history_row_0"
-                quizTitle="Immigration Law"
-                date="2020-02-09"
-                score={100.0}
-              />
+              {this.renderQuizHistories()}
             </Grid>
           </Box>
         )}

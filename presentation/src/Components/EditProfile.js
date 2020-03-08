@@ -17,7 +17,7 @@ import "../Styles/studentprofile.css"; //TODO
  * Student Profile card for the student profile customization.
  * Includes logic to send/receive requests to the flask server
  */
-class StudentProfile extends React.Component {
+class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,72 +30,52 @@ class StudentProfile extends React.Component {
     };
   }
 
-  updateProfilePicturePath() { //TODO
-    alert("Just kidding, you can't upload pictures yet!")
+  updateProfilePicturePath() {
+    //TODO
+    alert("Just kidding, you can't upload pictures yet!");
   }
 
   updateResumePath() {
-      alert("Just kidding, you can't upload resumes yet!")
+    alert("Just kidding, you can't upload resumes yet!");
   }
 
-    // fetch user data...
-    componentWillMount() {
-      // fetchProfile(this.state.sessId, this.state.userId).then(result => {
-        // console.log(result);
-        // this.setState({
-        //   firstName: result.firstName,
-        //   lastName: result.lastName,
-        //   studyLevel: result.studyLevel,
-        //   school: result.school,
-        //   bio: result.bio,
-        //   city: result.city,
-        //   stateOrProvince: result.stateOrProvince,
-        //   country: result.country
-        // });
-        this.setState({
-          firstName: "Harry",
-          lastName: "Gunther",
-          studyLevel: "Undergraduate",
-          school: "Yale University",
-          bio: "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
-          city: "Hartford",
-          stateOrProvince: "Connecticut",
-          country: "United States"
-        });
-      // });
-    }
+  // fetch user data...
+  componentWillMount() {
+    // fetchProfile(this.state.sessId, this.state.userId).then(result => {
+    // console.log(result);
+    // this.setState({
+    //   firstName: result.firstName,
+    //   lastName: result.lastName,
+    //   studyLevel: result.studyLevel,
+    //   school: result.school,
+    //   bio: result.bio,
+    //   city: result.city,
+    //   stateOrProvince: result.stateOrProvince,
+    //   country: result.country
+    // });
+    this.setState({
+      firstName: "Harry",
+      lastName: "Gunther",
+      studyLevel: "Undergraduate",
+      school: "Yale University",
+      bio:
+        "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
+      city: "Hartford",
+      stateOrProvince: "Connecticut",
+      country: "United States"
+    });
+    // });
+  }
 
   submitStudentProfileUpdates = async () => {
     updateProfile(this.state).then(result => {
       if (result === false) {
         this.setState({ error: true });
-        
-        return
+
+        return;
       }
       this.setState({ submitted: true }); // change this later
-    })
-    // console.log("Attempting to update student profile");
-    // const response = fetch("http://104.196.152.154:5000/api/v1/editProfile/student", {
-    //   method: 'POST',
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(this.state)
-    // }).then(result => {
-    //   console.log(result)
-    // });
-
-    // if (response.ok) {
-    //   this.setState({ submitted: true }); // change this later
-    //   console.log("Successfully updated student profile");
-    // } else { 
-    //   //TODO: add different error cases
-    //     //400 BAD REQUEST if request body formatted incorrectly, string too long
-    //     //500 INTERNAL SERVER ERROR for internal error (db down)
-    //   this.setState({ error: true });
-    //   console.log("Failed to update student profile");
-    // }
-    // console.log(this.state);
+    });
   };
 
   render = () => {
@@ -104,18 +84,25 @@ class StudentProfile extends React.Component {
         <div className="card">
           <div className="subtitle">Customize Your Student Profile </div>
 
-            <div className = "center">
-                <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
-                
-            </div>
-            <div className="center">
-            <Button className="btn_yellow_small" text="Upload Picture" 
-                    onClick = {this.updateProfilePicturePath}
-                />
-                <Button className="btn_yellow_small" text="Upload Resume" 
-                    onClick = {this.updateResumePath}
-                />
-            </div>
+          <div className="center">
+            <img
+              src={profilePic}
+              alt="your pic here"
+              className="profile_img"
+            />
+          </div>
+          <div className="upload_row">
+            <Button
+              className="btn_yellow_small"
+              text="Upload Picture"
+              onClick={this.updateProfilePicturePath}
+            />
+            <Button
+              className="btn_yellow_small"
+              text="Upload Resume"
+              onClick={this.updateResumePath}
+            />
+          </div>
 
           <TextField
             id="firstname"
@@ -136,7 +123,7 @@ class StudentProfile extends React.Component {
             variant="outlined"
             onChange={e => this.setState({ lastName: e.target.value })}
           />
-{/* 
+          {/* 
           <TextField
             id="email"
             label="Email"
@@ -242,11 +229,19 @@ class StudentProfile extends React.Component {
             multiline
           />
 
-<div className="centerdiv">
-{ this.state.submitted && <div  style={{color: 'green'}}>Your changes have been saved.</div>}
-          { this.state.error && <div  style={{color: 'red'}}> Your changes could not be saved. Please try again.</div> }
-
-</div>
+          <div className="centerdiv">
+            {this.state.submitted && (
+              <div style={{ color: "green" }}>
+                Your changes have been saved.
+              </div>
+            )}
+            {this.state.error && (
+              <div style={{ color: "red" }}>
+                {" "}
+                Your changes could not be saved. Please try again.
+              </div>
+            )}
+          </div>
 
           <div className="centerdiv">
             <Button
@@ -261,4 +256,4 @@ class StudentProfile extends React.Component {
   };
 }
 
-export default StudentProfile;
+export default EditProfile;

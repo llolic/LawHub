@@ -18,7 +18,7 @@ class ProfileStats extends React.Component {
       userId: "userId",
       sessId: "sessId",
       userType: "student",
-      tab: 1
+      tab: 0
     };
   }
 
