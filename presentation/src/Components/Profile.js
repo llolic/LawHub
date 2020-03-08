@@ -21,8 +21,8 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "userId",
-      sessId: "sessId",
+      uid: this.props.uid,
+      sessId: this.props.sessId,
       userType: "student",
       profileId: "userId"
     };
