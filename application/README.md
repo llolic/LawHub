@@ -59,7 +59,7 @@ Endpoints:
     "message": string
 }
 ```
-*sessId* is a 256 bit unique token. userId and sessId must be sent with every subsequent request.
+*sessId* is a 256 bit unique token. uid and sessId must be sent with every subsequent request.
 *message* is a potentially empty string.
 
 # POST /api/v1/editProfile/student
@@ -219,8 +219,6 @@ where *correct* is number of correct answers and *numMultChoice* is the number o
 ```
 where *message* is potentially an empty string
 
-
-
 # POST /api/v1/verifyUser
 
 **Request Body**
@@ -240,5 +238,149 @@ where *message* is potentially an empty string
 {
     "message": string
 }
+```
 
+# POST /api/v1/fetchQuizScores
+
+**Request Body**
+```json
+{
+    "sessId": string,
+    "quizId": int,
+    "numScores": int
+}
+```
+where *numScores* indicates how many scores to return. A *numScores* of 0 indicates a request for all scores for the given quiz.
+
+**Response**
+
+    - 200 OK if quiz scores exist
+    - 400 if no scores found
+    
+**Response Body**
+```json
+{
+    "quizName": string,
+    "scores": [ 
+            {
+                "uid": int, 
+                "userName": string, 
+                "score": int
+            } 
+                ]
+}
+```
+
+# POST /api/v1/filterQuizzes
+
+**Request Body**
+```json
+{
+    "sessId": string,
+    "author": string,
+    "tags": list of strings,
+    "quizName": string
+}
+```
+
+**Response**
+
+    - 200 OK if quizzes found
+    - 400 if no quizzes found
+    
+**Response Body**
+```json
+{
+    "quizId": int,
+    "quizName": string,
+    "numQuestions": int
+}
+```
+
+# POST /api/v1/filterStudents
+
+**Request Body**
+```json
+{
+    "firstName": string,
+    "lastName": string,
+    "studyLevel": int,
+    "school": string,
+    "country": string,
+    "state": string,
+    "city": string
+}
+```
+where *name* is first name and last name separated by a space
+
+**Response**
+
+    - 200 OK if students found
+    - 400 if no students found
+    
+**Response Body**
+```json
+{
+    "uid": int,
+    "studentName": string,
+}
+```
+
+# POST /api/v1/getUserHistory
+
+**Request Body**
+```json
+{
+    "sessId": string, 
+    "uid": int, 
+    "numScores": int
+}
+```
+
+**Response**
+
+    - 200 OK if user history exist
+    - 400 if no history exists
+    
+**Response Body**
+```json
+{
+    "scores": [
+        {
+            "quizId": int, 
+            "quizName": string, 
+            "score": int
+        } 
+             ]
+}
+```
+
+# POST /api/v1/getUserInfo
+
+**Request Body**
+```json
+{
+    "sessId": string,
+    "uid": int
+}
+```
+
+**Response**
+
+    - 200 OK if user exists
+    - 400 if no info found
+    
+**Response Body**
+```json
+{
+    "firstName": string, 
+    "lastName": string, 
+    "studyLevel": int, 
+    "school": string, 
+    "bio": string, 
+    "city": string, 
+    "stateOrProvince": string, 
+    "country": string
+}
+```
 
