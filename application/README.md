@@ -291,9 +291,13 @@ where *numScores* indicates how many scores to return. A *numScores* of 0 indica
 **Response Body**
 ```json
 {
-    "quizId": int,
-    "quizName": string,
-    "numQuestions": int
+    "matches": [
+        {
+            "quizId": int,
+            "quizName": string,
+            "numQuestions": int
+        }
+    ]
 }
 ```
 
@@ -321,8 +325,12 @@ where *name* is first name and last name separated by a space
 **Response Body**
 ```json
 {
-    "uid": int,
-    "studentName": string,
+    "matches": [
+        {
+            "uid": int,
+            "studentName": string
+        }
+    ]
 }
 ```
 
