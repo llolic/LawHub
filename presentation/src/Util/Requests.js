@@ -89,9 +89,10 @@ export const verifyUser = async (sessId, userId) => {
   });
 }
 
-export const fetchProfile = async (sessId, userId) => {
+// fetches user data, no quiz data
+export const getUserInfo = async (sessId, userId) => {
   // var jsonObj = { sessId: sessId, userId: userId };
-  return fetch(`http://${path}:5000/api/v1/getProfile?sessId=${sessId}&userId=${userId}`, {
+  return fetch(`http://${path}:5000/api/v1/getUserInfo?sessId=${sessId}&userId=${userId}`, {
     method: "GET", // ??
     headers: {
       "Content-Type": "application/json"
@@ -118,9 +119,10 @@ export const updateProfile = async (state) => {
 
 }
 
+// FOR QUIZ HISTORY tab in profile
 export const getUserHistory = async (sessId, userId) => {
   // var jsonObj = { sessId: sessId, userId: userId };
-  return fetch(`http://${path}:5000/api/v1/getProfile?sessId=${sessId}&userId=${userId}`, {
+  return fetch(`http://${path}:5000/api/v1/getUserInfo?sessId=${sessId}&userId=${userId}`, {
     method: "GET", // ??
     headers: {
       "Content-Type": "application/json"

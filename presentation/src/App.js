@@ -11,6 +11,7 @@ import EditProfile from "./Components/EditProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
 import Profile from "./Components/Profile";
 import Leaderboard from "./Components/Leaderboard";
+import QuizLeaderboard from "./Components/QuizLeaderboard";
 
 import { isAuthenticated } from "./Util/Auth";
 
@@ -80,6 +81,11 @@ class App extends React.Component {
             <Route path="/takeQuiz">
               <TakeQuiz />
             </Route>
+
+            <Route path="/quizLeaderboard">
+              <QuizLeaderboard />
+            </Route>
+
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
