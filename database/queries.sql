@@ -1,0 +1,2 @@
+-- LAM-10: Filter students
+SELECT AppUser.uid, firstName, lastName FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE studyLevel={} OR school={} OR country={} OR stateOrProvince={} OR city={};
