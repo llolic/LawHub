@@ -158,3 +158,31 @@ def submitEmptyQuiz(userId, quizId):
 	except:
 		return -1
 	return 1
+
+def queryQuestions():
+	db = database_mysql.DatabaseMySql()
+	query = "SELECT * FROM Question;"
+	try:
+		db.connect()
+		rows = db.execute(query)
+		db.close_connection()
+	except:
+		return -1
+
+	if rows == []:
+		return 0
+
+	questions = []
+	for row in rows:
+		question = {}
+		question['questionId'] = row[0]
+		question['question'] = row[1]
+		question['questionType'] = row[2]
+		question['option1'] = row[3]
+		question['option2'] = row[4]
+		question['option3'] = row[5]
+		question['option4'] = row[6]
+		question['correctAnswer'] = row[7]
+		questions.append(question)
+
+	return questions
