@@ -1,4 +1,4 @@
-# Sprint 1 Planning meeting
+# Sprint 3 Planning meeting
 
 ### Sunday, March 1st, 2020
 
