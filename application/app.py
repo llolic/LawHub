@@ -213,7 +213,7 @@ class FilterStudents(Resource):
         if matches == 0: # no results found
             return {}, status.HTTP_400_BAD_REQUEST
         
-        return matches, status.HTTP_200_OK
+        return {"matches": matches}, status.HTTP_200_OK
 
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
