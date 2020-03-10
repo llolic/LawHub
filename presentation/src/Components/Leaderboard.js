@@ -29,7 +29,7 @@ const LeaderboardBar = props => {
     <svg height="300" width="1200">
 
       <rect x={x} y={y + 50} width={width} height={height} fill={fill} />
-      <text x={x + 3} y={y + 75}  fill="white" fontSize="28px" fontWeight="500">
+      <text x={x + (width / 2)} y={y + 80}  fill="white" fontSize="28px" fontWeight="500" textAnchor="middle">
         {name.toUpperCase()}
       </text>
     </svg>
