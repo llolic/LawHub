@@ -50,7 +50,7 @@ class Login(Resource):
         try:
             val = db.connect()
             #sanitize email input here, learn to escape the input
-            row = db.execute("SELECT uid, password FROM AppUser WHERE email = '{}'".format(args['email']))
+            row = db.execute("SELECT uid, password, role FROM AppUser WHERE email = '{}'".format(args['email']))
             db.close_connection()
         except:
             #return 500
@@ -60,11 +60,12 @@ class Login(Resource):
             return {}, status.HTTP_401_UNAUTHORIZED
         uid = row[0][0]
         password_hash = row[0][1]
+        role = row[0][2]
         if bcrypt.check_password_hash(password_hash.encode(), args['password']):
             #return 200 ok
             sessId = generate_auth_token()
             insert_auth_uid(uid, sessId)
-            return {"uid": uid, "sessId": sessId}
+            return {"uid": uid, "role": role, "sessId": sessId}
         
         #return 401 unauthorized
         return {}, status.HTTP_401_UNAUTHORIZED
