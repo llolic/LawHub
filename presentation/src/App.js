@@ -30,9 +30,9 @@ class App extends React.Component {
     };
   }
 
-  updateNavbar = (sessId, uid) => {
-    console.log("login successful", sessId, uid);
-    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, uid: uid }); // replace this?
+  updateNavbar = (sessId, uid, role) => {
+    console.log("login successful", sessId, uid, role);
+    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, uid: uid, userType: role }); // replace this?
     console.log(this.state);
   };
 

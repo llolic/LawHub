@@ -74,6 +74,7 @@ class StudentFilter extends React.Component {
         return
       }
       this.setState({ submitted: true }); // change this later
+      this.setState({ students: result.matches });
     })
   };
 

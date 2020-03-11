@@ -6,7 +6,7 @@ import {
   countries,
   stateprovinces
 } from "../Constants/registration";
-import { updateProfile } from "./Requests";
+import { updateProfile, getUserInfo } from "./Requests";
 import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
@@ -25,6 +25,8 @@ class StudentProfile extends React.Component {
       sessId: this.props.sessId,
       studyLevel: "",
       school: "",
+      country: "",
+      stateOrProvince: "",
       bio: "",
       profilePicturePath: "../Images/lawhub.png",
       resumePath: "",
@@ -39,6 +41,33 @@ class StudentProfile extends React.Component {
 
   updateResumePath() {
       alert("Just kidding, you can't upload resumes yet!")
+  }
+
+  componentWillMount() {
+    getUserInfo(this.state.uid).then(result => {
+    console.log(result);
+    this.setState({
+      firstName: result.firstName,
+      lastName: result.lastName,
+      studyLevel: result.studyLevel,
+      school: result.school,
+      bio: result.bio,
+      city: result.city,
+      stateOrProvince: result.stateOrProvince,
+      country: result.country
+    });
+    // this.setState({
+    //   firstName: "Harry",
+    //   lastName: "Gunther",
+    //   studyLevel: "Undergraduate",
+    //   school: "Yale University",
+    //   bio:
+    //     "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
+    //   city: "Hartford",
+    //   stateOrProvince: "Connecticut",
+    //   country: "United States"
+    // });
+    });
   }
 
   submitStudentProfileUpdates = async () => {
