@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 import ProfileStats from "./ProfileStats";
 
-import { fetchProfile } from "../Util/Requests";
+import { getUserInfo } from "../Util/Requests";
 
 import profilePic from "../Images/groot.jpg";
 
@@ -21,8 +21,8 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "userId",
-      sessId: "sessId",
+      // uid: this.props.uid,
+      // sessId: this.props.sessId,
       userType: "student",
       profileId: "userId"
     };
@@ -30,7 +30,7 @@ class Profile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    // fetchProfile(this.state.sessId, this.state.userId).then(result => {
+    // getUserInfo(this.props.uid).then(result => {
       // console.log(result);
       // this.setState({
       //   firstName: result.firstName,

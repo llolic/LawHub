@@ -1,6 +1,6 @@
 import React from "react";
 
-import QuizHistory from "./QuizHistory";
+import ChartRow from "./ChartRow";
 
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -14,7 +14,7 @@ class History extends React.Component {
 
     componentWillMount() {
     // fetch user history here
-      // getUserHistory(this.props.sessId, this.props.uid).then(data => {
+      // getUserHistory(this.props.uid).then(data => {
         // this.setState({
           // history: data
         // });
@@ -53,10 +53,11 @@ class History extends React.Component {
     renderQuizHistories = () => {
       let rows = [];
       for (let i = 0; i < this.state.history.length; i++) {
-        rows.push(<QuizHistory className={`history_row_${i%2}`}
+        rows.push(<ChartRow className={`history_row_${i%2}`}
         quizTitle={this.state.history[i].title}
         date={this.state.history[i].date}
-        score={this.state.history[i].score}/>)
+        score={this.state.history[i].score}
+        number={-1}/>)
       }
       return rows;
     }

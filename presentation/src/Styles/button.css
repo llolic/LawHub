@@ -85,6 +85,7 @@ button {
 }
 
 .btn_small_blk:hover {
-  color: rgb(32, 32, 32);
+  font-weight: 700;
+  color: rgb(18, 51, 122);
 }
   
