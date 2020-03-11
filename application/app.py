@@ -202,6 +202,35 @@ class VerifyUser(Resource):
             return {}, status.HTTP_200_OK
         return {}, status.HTTP_401_UNAUTHORIZED
 
+class FetchQuizScores(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['quizId', 'numScores'])
+        args = parser.parse_args()
+        quizId = args['quizId']
+        numScores = args['numScores']
+        # return {'quizName': 'TestQuiz', 'scores': [{'uid': 0, 'userName': 'TestUser1', 'score': 5}, {'uid': 1, 'userName': 'TestUser2', 'score': 10}]}
+
+        quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
+        leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        try:
+            quizNameRows = db.execute(quizNameQuery)
+            leaderboardRows = db.execute(leaderboardQuery)
+        except:
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if quizNameRows == []:
+            return {}, status.HTTP_404_NOT_FOUND
+        
+        scores = []
+        for row in leaderboardRows:
+            scores.append({'uid': row[0], 'userName': row[2]+ " " + row[3], 'score': row[1]})
+        
+        return {'quizName': quizNameRows[0][0], 'scores': scores}, status.HTTP_200_OK
 
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
@@ -212,6 +241,7 @@ api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
+api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
 
 
 if __name__ == "__main__":
