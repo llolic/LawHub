@@ -14,7 +14,7 @@ class History extends React.Component {
 
     componentWillMount() {
     // fetch user history here
-      // getUserHistory(this.props.sessId, this.props.uid).then(data => {
+      // getUserHistory(this.props.uid).then(data => {
         // this.setState({
           // history: data
         // });

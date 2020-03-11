@@ -1,20 +1,21 @@
 import React from "react";
 import LeaderboardChart from "./Stats/LeaderboardChart";
 
-import "../Styles/leaderboard.css"; //TODO
+import { fetchQuizScores } from "../Util/Requests";
 
+import "../Styles/leaderboard.css"; //TODO
 
 class QuizLeaderboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      uid: this.props.uid,
+      uid: this.props.uid, //prob dont need state here?
       sessId: this.props.sessId
     };
   }
   componentWillMount() {
     // fetch user history here
-      // getQuizHistory(this.props.sessId, this.props.uid, this.props.quizId).then(data => {
+      // fetchQuizScores(this.props.uid, this.props.quizId).then(data => {
         // this.setState({
           // history: data
         // });
@@ -55,7 +56,6 @@ class QuizLeaderboard extends React.Component {
     return (
       <div className="leaderboard_container">
         <div className="lb_title">{this.state.quizName} Leaderboard</div>
-
 
         <div>
         <LeaderboardChart

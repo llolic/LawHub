@@ -21,8 +21,8 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      uid: this.props.uid,
-      sessId: this.props.sessId,
+      // uid: this.props.uid,
+      // sessId: this.props.sessId,
       userType: "student",
       profileId: "userId"
     };
@@ -30,7 +30,7 @@ class Profile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    // getUserInfo(this.state.sessId, this.state.userId).then(result => {
+    // getUserInfo(this.props.uid).then(result => {
       // console.log(result);
       // this.setState({
       //   firstName: result.firstName,
