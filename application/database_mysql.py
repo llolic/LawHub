@@ -53,8 +53,8 @@ if __name__ == '__main__':
 
 	rows = db.execute(select_query)
 	print(rows)
-	for row in rows:
-		print(row)
+	# for row in rows:
+	# 	print(row)
 		# print(f"{row[0]}, {row[4]}")
 	db.close_connection()
 	
