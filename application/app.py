@@ -10,7 +10,7 @@ import database_lite
 import database_mysql
 import database_auth
 from helpers import *
-import query_helpers
+from query_helpers import *
 import sqlite3
 import json
 
@@ -157,19 +157,19 @@ class addQuiz(Resource):
         parser.add_argument('questions', action='append', type=dict) # to parse an argument as a list and convert the values to dicts
         args = parser.parse_args()
         
-        questionIds = query_helpers.addQuestions(args['questions']) # -> returns list of questionIds
+        questionIds = addQuestions(args['questions']) # -> returns list of questionIds
         if questionIds == -1:
             return {"message": "internal server error in addQuestions"}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
-        quizId = query_helpers.createQuiz(args['author'], args['title'], args['numQuestions'])
+        quizId = createQuiz(args['author'], args['title'], args['numQuestions'])
         if quizId == -1:
             return {"message": "internal server error in createQuiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         
-        retval = query_helpers.updateQuizContains(quizId, questionIds)
+        retval = updateQuizContains(quizId, questionIds)
         if retval == -1:
             return {"message": "internal server error in updateQuizContains"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         
-        retval = query_helpers.addTags(quizId, args['tags'])
+        retval = addTags(quizId, args['tags'])
         if retval == -1:
             return {"message": "internal server error in addTags"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         return {}, status.HTTP_200_OK
@@ -181,10 +181,10 @@ class SubmitQuiz(Resource):
         args = parser.parse_args()
 
         # if (int(args['score']) == 0):
-        #     retval = query_helpers.submitEmptyQuiz('userId', 'quizId')
+        #     retval = submitEmptyQuiz('userId', 'quizId')
         # else:
         score = int(args['correct']) / int(args['numMultChoice'])
-        retval = query_helpers.submitQuiz('uid', 'quizId', score)
+        retval = submitQuiz('uid', 'quizId', score)
 
         if (retval == -1):
             return {"message": "error submitting quiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -208,7 +208,7 @@ class FilterStudents(Resource):
         parser = reqparse.RequestParser()
         reqParser(parser, ['studyLevel', 'school', 'country', 'state', 'city'])
         args = parser.parse_args()
-        matches = query_helpers.queryStudent(args)
+        matches = queryStudent(args)
         if matches == -1: # error connecting to/querying the db
             return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
         if matches == 0: # no results found
