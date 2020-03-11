@@ -7,7 +7,7 @@ from flask_cors import CORS
 import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
-from database_mysql import *
+from database_mysql
 import database_auth
 from helpers import *
 import query_helpers
@@ -214,7 +214,7 @@ class FetchQuizScores(Resource):
         quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
         leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
 
-        db = DatabaseMySql()
+        db = database_auth.DatabaseMySql()
         db.connect()
 
         try:
@@ -225,12 +225,43 @@ class FetchQuizScores(Resource):
 
         if quizNameRows == []:
             return {}, status.HTTP_404_NOT_FOUND
-        
         scores = []
         for row in leaderboardRows:
             scores.append({'uid': row[0], 'userName': row[2]+ " " + row[3], 'score': row[1]})
         
         return {'quizName': quizNameRows[0][0], 'scores': scores}, status.HTTP_200_OK
+
+class GetUserHistory(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid', 'numScores'])
+        args = parser.parse_args()
+        uid = args['uid']
+        numScores = args['numScores']
+
+        db = database_auth.DatabaseMySql()
+        db.connect()
+
+        userHistoryQuery = f"SELECT QuizRecord.quizId, score, title FROM QuizRecord RIGHT JOIN Quiz ON QuizRecord.quizId=Quiz.quizId WHERE uid={uid} ORDER BY score DESC;"
+
+        try:
+            userHistoryRows = db.execute(userHistoryQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if userHistoryQuery == []:
+            return {}, status.HTTP_404_NOT_FOUND
+
+        scores = []
+        for row in userHistoryRows:
+            scores.append({'quizId': row[0], 'score': row[1], 'quizName': row[2]})
+
+        return {'scores': scores}, status.HTTP_200_OK
+
+
+
+
+
 
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
