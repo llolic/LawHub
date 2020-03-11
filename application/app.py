@@ -7,7 +7,7 @@ from flask_cors import CORS
 import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
-import database_mysql
+from database_mysql import *
 import database_auth
 from helpers import *
 import query_helpers
@@ -222,6 +222,9 @@ class FetchQuizScores(Resource):
             leaderboardRows = db.execute(leaderboardQuery)
         except:
             return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if quizNameRows == []:
+            return {}, status.HTTP_404_NOT_FOUND
         
         scores = []
         for row in leaderboardRows:
