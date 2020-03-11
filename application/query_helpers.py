@@ -158,3 +158,59 @@ def submitEmptyQuiz(userId, quizId):
 	except:
 		return -1
 	return 1
+
+def queryStudent(args):
+	study_level = args['studyLevel']
+	school = args['school']
+	country = args['country']
+	state = args['state']
+	city = args['city']
+
+	query = generateStudentQuery(study_level, school, country, state, city)
+	db = database_mysql.DatabaseMySql()
+	try:
+		db.connect()
+		rows = db.execute(query)
+		db.close_connection()
+	except:
+		return -1
+		
+	if rows == []:
+		return 0
+
+	matches = []
+	for row in rows:
+		match = {}
+		match["uid"] = row[0]
+		match["studentName"] = row[1] + " " + row[2]
+		matches.append(match)
+
+	return matches
+
+def generateStudentQuery(study_level, school, country, state, city):
+	add_and = False
+	query = "SELECT AppUser.uid, firstName, lastName FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE"
+	if study_level != "":
+		query += " studyLevel="+study_level
+		add_and = True
+	if school != "":
+		if add_and:
+			query+= " AND"
+		query += " school='"+school+"'"
+		add_and = True
+	if country != "":
+		if add_and:
+			query+= " AND"
+		query += " country='"+country+"'"
+		add_and = True
+	if state != "":
+		if add_and:
+			query+= " AND"
+		query += " stateOrProvince='"+state+"'"
+		add_and = True
+	# if city != "":
+	# 	if add_and:
+	# 		query+= " AND"
+	# 	query += " city='"+city+"'"
+	query += ";"
+	return query

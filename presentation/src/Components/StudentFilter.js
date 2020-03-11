@@ -6,18 +6,17 @@ import {
   countries,
   stateprovinces
 } from "../Constants/registration";
-import { updateProfile, getUserInfo } from "./Requests";
-import profilePic from "../Images/groot.jpg";
+import { filterStudents } from "./Requests"; 
 
 import { TextField, MenuItem } from "@material-ui/core";
 
-import "../Styles/studentprofile.css"; //TODO
+import "../Styles/studentfilter.css"; //TODO
 
 /**
- * Student Profile card for the student profile customization.
+ * Filter Students card for finding students using our platform
  * Includes logic to send/receive requests to the flask server
  */
-class StudentProfile extends React.Component {
+class StudentFilter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,112 +25,64 @@ class StudentProfile extends React.Component {
       studyLevel: "",
       school: "",
       country: "",
-      stateOrProvince: "",
-      bio: "",
-      profilePicturePath: "../Images/lawhub.png",
-      resumePath: "",
+      state: "",
+      city: "",
       submitted: false,
-      error: false
+      error: false,
+      students: [
+        {uid: 1, studentName: "Alfonso Dela Cruz"},
+        {uid: 2, studentName: "Ahmad Al-Taha"},
+        {uid: 3, studentName: "Lazar Lolic"},
+        {uid: 4, studentName: "Shahmeer Shahid"},
+        {uid: 5, studentName: "Michelle Luo"}
+      ] //TODO: hard coded
     };
   }
 
-  updateProfilePicturePath() { //TODO
-    alert("Just kidding, you can't upload pictures yet!")
+  //https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
+  createTable = () => {
+
+    let table = [];
+
+    let header = [];
+    header.push(<tr><th>User ID</th><th>Student Name</th></tr>)
+
+    table.push(header)
+
+    for (let i=0; i<this.state.students.length; i++) {
+
+      let children = []
+  
+      //note: {i}, not ${i} since $ is for string
+      children.push(<td>{this.state.students[i].uid}</td>)
+      children.push(<td>{this.state.students[i].studentName}</td>)
+      
+      table.push(<tr>{children}</tr>)
+
+    }
+
+    return table;
+
   }
 
-  updateResumePath() {
-      alert("Just kidding, you can't upload resumes yet!")
-  }
 
-  componentWillMount() {
-    getUserInfo(this.state.uid).then(result => {
-    console.log(result);
-    this.setState({
-      firstName: result.firstName,
-      lastName: result.lastName,
-      studyLevel: result.studyLevel,
-      school: result.school,
-      bio: result.bio,
-      city: result.city,
-      stateOrProvince: result.stateOrProvince,
-      country: result.country
-    });
-    // this.setState({
-    //   firstName: "Harry",
-    //   lastName: "Gunther",
-    //   studyLevel: "Undergraduate",
-    //   school: "Yale University",
-    //   bio:
-    //     "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
-    //   city: "Hartford",
-    //   stateOrProvince: "Connecticut",
-    //   country: "United States"
-    // });
-    });
-  }
-
-  submitStudentProfileUpdates = async () => {
-    updateProfile(this.state).then(result => {
+  submitStudentFilters = async () => {
+    filterStudents(this.state).then(result => {
       if (result === false) {
         this.setState({ error: true });
         
         return
       }
       this.setState({ submitted: true }); // change this later
+      this.setState({ students: result.matches });
     })
   };
 
   render = () => {
     return (
-      <div className="studentprofile_container">
+      <div className="studentfilter_container">
         <div className="card">
-          <div className="subtitle">Customize Your Student Profile </div>
-
-          
-
-            <div className = "center">
-                <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
-                
-            </div>
-            <div className="center">
-            <Button className="btn_yellow_small" text="Upload Picture" 
-                    onClick = {this.updateProfilePicturePath}
-                />
-                <Button className="btn_yellow_small" text="Upload Resume" 
-                    onClick = {this.updateResumePath}
-                />
-            </div>
-
-          <TextField
-            id="firstname"
-            label="First Name"
-            value={this.state.firstName}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ firstName: e.target.value })}
-          />
-
-          <TextField
-            id="lastname"
-            label="Last Name"
-            value={this.state.lastName}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ lastName: e.target.value })}
-          />
-{/* 
-          <TextField
-            id="email"
-            label="Email"
-            margin="normal"
-            value={this.state.email}
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ email: e.target.value })}
-            error={!this.state.email.includes("@") && this.state.email !== ""}
-          /> */}
+          <div className="subtitle"> Select filters below to narrow your search for students: </div>
 
           <div className="row">
             <div className="width-60">
@@ -224,34 +175,36 @@ class StudentProfile extends React.Component {
           </div>
 
           <TextField
-            id="bio"
-            label="About Me"
-            helperText="Feel free to enter your biography here"
-            value={this.state.bio}
+            id="city"
+            label="City"
+            helperText="City"
+            value={this.state.city}
             margin="normal"
             fullWidth
             variant="outlined"
-            onChange={e => this.setState({ bio: e.target.value })}
-            multiline
+            onChange={e => this.setState({ city: e.target.value })}
           />
 
-<div className="centerdiv">
-{ this.state.submitted && <div  style={{color: 'green'}}>Your changes have been saved.</div>}
-          { this.state.error && <div  style={{color: 'red'}}> Your changes could not be saved. Please try again.</div> }
-
-</div>
 
           <div className="centerdiv">
             <Button
               className="btn_blue"
-              text="Save Changes"
-              onClick={this.submitStudentProfileUpdates}
+              text="Filter Students"
+              onClick={this.submitStudentFilters}
             />
           </div>
+
+          <div className="centerdiv">
+              <table id="students">
+                  {this.createTable()}
+              </table>
+          </div>
+
+
         </div>
       </div>
     );
   };
 }
 
-export default StudentProfile;
+export default StudentFilter;

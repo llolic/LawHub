@@ -10,7 +10,7 @@ import database_lite
 import database_mysql
 import database_auth
 from helpers import *
-import query_helpers
+from query_helpers import *
 import sqlite3
 import json
 
@@ -50,7 +50,7 @@ class Login(Resource):
         try:
             val = db.connect()
             #sanitize email input here, learn to escape the input
-            row = db.execute("SELECT uid, password FROM AppUser WHERE email = '{}'".format(args['email']))
+            row = db.execute("SELECT uid, password, role FROM AppUser WHERE email = '{}'".format(args['email']))
             db.close_connection()
         except:
             #return 500
@@ -60,11 +60,12 @@ class Login(Resource):
             return {}, status.HTTP_401_UNAUTHORIZED
         uid = row[0][0]
         password_hash = row[0][1]
+        role = row[0][2]
         if bcrypt.check_password_hash(password_hash.encode(), args['password']):
             #return 200 ok
             sessId = generate_auth_token()
             insert_auth_uid(uid, sessId)
-            return {"uid": uid, "sessId": sessId}
+            return {"uid": uid, "role": role, "sessId": sessId}
         
         #return 401 unauthorized
         return {}, status.HTTP_401_UNAUTHORIZED
@@ -118,19 +119,26 @@ class RegisterRecruiter(Register):
         return super().post('Recruiter')
 
 class EditProfile(Resource):
-    def post(self, role, uid, args):
-        query = "UPDATE " + role + " SET "
+    def post(self, role, uid, role_args, appuser_args):
+        query_role = "UPDATE " + role + " SET "
+        for key in role_args.keys():
+            query_role += key + ' = "' + role_args[key] + '", '
+    
+        query_role = query_role[0:-2] #truncate extra comma and space
+        query_role += " WHERE uid = " + uid + ";"
 
-        for key in args.keys():
-            query += key + ' = "' + args[key] + '", '
+        query_user = "UPDATE AppUser SET "
+        for key in appuser_args.keys():
+            query_user += key + ' = "' + appuser_args[key] + '", '
         
-        query = query[0:-2] #truncate extra comma and space
-        query += " WHERE uid = " + uid + ";"
+        query_user = query_user[0:-2] #truncate extra comma and space
+        query_user += " WHERE uid = " + uid + ";"
 
         db = database_mysql.DatabaseMySql()
         try:
             db.connect()
-            db.execute(query)
+            db.execute(query_role)
+            db.execute(query_user)
             db.close_connection()
         except:
             #return 500
@@ -142,12 +150,20 @@ class EditProfile(Resource):
 
 class EditProfileStudent(EditProfile):
     def post(self):
-        parser = reqparse.RequestParser()
-        reqParser(parser, ['studyLevel', 'school', 'bio'])
-        args = parser.parse_args()
+        # create two different parsers to separate args needed to match the table they correspond to 
+        parser_role = reqparse.RequestParser() # role specific information
+        parser_user = reqparse.RequestParser() # general user information
+
+        reqParser(parser_role, ['studyLevel', 'school', 'bio'])
+        reqParser(parser_user, ['country', 'stateOrProvince'])
+
+        role_args = parser_role.parse_args()
+        appuser_args = parser_user.parse_args()
+
         parser.add_argument('uid', required=True, location='json')
         uid = parser.parse_args()['uid']
-        return super().post('Student', uid, args)
+        
+        return super().post('Student', uid, role_args, appuser_args)
 
 class addQuiz(Resource):
     def post(self):
@@ -156,19 +172,19 @@ class addQuiz(Resource):
         parser.add_argument('questions', action='append', type=dict) # to parse an argument as a list and convert the values to dicts
         args = parser.parse_args()
         
-        questionIds = query_helpers.addQuestions(args['questions']) # -> returns list of questionIds
+        questionIds = addQuestions(args['questions']) # -> returns list of questionIds
         if questionIds == -1:
             return {"message": "internal server error in addQuestions"}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
-        quizId = query_helpers.createQuiz(args['author'], args['title'], args['numQuestions'])
+        quizId = createQuiz(args['author'], args['title'], args['numQuestions'])
         if quizId == -1:
             return {"message": "internal server error in createQuiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         
-        retval = query_helpers.updateQuizContains(quizId, questionIds)
+        retval = updateQuizContains(quizId, questionIds)
         if retval == -1:
             return {"message": "internal server error in updateQuizContains"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         
-        retval = query_helpers.addTags(quizId, args['tags'])
+        retval = addTags(quizId, args['tags'])
         if retval == -1:
             return {"message": "internal server error in addTags"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         return {}, status.HTTP_200_OK
@@ -180,10 +196,10 @@ class SubmitQuiz(Resource):
         args = parser.parse_args()
 
         # if (int(args['score']) == 0):
-        #     retval = query_helpers.submitEmptyQuiz('userId', 'quizId')
+        #     retval = submitEmptyQuiz('userId', 'quizId')
         # else:
         score = int(args['correct']) / int(args['numMultChoice'])
-        retval = query_helpers.submitQuiz('uid', 'quizId', score)
+        retval = submitQuiz('uid', 'quizId', score)
 
         if (retval == -1):
             return {"message": "error submitting quiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -202,6 +218,18 @@ class VerifyUser(Resource):
             return {}, status.HTTP_200_OK
         return {}, status.HTTP_401_UNAUTHORIZED
 
+class FilterStudents(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['studyLevel', 'school', 'country', 'state'])
+        args = parser.parse_args()
+        matches = queryStudent(args)
+        if matches == -1: # error connecting to/querying the db
+            return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        if matches == 0: # no results found
+            return {}, status.HTTP_400_BAD_REQUEST
+        
+        return {"matches": matches}, status.HTTP_200_OK
 
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
@@ -212,6 +240,7 @@ api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
+api.add_resource(FilterStudents, '/api/v1/filterStudents')
 
 
 if __name__ == "__main__":
