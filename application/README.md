@@ -240,6 +240,61 @@ where *message* is potentially an empty string
 }
 ```
 
+# POST /api/v1/fetchQuiz
+
+**Request Body**
+```
+{
+    "sessId": string,
+    "quizId": int
+}
+```
+**Response**
+
+    - 200 OK if quizzes found
+    - 400 if no quizzes found
+    
+**Response Body**
+```
+{
+    "quizName",
+    "author",
+    "numQuestions",
+    "questions": [
+        {"questionType",
+         "question",
+          "answers": [strings],
+          "correct": 0} // index of correct answer
+    ]
+}
+```
+
+# POST /api/v1/fetchQuizList
+
+**Request Body**
+```
+{
+    "sessId": string
+}
+```
+**Response**
+
+    - 200 OK if quizzes found
+    - 400 if no quizzes found
+    
+**Response Body**
+```
+{
+    "quizzes": [
+        {
+            "quizId",
+            "quizName"
+        }
+    ],
+    "numQuizzes"
+}
+```
+
 # POST /api/v1/fetchQuizScores
 
 **Request Body**
