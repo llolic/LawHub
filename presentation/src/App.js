@@ -8,7 +8,7 @@ import Footer from "./Components/Footer";
 import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
 import StudentProfile from "./Components/StudentProfile";
-import StudentFilter from "./Components/StudentFilter";
+import QuizFilter from "./Components/QuizFilter";
 // import EmployerProfile from "./Components/EmployerProfile";
 
 import { isAuthenticated } from "./Components/Auth";
@@ -86,8 +86,11 @@ class App extends React.Component {
               <Registration type="recruiter" />
             </Route>
 
-            <Route path="/studentFilter">
-              <StudentFilter sessId={this.state.sessId} uid={this.state.uid} />
+
+
+
+            <Route path="/quizFilter">
+              <QuizFilter sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/successfulRegistration">

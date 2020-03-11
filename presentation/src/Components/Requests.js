@@ -4,9 +4,9 @@
 
 const path = "35.227.67.4";
 
-export const filterStudents = async state => {
+export const filterQuizzes = async state => {
 
-  return fetch(`http://${path}:5000/api/v1/filterStudents`, {
+  return fetch(`http://${path}:5000/api/v1/filterQuizzes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -14,7 +14,7 @@ export const filterStudents = async state => {
     body: JSON.stringify(state)
   }).then(result => {
     if (result.ok) {
-      state.students = result.json().matches;
+      state.quizzes = result.json().matches;
     } else {
       return false;
     }

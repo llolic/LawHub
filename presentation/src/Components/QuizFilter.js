@@ -1,40 +1,35 @@
 import React from "react";
 import Button from "./Button";
-import {
-  schools,
-  studyLevels,
-  countries,
-  stateprovinces
-} from "../Constants/registration";
-import { filterStudents } from "./Requests"; 
+import { filterQuizzes } from "./Requests"; 
 
-import { TextField, MenuItem } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
-import "../Styles/studentfilter.css"; //TODO
+import "../Styles/quizfilter.css"; 
 
 /**
- * Filter Students card for finding students using our platform
+ * Filter Quizzes card for finding quizzes using our platform
  * Includes logic to send/receive requests to the flask server
  */
-class StudentFilter extends React.Component {
+class QuizFilter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       uid: this.props.uid,
       sessId: this.props.sessId,
-      studyLevel: "",
-      school: "",
-      country: "",
-      state: "",
-      city: "",
+      quizName: "", 
+      author: "",
+      tag1: "",
+      tag2: "",
+      tag3: "",
+      //tags: [this.state.tag1, this.state.tag2, this.state.tag3], //TODO: default 3 empty strings, reference others?
       submitted: false,
       error: false,
-      students: [
-        {uid: 1, studentName: "Alfonso Dela Cruz"},
-        {uid: 2, studentName: "Ahmad Al-Taha"},
-        {uid: 3, studentName: "Lazar Lolic"},
-        {uid: 4, studentName: "Shahmeer Shahid"},
-        {uid: 5, studentName: "Michelle Luo"}
+      quizzes: [
+        {quizId: 1, quizName: "Quiz 1", numQuestions: 1},
+        {quizId: 2, quizName: "Quiz 2", numQuestions: 2},
+        {quizId: 3, quizName: "Quiz 3", numQuestions: 3},
+        {quizId: 4, quizName: "Quiz 4", numQuestions: 4},
+        {quizId: 5, quizName: "Quiz 5", numQuestions: 5}
       ] //TODO: hard coded
     };
   }
@@ -45,17 +40,18 @@ class StudentFilter extends React.Component {
     let table = [];
 
     let header = [];
-    header.push(<tr><th>User ID</th><th>Student Name</th></tr>)
+    header.push(<tr><th>Quiz ID</th><th>Quiz Name</th><th>Number of Questions</th></tr>)
 
     table.push(header)
 
-    for (let i=0; i<this.state.students.length; i++) {
+    for (let i=0; i<this.state.quizzes.length; i++) {
 
       let children = []
   
       //note: {i}, not ${i} since $ is for string
-      children.push(<td>{this.state.students[i].uid}</td>)
-      children.push(<td>{this.state.students[i].studentName}</td>)
+      children.push(<td>{this.state.quizzes[i].quizId}</td>)
+      children.push(<td>{this.state.quizzes[i].quizName}</td>)
+      children.push(<td>{this.state.quizzes[i].numQuestions}</td>)
       
       table.push(<tr>{children}</tr>)
 
@@ -66,8 +62,8 @@ class StudentFilter extends React.Component {
   }
 
 
-  submitStudentFilters = async () => {
-    filterStudents(this.state).then(result => {
+  submitQuizFilters = async () => {
+    filterQuizzes(this.state).then(result => {
       if (result === false) {
         this.setState({ error: true });
         
@@ -79,126 +75,78 @@ class StudentFilter extends React.Component {
 
   render = () => {
     return (
-      <div className="studentfilter_container">
+      <div className="quizfilter_container">
         <div className="card">
-          <div className="subtitle"> Select filters below to narrow your search for students: </div>
-
-          <div className="row">
-            <div className="width-60">
-              <TextField
-                id="school"
-                select
-                margin="normal"
-                label="Post-secondary Institution"
-                value={this.state.school}
-                onChange={e => this.setState({ school: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {schools.map(school => (
-                  <MenuItem key={school} value={school}>
-                    {school}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-
-            <div className="width-40">
-              <TextField
-                id="studyLevel"
-                select
-                margin="normal"
-                label="Level of Study"
-                value={this.state.studylvl}
-                onChange={e => this.setState({ studylvl: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
-                  <MenuItem key={option.index} value={option.value}>
-                    {option.value}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="width-50">
-              <TextField
-                id="country"
-                select
-                margin="normal"
-                label="Country"
-                value={this.state.country}
-                onChange={e => this.setState({ country: e.target.value })}
-                variant="outlined"
-                fullWidth
-              >
-                {countries.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-
-            <div className="width-50">
-              <TextField
-                id="state-province"
-                select
-                margin="normal"
-                label="State/Province"
-                value={this.state.stateOrProvince}
-                onChange={e =>
-                  this.setState({ stateOrProvince: e.target.value })
-                }
-                // value={studyLevels[this.state.studyLevel].value}
-                // onChange={e => this.setState({ studyLevel: e.target.key })} //e.target.key
-                variant="outlined"
-                fullWidth
-              >
-                {/* {studyLevels.map(option => ( //https://stackoverflow.com/questions/38364400/index-inside-map-function
-                  <MenuItem key={option.index} value={option.value}>
-                    {option.value}
-                  </MenuItem>
-                ))} */}
-
-                {stateprovinces.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-          </div>
+          <div className="subtitle"> Enter filters below to narrow your search for quizzes: </div>
 
           <TextField
-            id="city"
-            label="City"
-            helperText="City"
-            value={this.state.city}
+            id="quizName"
+            label="Quiz Name"
+            value={this.state.quizName}
             margin="normal"
             fullWidth
             variant="outlined"
-            onChange={e => this.setState({ city: e.target.value })}
+            onChange={e => this.setState({ quizName: e.target.value })}
+            multiline
           />
 
+          <TextField
+            id="author"
+            label="Quiz Author"
+            value={this.state.author}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ author: e.target.value })}
+            multiline
+          />
+
+          <TextField
+            id="tag1"
+            label="Quiz Tag 1"
+            value={this.state.tag1}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ tag1: e.target.value })}
+            multiline
+          />
+
+          <TextField
+            id="tag2"
+            label="Quiz Tag 2"
+            value={this.state.tag2}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ tag2: e.target.value })}
+            multiline
+          />
+
+          <TextField
+            id="tag3"
+            label="Quiz Tag 3"
+            value={this.state.tag1}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            onChange={e => this.setState({ tag3: e.target.value })}
+            multiline
+          />
 
           <div className="centerdiv">
             <Button
               className="btn_blue"
-              text="Filter Students"
-              onClick={this.submitStudentFilters}
+              text="Filter Quizzes"
+              onClick={this.submitQuizFilters}
             />
           </div>
 
           <div className="centerdiv">
-              <table id="students">
+              <table id="quizzes">
                   {this.createTable()}
               </table>
           </div>
-
 
         </div>
       </div>
@@ -206,7 +154,7 @@ class StudentFilter extends React.Component {
   };
 }
 
-export default StudentFilter;
+export default QuizFilter;
 
 
 
