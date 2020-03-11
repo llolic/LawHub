@@ -7,7 +7,7 @@ from flask_cors import CORS
 import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
-from database_mysql
+import database_mysql
 import database_auth
 from helpers import *
 import query_helpers
