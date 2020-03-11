@@ -202,6 +202,18 @@ class VerifyUser(Resource):
             return {}, status.HTTP_200_OK
         return {}, status.HTTP_401_UNAUTHORIZED
 
+class FilterStudents(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['studyLevel', 'school', 'country', 'state', 'city'])
+        args = parser.parse_args()
+        matches = query_helpers.queryStudent(args)
+        if matches == -1: # error connecting to/querying the db
+            return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        if matches == 0: # no results found
+            return {}, status.HTTP_400_BAD_REQUEST
+        
+        return {"matches": matches}, status.HTTP_200_OK
 
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
@@ -212,6 +224,7 @@ api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
+api.add_resource(FilterStudents, '/api/v1/filterStudents')
 
 
 if __name__ == "__main__":
