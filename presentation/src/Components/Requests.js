@@ -4,6 +4,54 @@
 
 const path = "35.227.67.4";
 
+export const filterStudents = async state => {
+
+  return fetch(`http://${path}:5000/api/v1/filterStudents`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(state)
+  }).then(result => {
+    if (result.ok) {
+      state.students = result.json().matches;
+    } else {
+      return false;
+    }
+  });
+
+} ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const submitRegistration = async (state, type) => {
   return fetch(`http://${path}:5000/api/v1/register/${type}`, {
     method: "POST",
