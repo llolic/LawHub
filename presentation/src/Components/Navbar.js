@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import Button from "./Button";
-import { removeAccessToken } from "./Auth";
+import { removeAccessToken } from "../Util/Auth";
 
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";

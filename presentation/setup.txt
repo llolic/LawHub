@@ -5,6 +5,7 @@ RUNNING CREATE-REACT-APP
 - npm install @material-ui/icons
 - npm install js-cookie *NEW*
 - npm install react-compound-timer *NEW*
+- npm install recharts *NEW*
 
 
 - go to presentation folder and run "npm start" 

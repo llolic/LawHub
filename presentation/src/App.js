@@ -7,10 +7,11 @@ import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
 import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
-import StudentProfile from "./Components/StudentProfile";
+import EditProfile from "./Components/EditProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
+import Profile from "./Components/Profile.js";
 
-import { isAuthenticated } from "./Components/Auth";
+import { isAuthenticated } from "./Util/Auth";
 
 import {
   BrowserRouter as Router,
@@ -38,6 +39,8 @@ class App extends React.Component {
   // need to update navbar after being unauthenticated
 
   render = () => {
+
+    
     return (
       <div className="container">
         <Router>
@@ -99,8 +102,13 @@ class App extends React.Component {
               <EmployerProfile />
             </Route> */}
 
+            <Route path="/editProfile">
+              <EditProfile />
+            </Route>
+
+
             <Route path="/studentProfile">
-              <StudentProfile sessId={this.state.sessId} uid={this.state.uid} />
+              <Profile sessId={this.state.sessId} uid={this.state.uid}/>
             </Route>
 
 

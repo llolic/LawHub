@@ -1,0 +1,39 @@
+.grid_header {
+    /* border-bottom: 2px solid rgb(0, 0, 0); */
+    padding: 0.5em;
+
+
+    font-style: bold;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.quiz_history_title {
+    padding-left: 1em;
+
+    font-style: bold;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.history_row_0 {
+    padding: 0.5em;
+    background-color: rgb(206, 219, 238);
+    border-radius: 8px;
+}
+
+.history_row_1 {
+    padding: 0.5em;
+    border-radius: 8px;
+    color: #446598;
+}
+
+.quiz_history_date {
+    text-align: center;
+
+}
+
+.quiz_history_score {
+    text-align: center;
+
+}

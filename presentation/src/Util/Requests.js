@@ -92,6 +92,20 @@ export const verifyUser = async (sessId, userId) => {
   });
 }
 
+export const fetchProfile = async (sessId, userId) => {
+  // var jsonObj = { sessId: sessId, userId: userId };
+  return fetch(`http://${path}:5000/api/v1/getProfile?sessId=${sessId}&userId=${userId}`, {
+    method: "GET", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    // body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
 
 export const updateProfile = async (state) => {
   console.log("Attempting to update student profile");
@@ -106,5 +120,21 @@ export const updateProfile = async (state) => {
   });
 
 }
+
+export const getUserHistory = async (sessId, userId) => {
+  // var jsonObj = { sessId: sessId, userId: userId };
+  return fetch(`http://${path}:5000/api/v1/getProfile?sessId=${sessId}&userId=${userId}`, {
+    method: "GET", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    // body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
+
 
 
