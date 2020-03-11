@@ -291,9 +291,13 @@ where *numScores* indicates how many scores to return. A *numScores* of 0 indica
 **Response Body**
 ```json
 {
-    "quizId": int,
-    "quizName": string,
-    "numQuestions": int
+    "matches": [
+        {
+            "quizId": int,
+            "quizName": string,
+            "numQuestions": int
+        }
+    ]
 }
 ```
 
@@ -321,8 +325,12 @@ where *name* is first name and last name separated by a space
 **Response Body**
 ```json
 {
-    "uid": int,
-    "studentName": string,
+    "matches": [
+        {
+            "uid": int,
+            "studentName": string
+        }
+    ]
 }
 ```
 
@@ -384,3 +392,36 @@ where *name* is first name and last name separated by a space
 }
 ```
 
+# POST /api/v1/fetchQuestions
+
+**Request Body**
+```json
+{
+
+}
+```
+A request body is not required for this request
+
+**Response**
+
+    - 200 OK if questions found
+    - 400 if no questions found
+    - 500 for any server errors
+    
+**Response Body**
+```json
+{
+    "questions": [
+        {
+            "questionId": int,
+            "question": string,
+            "questionType": int,
+            "option1": string,
+            "option2": string,
+            "option3": string,
+            "option3": string,
+            "correctAnswer": int
+        }
+                ]
+}
+```

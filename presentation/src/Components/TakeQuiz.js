@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import QuizArea from "./QuizArea";
-import { submitQuizAnswers } from "./Requests";
+import { submitQuizAnswers } from "../Util/Requests";
 
 import { response } from "../Constants/quiz";
 
@@ -105,6 +105,29 @@ class TakeQuiz extends React.Component {
       }
     });
   };
+
+  // submitQuiz = async () => {
+  //   console.log("Attempting to submit quiz results");
+  //   const response = fetch("http://104.196.152.154:5000/api/v1/submitQuiz", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(this.state)
+  //   }).then(result => {
+  //     console.log(result);
+  //   });
+
+  //   if (response.ok) {
+  //     this.setState({ submitted: true }); // change this later
+  //     console.log("Successfully submitted quiz results");
+  //   } else {
+  //     // TODO: other error cases
+  //     this.setState({ error: true });
+  //     console.log("Failed to submit quiz results");
+  //   }
+  //   console.log(this.state);
+  // };
 
   render() {
     return (

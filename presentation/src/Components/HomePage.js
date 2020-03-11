@@ -66,7 +66,7 @@ class HomePage extends React.Component {
               Differentiate yourself from the crowd
               </div>
             <div className="center">
-              <img src={leaderboardImg} alt="stats" style={{ width: "60%" }} />
+              <img src={leaderboardImg} alt="stats" style={{ width: "100%" }} />
             </div>
             <div className="card_title_bot" style={{ textAlign: "center" }}>
               Climb the Leaderboard

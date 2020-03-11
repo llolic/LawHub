@@ -17,6 +17,7 @@ export const countries = ["United States", "Canada"];
 export const stateprovinces = [
   "Arizona",
   "California",
+  "Connecticut",
   "Florida",
   "Massachusetts",
   "Michigan",
