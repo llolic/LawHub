@@ -258,6 +258,35 @@ class GetUserHistory(Resource):
 
         return {'scores': scores}, status.HTTP_200_OK
 
+class GetUserInfo(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid'])
+        args = parser.parse_args()
+        uid = args['uid']
+
+        db = database_auth.DatabaseMySql()
+        db.connect()
+
+        userInfoQuery = f"SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, school FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE AppUser.uid={uid};"
+
+        try:
+            userInfoRows = db.execute(userInfoQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if userInfoQuery == []:
+            return {}, status.HTTP_404_NOT_FOUND
+
+
+        return {'firstName': userInfoRows[0],
+                'lastName': userInfoRows[1],
+                'email': userInfoRows[2],
+                'country': userInfoRows[3],
+                'stateOrProvince': userInfoRows[4],
+                'city': userInfoRows[5],
+                'studyLevel': userInfoRows[6],
+                'school': userInfoRows[7]}, status.HTTP_200_OK
 
 
 
