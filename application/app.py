@@ -7,7 +7,7 @@ from flask_cors import CORS
 import markdown, os
 # http://zetcode.com/python/bcrypt/ for bcrypt methods
 import database_lite
-from database_mysql import *
+import database_mysql
 import database_auth
 from helpers import *
 import query_helpers
@@ -214,7 +214,7 @@ class FetchQuizScores(Resource):
         quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
         leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
 
-        db = DatabaseMySql()
+        db = database_mysql.DatabaseMySql()
         db.connect()
 
         try:
