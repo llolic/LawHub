@@ -208,9 +208,9 @@ def generateStudentQuery(study_level, school, country, state, city):
 			query+= " AND"
 		query += " stateOrProvince='"+state+"'"
 		add_and = True
-	if city != "":
-		if add_and:
-			query+= " AND"
-		query += " city='"+city+"'"
+	# if city != "":
+	# 	if add_and:
+	# 		query+= " AND"
+	# 	query += " city='"+city+"'"
 	query += ";"
 	return query

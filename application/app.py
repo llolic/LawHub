@@ -119,19 +119,26 @@ class RegisterRecruiter(Register):
         return super().post('Recruiter')
 
 class EditProfile(Resource):
-    def post(self, role, uid, args):
-        query = "UPDATE " + role + " SET "
+    def post(self, role, uid, role_args, appuser_args):
+        query_role = "UPDATE " + role + " SET "
+        for key in role_args.keys():
+            query_role += key + ' = "' + role_args[key] + '", '
+    
+        query_role = query_role[0:-2] #truncate extra comma and space
+        query_role += " WHERE uid = " + uid + ";"
 
-        for key in args.keys():
-            query += key + ' = "' + args[key] + '", '
+        query_user = "UPDATE AppUser SET "
+        for key in appuser_args.keys():
+            query_user += key + ' = "' + appuser_args[key] + '", '
         
-        query = query[0:-2] #truncate extra comma and space
-        query += " WHERE uid = " + uid + ";"
+        query_user = query_user[0:-2] #truncate extra comma and space
+        query_user += " WHERE uid = " + uid + ";"
 
         db = database_mysql.DatabaseMySql()
         try:
             db.connect()
-            db.execute(query)
+            db.execute(query_role)
+            db.execute(query_user)
             db.close_connection()
         except:
             #return 500
@@ -143,12 +150,20 @@ class EditProfile(Resource):
 
 class EditProfileStudent(EditProfile):
     def post(self):
-        parser = reqparse.RequestParser()
-        reqParser(parser, ['studyLevel', 'school', 'bio'])
-        args = parser.parse_args()
+        # create two different parsers to separate args needed to match the table they correspond to 
+        parser_role = reqparse.RequestParser() # role specific information
+        parser_user = reqparse.RequestParser() # general user information
+
+        reqParser(parser_role, ['studyLevel', 'school', 'bio'])
+        reqParser(parser_user, ['country', 'stateOrProvince'])
+
+        role_args = parser_role.parse_args()
+        appuser_args = parser_user.parse_args()
+
         parser.add_argument('uid', required=True, location='json')
         uid = parser.parse_args()['uid']
-        return super().post('Student', uid, args)
+        
+        return super().post('Student', uid, role_args, appuser_args)
 
 class addQuiz(Resource):
     def post(self):
@@ -206,7 +221,7 @@ class VerifyUser(Resource):
 class FilterStudents(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        reqParser(parser, ['studyLevel', 'school', 'country', 'state', 'city'])
+        reqParser(parser, ['studyLevel', 'school', 'country', 'state'])
         args = parser.parse_args()
         matches = queryStudent(args)
         if matches == -1: # error connecting to/querying the db
