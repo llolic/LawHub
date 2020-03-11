@@ -19,6 +19,7 @@ class Login extends React.Component {
     };
   }
 
+
   handleSubmit = () => {
     // DEMO 
     // this.setState({ loginState: 1 });
@@ -31,7 +32,7 @@ class Login extends React.Component {
         console.log(result);
         this.setState({ loginState: 1 });
         authenticate(result.sessId);
-        this.props.updateNavbar(result.sessId, result.uid); // add recruiter/student here
+        this.props.updateNavbar(result.sessId, result.uid, result.role); // add recruiter/student here
       } else {
         this.setState({ loginState: -1 });
       }
@@ -47,6 +48,7 @@ class Login extends React.Component {
       <div className="login_container">
         <div className="card">
           <div className="subtitle">LawHub Account Login</div>
+
 
           <TextField
             id="email"
@@ -83,7 +85,6 @@ class Login extends React.Component {
               onClick={this.handleSubmit}
             />
           </div>
-
         </div>
       </div>
     );

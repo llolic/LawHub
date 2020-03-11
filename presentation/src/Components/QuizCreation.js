@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import { submitQuiz } from "./Requests";
+import { submitNewQuiz } from "./Requests";
 
 import {
   TextField,
@@ -21,6 +21,7 @@ class QuizCreation extends React.Component {
     this.state = {
       title: "",
       author: this.props.uid,
+      sessId: this.props.sessId,
       tags: "", // backend parses this by splitting commas
       numQuestions: 3,
       questions: [
@@ -46,6 +47,7 @@ class QuizCreation extends React.Component {
       submitted: 0,
       missingFields: false,
       authorized: true,
+      // sessId
     };
   }
 
@@ -60,7 +62,7 @@ class QuizCreation extends React.Component {
       return;
     }
     this.setState({ missingFields: false });
-    submitQuiz(this.state).then(result => {
+    submitNewQuiz(this.state).then(result => {
       if (result === true) {
         this.setState({ submitted: 1 });
       } else {

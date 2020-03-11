@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import QuizArea from "./QuizArea";
+import { submitQuizAnswers } from "./Requests";
 
 import { response } from "../Constants/quiz";
 
@@ -19,10 +20,11 @@ class TakeQuiz extends React.Component {
     super(props);
 
     this.state = {
-      userId: "userId",
-      quizId: "quiz1",
+      uid: this.props.uid,
+      sessId: this.props.sessId,
+      quizId: 16, // for testing
       title: response.title,
-      user_answers: [], //TODO
+      userAnswers: [], //TODO
       curr_answer: "",
       current: 0,
       dataSet: response.questions,
@@ -32,7 +34,7 @@ class TakeQuiz extends React.Component {
       numMultChoice: 0, //TODO
       done: false,
       submitted: false,
-      error: false
+      error: false,
     };
 
     // this.handleClick = this.handleClick.bind(this);
@@ -40,25 +42,21 @@ class TakeQuiz extends React.Component {
 
   addAnswerToList = choice => {
     this.setState({ curr_answer: choice });
-    //console.log(choice)
-    //console.log(this.state.curr_answer)
-    const new_arr = this.state.user_answers.concat(choice); //TODO: user_answers, const
+    var temp = {answer: choice,
+                questionId: this.state.dataSet[this.state.current].questionId,
+                questionType: this.state.dataSet[this.state.current].questionType}
+    const new_arr = this.state.userAnswers.concat(temp); //TODO: user_answers, const
     //console.log(this.state.user_answers)
-    this.setState({ user_answers: new_arr }, () => {
+    this.setState({ userAnswers: new_arr }, () => {
       //TODO: callbacks to guarantee since async
-      console.log(this.state.user_answers);
     }); //Bracket placements
-    //console.log(new_arr)
 
     this.setState({ current: this.state.current + 1 });
     this.setState({ numMultChoice: this.state.numMultChoice + 1 }); // TODO
     console.log(this.state.numMultChoice);
-    //console.log(this.state.curr_answer)
   };
 
   handleClick = choice => {
-    console.log(this.state.current);
-    console.log(this.state.numQs);
     if (this.state.dataSet[this.state.current].questionType === "0") {
       // if we have a quiz
       if (choice === this.state.dataSet[this.state.current].correct) {
@@ -70,7 +68,7 @@ class TakeQuiz extends React.Component {
       if (this.state.current === this.state.numQs) {
         this.addAnswerToList(choice); //TODO: final add
         this.setState({ done: true });
-        this.submitQuiz();
+        this.handleSubmit();
       } else {
         //TODO
         this.addAnswerToList(choice);
@@ -81,45 +79,31 @@ class TakeQuiz extends React.Component {
     } else if (this.state.dataSet[this.state.current].questionType === "1") {
       //we have an open response
       //this.setState({curr_answer: choice})
-      //console.log(choice)
-      //console.log(this.state.curr_answer)
       if (this.state.current === this.state.numQs) {
         this.setState({ done: true });
-        this.submitQuiz();
+        this.handleSubmit();
       } else {
         //const new_arr = this.state.user_answers.push(this.state.curr_answer)
-        const new_arr = this.state.user_answers.concat(this.state.curr_answer); //TODO: user_answers, const
-        //console.log(this.state.user_answers)
-        this.setState({ user_answers: new_arr }, () => {
-          //TODO: callbacks to guarantee since async
-          // console.log(this.state.user_answers);
+        var temp = {answer: choice,
+                    questionId: this.state.dataSet[this.state.current].questionId,
+                    questionType: this.state.dataSet[this.state.current].questionType}
+        const new_arr = this.state.userAnswers.push(temp); //TODO: user_answers, const
+        this.setState({ userAnswers: new_arr }, () => {
         }); //Bracket placements
         this.setState({ current: this.state.current + 1, curr_answer: "" });
       }
     }
   };
 
-  submitQuiz = async () => {
-    console.log("Attempting to submit quiz results");
-    const response = fetch("http://104.196.152.154:5000/api/v1/submitQuiz", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    }).then(result => {
-      console.log(result);
+  handleSubmit = () => {
+    submitQuizAnswers(this.state).then(result => {
+      // may want to change this?
+      if (result === true) {
+        this.setState({ submitted: true });
+      } else {
+        this.setState({ error: true });
+      }
     });
-
-    if (response.ok) {
-      this.setState({ submitted: true }); // change this later
-      console.log("Successfully submitted quiz results");
-    } else {
-      // TODO: other error cases
-      this.setState({ error: true });
-      console.log("Failed to submit quiz results");
-    }
-    console.log(this.state);
   };
 
   render() {
@@ -146,7 +130,7 @@ class TakeQuiz extends React.Component {
                   <Button
                     className="btn_blue"
                     text="Submit Results"
-                    onClick={this.submitQuiz}
+                    onClick={this.handleSubmit}
                   />
                 </div>
                 </div>
