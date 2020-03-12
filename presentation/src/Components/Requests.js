@@ -14,7 +14,9 @@ export const filterQuizzes = async state => {
     body: JSON.stringify(state)
   }).then(result => {
     if (result.ok) {
-      state.quizzes = result.json().matches;
+      console.log(JSON.stringify(state));
+      //state.quizzes = result.json().matches;
+      return result.json();
     } else {
       return false;
     }

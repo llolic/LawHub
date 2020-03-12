@@ -21,7 +21,7 @@ class QuizFilter extends React.Component {
       tag1: "",
       tag2: "",
       tag3: "",
-      //tags: [this.state.tag1, this.state.tag2, this.state.tag3], //TODO: default 3 empty strings, reference others?
+      tags: [], //TODO: default 3 empty strings, reference others?
       submitted: false,
       error: false,
       quizzes: [
@@ -63,6 +63,19 @@ class QuizFilter extends React.Component {
 
 
   submitQuizFilters = async () => {
+    const new_arr = [];
+    new_arr.push(this.state.tag1);
+    new_arr.push(this.state.tag2);
+    new_arr.push(this.state.tag3);
+    this.setState({ tags: new_arr }, () => {
+      console.log(this.state.tags);
+      //TODO: callbacks to guarantee since async
+    }); //Bracket placements
+
+    
+
+
+
     filterQuizzes(this.state).then(result => {
       if (result === false) {
         this.setState({ error: true });
@@ -70,6 +83,7 @@ class QuizFilter extends React.Component {
         return
       }
       this.setState({ submitted: true }); // change this later
+      this.setState({ quizzes: result.matches });
     })
   };
 
@@ -126,7 +140,7 @@ class QuizFilter extends React.Component {
           <TextField
             id="tag3"
             label="Quiz Tag 3"
-            value={this.state.tag1}
+            value={this.state.tag3}
             margin="normal"
             fullWidth
             variant="outlined"
