@@ -7,11 +7,14 @@ import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
 import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
-import StudentProfile from "./Components/StudentProfile";
 import StudentFilter from "./Components/StudentFilter";
+import EditProfile from "./Components/EditProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
+import Profile from "./Components/Profile";
+import Leaderboard from "./Components/Leaderboard";
+import QuizLeaderboard from "./Components/QuizLeaderboard";
 
-import { isAuthenticated } from "./Components/Auth";
+import { isAuthenticated } from "./Util/Auth";
 
 import {
   BrowserRouter as Router,
@@ -39,6 +42,8 @@ class App extends React.Component {
   // need to update navbar after being unauthenticated
 
   render = () => {
+
+    
     return (
       <div className="container">
         <Router>
@@ -56,7 +61,10 @@ class App extends React.Component {
               {/* dashboard (home after login) here */}
             </Route>
 
-            <Route path="/leaderboard">{/* leaderboard here */}</Route>
+            <Route path="/leaderboard">
+              <Leaderboard sessId={this.state.sessId}
+                uid={this.state.uid}/>
+            </Route>
 
             <Route path="/search">{/* search results here */}</Route>
 
@@ -71,6 +79,11 @@ class App extends React.Component {
             <Route path="/takeQuiz">
               <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
+
+            <Route path="/quizLeaderboard">
+              <QuizLeaderboard />
+            </Route>
+
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
@@ -104,8 +117,13 @@ class App extends React.Component {
               <EmployerProfile />
             </Route> */}
 
+            <Route path="/editProfile">
+              <EditProfile />
+            </Route>
+
+
             <Route path="/studentProfile">
-              <StudentProfile sessId={this.state.sessId} uid={this.state.uid} />
+              <Profile sessId={this.state.sessId} uid={this.state.uid}/>
             </Route>
 
 

@@ -147,7 +147,6 @@ export const fetchQuizScores = async (quizId, numScores) => {
   });
 }
 
-
 // POST /api/v1/filterQuizzes
 
 // POST /api/v1/filterStudents
@@ -186,9 +185,3 @@ export const getUserInfo = async (uid) => {
 }
 
 // POST /api/v1/fetchQuestions
-
-
-
-
-
-

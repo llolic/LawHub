@@ -30,7 +30,13 @@ class HomePage extends React.Component {
             </Grid>
 
             {this.props.loggedIn ?
-              <Grid item xs={12}/>
+              <Grid item xs={12}>
+                <div className="center">
+                <Link to="/studentFilter">
+                    <Button className="btn_yellow" text="FIND STUDENT" />
+                  </Link>
+                  </div>
+              </Grid>
               :
               <Grid item xs={12}>
                 <div className="center">
@@ -66,7 +72,7 @@ class HomePage extends React.Component {
               Differentiate yourself from the crowd
               </div>
             <div className="center">
-              <img src={leaderboardImg} alt="stats" style={{ width: "60%" }} />
+              <img src={leaderboardImg} alt="stats" style={{ width: "100%" }} />
             </div>
             <div className="card_title_bot" style={{ textAlign: "center" }}>
               Climb the Leaderboard
