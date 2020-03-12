@@ -20,27 +20,27 @@ class Mock extends React.Component {
   }
 
   clickCreate = () => {
-    // this.setState({ createQuiz: 1 });
-    // return;
-    verifyUser(this.props.sessId, this.props.uid).then(result => {
-      if (result === false) {
-        this.setState({ createQuiz: -1 });
-      } else {
-        this.setState({ createQuiz: 1 });
-      }
-    });
+    this.setState({ createQuiz: 1 });
+    return;
+    // verifyUser(this.props.sessId, this.props.uid).then(result => {
+    //   if (result === false) {
+    //     this.setState({ createQuiz: -1 });
+    //   } else {
+    //     this.setState({ createQuiz: 1 });
+    //   }
+    // });
   };
 
   clickStartQuiz = () => {
-    // this.setState({ startQuiz: 1 });
-    // return;
-    verifyUser(this.props.sessId, this.props.uid).then(result => {
-      if (result === false) {
-        this.setState({ startQuiz: -1 });
-      } else {
-        this.setState({ startQuiz: 1 });
-      }
-    });
+    this.setState({ startQuiz: 1 });
+    return;
+    // verifyUser(this.props.sessId, this.props.uid).then(result => {
+    //   if (result === false) {
+    //     this.setState({ startQuiz: -1 });
+    //   } else {
+    //     this.setState({ startQuiz: 1 });
+    //   }
+    // });
   };
 
   clickLeaderboard = () => {
