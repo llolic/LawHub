@@ -40,10 +40,11 @@ class App extends React.Component {
   };
 
   // need to update navbar after being unauthenticated
+  // Needs to refresh page?
+  // need to scroll to top on redirect?
 
   render = () => {
 
-    
     return (
       <div className="container">
         <Router>
