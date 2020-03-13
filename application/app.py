@@ -214,6 +214,7 @@ class FetchQuizScores(Resource):
         quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
         leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
 
+
         db = database_mysql.DatabaseMySql()
         db.connect()
 
@@ -225,12 +226,121 @@ class FetchQuizScores(Resource):
 
         if quizNameRows == []:
             return {}, status.HTTP_404_NOT_FOUND
-        
         scores = []
         for row in leaderboardRows:
             scores.append({'uid': row[0], 'userName': row[2]+ " " + row[3], 'score': row[1]})
         
         return {'quizName': quizNameRows[0][0], 'scores': scores}, status.HTTP_200_OK
+
+class GetUserHistory(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid', 'numScores'])
+        args = parser.parse_args()
+        uid = args['uid']
+        numScores = args['numScores']
+
+        db = database_auth.DatabaseMySql()
+        db.connect()
+
+        userHistoryQuery = f"SELECT QuizRecord.quizId, score, title FROM QuizRecord RIGHT JOIN Quiz ON QuizRecord.quizId=Quiz.quizId WHERE uid={uid} ORDER BY score DESC;"
+
+        try:
+            userHistoryRows = db.execute(userHistoryQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if userHistoryQuery == []:
+            return {}, status.HTTP_404_NOT_FOUND
+
+        scores = []
+        for row in userHistoryRows:
+            scores.append({'quizId': row[0], 'score': row[1], 'quizName': row[2]})
+
+        return {'scores': scores}, status.HTTP_200_OK
+
+class GetUserInfo(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid'])
+        args = parser.parse_args()
+        uid = args['uid']
+
+        db = database_auth.DatabaseMySql()
+        db.connect()
+
+        userInfoQuery = f"SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, school FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE AppUser.uid={uid};"
+
+        try:
+            userInfoRows = db.execute(userInfoQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if userInfoQuery == []:
+            return {}, status.HTTP_404_NOT_FOUND
+
+
+        return {'firstName': userInfoRows[0],
+                'lastName': userInfoRows[1],
+                'email': userInfoRows[2],
+                'country': userInfoRows[3],
+                'stateOrProvince': userInfoRows[4],
+                'city': userInfoRows[5],
+                'studyLevel': userInfoRows[6],
+                'school': userInfoRows[7]}, status.HTTP_200_OK
+
+
+class FilterQuizzes(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['quizName', 'author', 'tags'])
+        args = parser.parse_args()
+        quizName = args['quizName']
+        author = args['author']
+        tagsString = args['tags']
+
+        hasName = quizName != ""
+        hasAuthor = author != ""
+        hasTags = tagsString != ""
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        tags = []
+        if (hasTags):
+            for tag in tagsString.split(','):
+                tags.append(tag.strip())
+        
+        final_rows = set()
+        
+        if (hasName and hasAuthor and hasTags):
+            query = 'SELECT quizId, title, numQuestions FROM Quiz;'
+            rows = db.execute(query)
+            for row in rows:
+                final_rows.add(row)
+        else:
+            if (hasAuthor):
+                rows = db.execute(f'SELECT DISTINCT quizId, title, numQuestions FROM Quiz WHERE author={author}')
+                for row in rows:
+                    final_rows.add(row)
+            if (hasName):
+                rows = db.execute(f"SELECT DISTINCT quizId, title, numQuestions FROM Quiz WHERE title LIKE '%{quizName}%';")
+                for row in rows:
+                    final_rows.add(row)
+            if (hasTags):
+                query = f'SELECT DISTINCT Quiz.quizId, title, numQuestions FROM HasTags RIGHT JOIN Quiz ON HasTags.quizId=Quiz.quizId WHERE tag="{tags[0]}"'
+                for tag in tags[1:]:
+                    query += f' OR tag="{tag}"'
+                query += ';'
+                rows = db.execute(query)
+                for row in rows:
+                    final_rows.add(row)
+
+        retDict = {'matches': []}
+        for row in list(final_rows):
+            retDict['matches'].append({'quizId': row[0], 'quizName': row[1], 'numQuestions': row[2]})
+        return retDict
+
 
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
@@ -242,7 +352,7 @@ api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
 api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
-
-
+api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+    
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
