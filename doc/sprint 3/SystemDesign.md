@@ -285,6 +285,22 @@ Responsibilities | Receives a POST register request and parses the necessary arg
 Collaborators | Shahmeer
 -------------------------
 
+Class Name | fetchQuestions
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Receives a POST request with an empty body and responds with a json objects which is a list of question objects. Question objects are json objects that describe the question, the type of question (multiple choice or long answer), possible answers (if the question is multiple choice) and the correct answer (again, if the question is multiple choice).
+Collaborators | Ahmad
+-------------------------
+
+Class Name | FilterStudents
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Receives a POST request with various attributes of a student profile and responds with a json object which is a list of student objects. Student objects consist of student names and their user id. 
+Collaborators | Ahmad
+-------------------------
+
 
 ## Architecture
 
