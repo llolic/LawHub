@@ -26,6 +26,7 @@ class App extends React.Component {
       loggedIn: false,
       sessId: null,
       uid: null,
+      quizId: null,
       userType: "recruiter" //testing
     };
   }
@@ -35,6 +36,10 @@ class App extends React.Component {
     this.setState({ loggedIn: isAuthenticated(), sessId: sessId, uid: uid }); // replace this?
     console.log(this.state);
   };
+
+  updateQuizId = (quizId) => {
+    this.setState({ quizId: quizId });
+  }
 
   // need to update navbar after being unauthenticated
 
@@ -67,11 +72,12 @@ class App extends React.Component {
                 sessId={this.state.sessId}
                 uid={this.state.uid}
                 userType={this.state.userType}
+                updateQuizId={this.updateQuizId}
               />
             </Route>
 
             <Route path="/takeQuiz">
-              <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} />
+              <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} quizId={17}/>
             </Route>
 
             <Route path="/quizCreation">

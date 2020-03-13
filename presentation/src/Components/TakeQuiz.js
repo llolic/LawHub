@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import QuizArea from "./QuizArea";
-import { submitQuizAnswers } from "../Util/Requests";
+import { submitQuizAnswers, fetchQuiz } from "../Util/Requests";
 
 import { response } from "../Constants/quiz";
 
@@ -22,7 +22,7 @@ class TakeQuiz extends React.Component {
     this.state = {
       uid: this.props.uid,
       sessId: this.props.sessId,
-      quizId: 16, // for testing
+      quizId: this.props.quizId, // for testing
       title: response.title,
       userAnswers: [], //TODO
       curr_answer: "",
@@ -38,6 +38,18 @@ class TakeQuiz extends React.Component {
     };
 
     // this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentWillMount() {
+    fetchQuiz(this.props.quizId).then(result => {
+      console.log(result);
+      this.setState({
+        title: result.quizName,
+        dataSet: result.questions,
+        numQs: result.numQuestions - 1,
+        numMultChoice: result.numQuestions - 1
+      })
+    })
   }
 
   addAnswerToList = choice => {
@@ -57,7 +69,8 @@ class TakeQuiz extends React.Component {
   };
 
   handleClick = choice => {
-    if (this.state.dataSet[this.state.current].questionType === "0") {
+    console.log(this.state);
+    if (this.state.dataSet[this.state.current].questionType === 0) {
       // if we have a quiz
       if (choice === this.state.dataSet[this.state.current].correct) {
         this.setState({ correct: this.state.correct + 1 });
@@ -76,7 +89,8 @@ class TakeQuiz extends React.Component {
         //this.state.student_answers[this.state.current] = this.state.curr_answer;
         //this.setState({student_answers: [...this.state.student_answers, this.state.curr_answer]}) // TODO: https://stackoverflow.com/questions/26505064/what-is-the-best-way-to-add-a-value-to-an-array-in-state
       }
-    } else if (this.state.dataSet[this.state.current].questionType === "1") {
+    } 
+    else if (this.state.dataSet[this.state.current].questionType === "1") {
       //we have an open response
       //this.setState({curr_answer: choice})
       if (this.state.current === this.state.numQs) {
@@ -105,29 +119,6 @@ class TakeQuiz extends React.Component {
       }
     });
   };
-
-  // submitQuiz = async () => {
-  //   console.log("Attempting to submit quiz results");
-  //   const response = fetch("http://104.196.152.154:5000/api/v1/submitQuiz", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify(this.state)
-  //   }).then(result => {
-  //     console.log(result);
-  //   });
-
-  //   if (response.ok) {
-  //     this.setState({ submitted: true }); // change this later
-  //     console.log("Successfully submitted quiz results");
-  //   } else {
-  //     // TODO: other error cases
-  //     this.setState({ error: true });
-  //     console.log("Failed to submit quiz results");
-  //   }
-  //   console.log(this.state);
-  // };
 
   render() {
     return (

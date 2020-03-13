@@ -61,7 +61,7 @@ export const submitNewQuiz = async (state, sessId, userId) => {
 };
 
 export const submitQuizAnswers = async (state) => {
-  console.log("Attempting to submit quiz results");
+  console.log("Attempting to submit quiz results", state);
   return fetch(`http://${path}:5000/api/v1/submitQuiz`, {
     method: "POST",
     headers: {
@@ -135,6 +135,40 @@ export const getUserHistory = async (sessId, userId) => {
     return -1;
   });
 }
+
+
+export const getQuizzes = async () => {
+  // var jsonObj = { sessId: sessId, userId: userId };
+  return fetch(`http://${path}:5000/api/v1/fetchQuizList`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    // body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
+
+
+export const fetchQuiz = async (quizId) => {
+  var jsonObj = { quizId: quizId };
+  return fetch(`http://${path}:5000/api/v1/fetchQuiz`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
+
+
 
 
 

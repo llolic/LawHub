@@ -7,7 +7,7 @@ export const response = {
   questions: [
     {
       questionId: "q0",
-      questionType: "0", // 0 MC, 1 long answer TODO: string
+      questionType: 0, // 0 MC, 1 long answer TODO: string
       question:
         "A man sued a railroad for personal injuries suffered when his car was struck by a train at an unguarded crossing. A major issue is whether the train sounded its whistle before arriving at the crossing. The railroad has offered the testimony of a resident who has lived near the crossing for 15 years. Although she was not present on the occasion in question, she will testify that, whenever she is home, the train always sounds its whistle before arriving at the crossing. Is the resident’s testimony admissible?",
       answers: [

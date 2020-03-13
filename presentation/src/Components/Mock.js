@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "./Button";
-import { verifyUser } from "../Util/Requests";
+import { verifyUser, getQuizzes } from "../Util/Requests";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
 import "../Styles/mock.css";
@@ -13,13 +13,23 @@ class Mock extends React.Component {
     super(props);
     this.state = {
       createQuiz: 0,
-      startQuiz: 0
+      startQuiz: 0,
+      quizzes: []
     }
   }
 
+  componentWillMount() {
+    getQuizzes().then(result => {
+      console.log(result);
+      if (result !== -1) {
+        this.setState({ quizzes: result.quizzes});
+      }
+    })
+  }
+
   clickCreate = () => {
-    // this.setState({ createQuiz: 1 });
-    // return;
+    this.setState({ createQuiz: 1 });
+    return;
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ createQuiz: -1 });
@@ -31,8 +41,8 @@ class Mock extends React.Component {
   }
 
   clickStartQuiz = () => {
-    // this.setState({ startQuiz: 1 });
-    // return;
+    this.setState({ startQuiz: 1 });
+    return;
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ startQuiz: -1 });
@@ -41,6 +51,26 @@ class Mock extends React.Component {
         this.setState({ startQuiz: 1 });
       }
     })
+  }
+
+  renderQuizzes = () => {
+    var quizlist = [];
+    for (let i = 0; i < this.state.quizzes.length; i++) {
+      quizlist.push(
+        <Grid item xs={12} className="quiz_card">
+            <div className="quiz_row">
+      <div className="quiz_title">{this.state.quizzes[i].quizName}</div>
+              <Link to="/takeQuiz">
+              {/* SEND QUIZID IN START QUIZ */}
+              <Button className="btn_yellow_small" text="Start" 
+              // onClick={this.props.updateQuizId(this.state.quizzes[i].quizId)}
+              />
+              </Link>
+            </div>
+          </Grid>
+      )
+    }
+    return quizlist;
   }
 
   render = () => {
@@ -72,6 +102,7 @@ class Mock extends React.Component {
         </div>
 
         <Grid container spacing={3}>
+          {this.renderQuizzes()}
           <Grid item xs={12} className="quiz_card">
             <div className="quiz_row">
               <div className="quiz_title">Test Quiz</div>
