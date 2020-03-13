@@ -63,7 +63,7 @@ class QuizCreation extends React.Component {
 
   // Alfonso added============================================================================================================
   getQuizQuestions = () => {
-    fetchQuizQuestions(this.state).then(result => {
+    fetchQuizQuestions().then(result => {
       if (result !== -1) {
         this.setState({ response: result.questions });
       } else {
@@ -72,6 +72,7 @@ class QuizCreation extends React.Component {
     });
 
     // TODO: currently hard coded
+    /*
     var temp = [
       {
         questionId: 1,
@@ -105,12 +106,13 @@ class QuizCreation extends React.Component {
       }
     ];
     this.setState({ response: temp });
+    */
   };
 
   getQuestionDisplay = i => {
     let display = [];
     if (this.state.questions[i].questionType === "") {
-      display.push(<div>nothing</div>);
+      display.push(<div></div>);
       return display;
     }
     if (this.state.questions[i].questionType !== "2") {
@@ -215,7 +217,9 @@ class QuizCreation extends React.Component {
     var qs = this.state.questions;
     qs[qIndex].questionType = type;
     */
-    this.getQuizQuestions();
+    if (this.state.response.length === 0) {
+      this.getQuizQuestions();
+    }
     var temp = this.state.questions;
     temp[qIndex].questionType = type;
     this.setState({ questions: temp });
@@ -252,7 +256,8 @@ class QuizCreation extends React.Component {
           questionType: "",
           question: "",
           answers: ["", "", "", ""],
-          correct: 0
+          correct: 0,
+          questionId: -1
         });
       }
     }
@@ -265,12 +270,14 @@ class QuizCreation extends React.Component {
       return false;
     }
     for (let i = 0; i < this.state.numQuestions; i++) {
-      if (qs[i].questionType === "" || qs[i].question === "") {
-        return false;
-      }
-      for (let j = 0; j < 4; j++) {
-        if (qs[i].answers[j] === "") {
+      if (qs[i].questionType !== "2") {
+        if (qs[i].questionType === "" || qs[i].question === "") {
           return false;
+        }
+        for (let j = 0; j < 4; j++) {
+          if (qs[i].answers[j] === "") {
+            return false;
+          }
         }
       }
     }
