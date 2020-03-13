@@ -63,7 +63,7 @@ class Login(Resource):
         if bcrypt.check_password_hash(password_hash.encode(), args['password']):
             #return 200 ok
             sessId = generate_auth_token()
-            insert_auth_uid(uid, sessId)
+            # insert_auth_uid(uid, sessId)
             return {"uid": uid, "sessId": sessId}
         
         #return 401 unauthorized
@@ -156,19 +156,19 @@ class addQuiz(Resource):
         parser.add_argument('questions', action='append', type=dict) # to parse an argument as a list and convert the values to dicts
         args = parser.parse_args()
         
-        questionIds = query_helpers.addQuestions(args['questions']) # -> returns list of questionIds
+        questionIds = addQuestions(args['questions']) # -> returns list of questionIds
         if questionIds == -1:
             return {"message": "internal server error in addQuestions"}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
-        quizId = query_helpers.createQuiz(args['author'], args['title'], args['numQuestions'])
+        quizId = createQuiz(args['author'], args['title'], args['numQuestions'])
         if quizId == -1:
             return {"message": "internal server error in createQuiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         
-        retval = query_helpers.updateQuizContains(quizId, questionIds)
+        retval = updateQuizContains(quizId, questionIds)
         if retval == -1:
             return {"message": "internal server error in updateQuizContains"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         
-        retval = query_helpers.addTags(quizId, args['tags'])
+        retval = addTags(quizId, args['tags'])
         if retval == -1:
             return {"message": "internal server error in addTags"}, status.HTTP_500_INTERNAL_SERVER_ERROR
         return {}, status.HTTP_200_OK
@@ -180,10 +180,10 @@ class SubmitQuiz(Resource):
         args = parser.parse_args()
 
         # if (int(args['score']) == 0):
-        #     retval = query_helpers.submitEmptyQuiz('userId', 'quizId')
+        #     retval = submitEmptyQuiz('userId', 'quizId')
         # else:
         score = int(args['correct']) / int(args['numMultChoice'])
-        retval = query_helpers.submitQuiz('uid', 'quizId', score)
+        retval = submitQuiz('uid', 'quizId', score)
 
         if (retval == -1):
             return {"message": "error submitting quiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -242,7 +242,7 @@ class FetchQuiz(Resource):
         db.connect()
 
         quizInfoQuery = f'SELECT title, author, numQuestions FROM Quiz WHERE quizId={quizId};'
-        questionsQuery = f'SELECT questionType, question, option1, option2, option3, option4, correctAnswer FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
+        questionsQuery = f'SELECT questionType, question, option1, option2, option3, option4, correctAnswer, questionId FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
 
         try:
             quizInfo = db.execute(quizInfoQuery)
@@ -258,7 +258,7 @@ class FetchQuiz(Resource):
         retDict = {"quizName": quizInfo[0], "author": quizInfo[1], "numQuestions": quizInfo[2], "questions": []}
 
         for question in questions:
-            retDict['questions'].append({'questionType': question[0], 'question': question[1], 'answers': [question[2], question[3], question[4], question[5]], 'correct': question[6]})
+            retDict['questions'].append({'questionType': question[0], 'question': question[1], 'answers': [question[2], question[3], question[4], question[5]], 'correct': question[6], 'questionId': question[7]})
 
         return retDict, status.HTTP_200_OK
 
