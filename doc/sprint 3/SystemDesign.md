@@ -222,7 +222,6 @@ Class Name | QuizCreation
 Parent class | React.Component
 Classname subclasses | (Material-UI) TextField, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, (React-router-dom) Redirect, Button
 Responsibilities | Creates the quiz creation form. This includes text fields for the quiz title, tags, questions, correct answers and wrong answers. A quiz needs at least 3 questions and the fields will be rendered as the user changes the number of questions. Error checking ensures that no field is left blank. 
-
 For using pre-made quiz questions, it fetches all existing quiz questions in the database for the quiz creator to use if they desire. Also updates the display for each question to have the text boxes if the user would like to create their own question, or provides a list of questions (and their one correct  solution) to choose from.
 
 Collaborators | Michelle, Alfonso
