@@ -10,46 +10,50 @@ class QuizLeaderboard extends React.Component {
     super(props);
     this.state = {
       uid: this.props.uid, //prob dont need state here?
-      sessId: this.props.sessId
+      sessId: this.props.sessId,
+      history: []
     };
   }
   componentWillMount() {
     // fetch user history here
-      // fetchQuizScores(this.props.uid, this.props.quizId).then(data => {
-        // this.setState({
-          // history: data
-        // });
-      // })
-      this.setState({
-        quizName: "Test Quiz",
-        history: [
-          {
-            user: "Harry Gunther",
-            numQuizzes: "2020-03-03",
-            avgScore: 100
-          },
-          {
-            user: "Amanda Lee",
-            numQuizzes: "2020-03-01",
-            avgScore: 95
-          },
-          {
-            user: "Barry Gunther",
-            numQuizzes: "2020-02-27",
-            avgScore: 94.3
-          },
-          {
-            user: "Mandy Collins",
-            numQuizzes: "2020-02-16",
-            avgScore: 93.2
-          },
-          {
-            user: "John Smith",
-            numQuizzes: "2020-02-09",
-            avgScore: 93
-          },
-        ]
-      });
+    // update quizid
+      fetchQuizScores(17, 1).then(data => {
+        console.log(data);
+        this.setState({
+          quizName: data.quizName,
+          history: data.scores
+        });
+      })
+      // this.setState({
+      //   quizName: "Test Quiz",
+      //   history: [
+      //     {
+      //       user: "Harry Gunther",
+      //       numQuizzes: "2020-03-03",
+      //       avgScore: 100
+      //     },
+      //     {
+      //       user: "Amanda Lee",
+      //       numQuizzes: "2020-03-01",
+      //       avgScore: 95
+      //     },
+      //     {
+      //       user: "Barry Gunther",
+      //       numQuizzes: "2020-02-27",
+      //       avgScore: 94.3
+      //     },
+      //     {
+      //       user: "Mandy Collins",
+      //       numQuizzes: "2020-02-16",
+      //       avgScore: 93.2
+      //     },
+      //     {
+      //       user: "John Smith",
+      //       numQuizzes: "2020-02-09",
+      //       avgScore: 93
+      //     },
+      //   ]
+      // });
     }
 
   render = () => {

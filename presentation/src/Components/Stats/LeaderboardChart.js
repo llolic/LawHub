@@ -13,9 +13,9 @@ class LeaderboardChart extends React.Component {
       let rows = [];
       for (let i = 0; i < this.props.data.length; i++) {
         rows.push(<ChartRow className={`history_row_${i%2}`}
-        quizTitle={this.props.data[i].user}
+        quizTitle={this.props.data[i].userName}
         date={this.props.data[i].numQuizzes}
-        score={this.props.data[i].avgScore}
+        score={this.props.data[i].score}
         number={i+1}/>)
       }
       return rows;
