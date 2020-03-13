@@ -10,7 +10,7 @@ import database_lite
 import database_mysql
 import database_auth
 from helpers import *
-import query_helpers
+from query_helpers import *
 import sqlite3
 import json
 
@@ -289,6 +289,7 @@ class GetUserInfo(Resource):
                 'studyLevel': userInfoRows[6],
                 'school': userInfoRows[7],
                 'bio': userInfoRows[8]}, status.HTTP_200_OK
+
 
 
 
