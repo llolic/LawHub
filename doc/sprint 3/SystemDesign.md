@@ -90,14 +90,6 @@ Responsibilities | Temporary component to display mock quizzes. A button for cre
 Collaborators | Michelle
 -------------------------
 
-Class Name | QuizCreation
------------- | -------------
-Parent class | React.Component
-Classname subclasses | (Material-UI) TextField, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, (React-router-dom) Redirect, Button
-Responsibilities | Creates the quiz creation form. This includes text fields for the quiz title, tags, questions, correct answers and wrong answers. A quiz needs at least 3 questions and the fields will be rendered as the user changes the number of questions. Error checking ensures that no field is left blank.
-Collaborators | Michelle
--------------------------
-
 Class Name | Requests
 ------------ | -------------
 Parent class | React.Component
@@ -209,6 +201,32 @@ Responsibilities | The leaderboard for a specific quiz. Users are ranked by high
 Collaborators | Michelle
 -------------------------
 
+Class Name | StudentFilter
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) TextField, MenuItem
+Responsibilities | Create the page for filtering students to be searched for. Includes drop-down options for their post-secondary institution, level of study, country, state/province and a text box for their city. Displays all relevant students matching the filter criteria in a table with the user ID and student name.
+Collaborators | Alfonso
+-------------------------
+
+Class Name | QuizFilter
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) TextField
+Responsibilities | Create the page for filtering quizzes that can be completed. Includes text fields to filter by quiz name, quiz author, or 3 different tags. Displays all relevant quizzes matching the filter criteria in a table with the quiz id, quiz name, and number of questions in the quiz.
+Collaborators | Alfonso
+-------------------------
+
+Class Name | QuizCreation
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | (Material-UI) TextField, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, (React-router-dom) Redirect, Button
+Responsibilities | Creates the quiz creation form. This includes text fields for the quiz title, tags, questions, correct answers and wrong answers. A quiz needs at least 3 questions and the fields will be rendered as the user changes the number of questions. Error checking ensures that no field is left blank. 
+
+For using pre-made quiz questions, it fetches all existing quiz questions in the database for the quiz creator to use if they desire. Also updates the display for each question to have the text boxes if the user would like to create their own question, or provides a list of questions (and their one correct  solution) to choose from.
+
+Collaborators | Michelle, Alfonso
+-------------------------
 
 ### _Back-end Components_
 
