@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { submitNewQuiz } from "./Requests";
+import { fetchQuizQuestions } from "./Requests";
 
 import {
   TextField,
@@ -29,24 +30,28 @@ class QuizCreation extends React.Component {
           questionType: "",
           question: "",
           answers: ["", "", "", ""],
-          correct: 0
+          correct: 0,
+          questionId: -1
         },
         {
           questionType: "",
           question: "",
           answers: ["", "", "", ""],
-          correct: 0
+          correct: 0,
+          questionId: -1
         },
         {
           questionType: "",
           question: "",
           answers: ["", "", "", ""],
-          correct: 0
+          correct: 0,
+          questionId: -1
         }
       ],
       submitted: 0,
       missingFields: false,
       authorized: true,
+      response: []
       // sessId
     };
   }
@@ -55,6 +60,168 @@ class QuizCreation extends React.Component {
   // componentWillMount() {
   //   this.setNumQuestions(this.state.numQuestions);
   // }
+
+  // Alfonso added============================================================================================================
+  getQuizQuestions = () => {
+    fetchQuizQuestions(this.state).then(result => {
+      if (result !== -1) {
+        this.setState({ response: result.questions });
+      } else {
+        this.setState({ response: [] });
+      }
+    });
+
+    // TODO: currently hard coded
+    var temp = [
+      {
+        questionId: 1,
+        question: "Is Coronavirus overhyped?",
+        questionType: 0,
+        option1: "Yes",
+        option2: "No",
+        option3: "Maybe",
+        option4: "Helo",
+        correctAnswer: 3
+      },
+      {
+        questionId: 2,
+        question: "Is this question useful?",
+        questionType: 0,
+        option1: "Yes",
+        option2: "No",
+        option3: "Maybe",
+        option4: "Helo",
+        correctAnswer: 1
+      },
+      {
+        questionId: 3,
+        question: "Who is my fav prof?",
+        questionType: 0,
+        option1: "Ilir",
+        option2: "Arnold",
+        option3: "Michael",
+        option4: "All of the above",
+        correctAnswer: 3
+      }
+    ];
+    this.setState({ response: temp });
+  };
+
+  getQuestionDisplay = i => {
+    let display = [];
+    if (this.state.questions[i].questionType === "") {
+      display.push(<div>nothing</div>);
+      return display;
+    }
+    if (this.state.questions[i].questionType !== "2") {
+      //string 2
+      display.push(
+        <div>
+          <TextField
+            id="correctAns"
+            label={`Correct Answer for Question ${i + 1}`}
+            margin="normal"
+            fullWidth
+            multiline
+            variant="outlined"
+            onChange={e => this.updateQAns(e.target.value, 0, i)}
+          />
+
+          <TextField
+            id="wrongans"
+            label={`Wrong answer 1 for Question ${i + 1}`}
+            margin="normal"
+            fullWidth
+            multiline
+            variant="outlined"
+            onChange={e => this.updateQAns(e.target.value, 1, i)}
+          />
+
+          <TextField
+            id="wrongans"
+            label={`Wrong answer 2 for Question ${i + 1}`}
+            margin="normal"
+            fullWidth
+            multiline
+            variant="outlined"
+            onChange={e => this.updateQAns(e.target.value, 2, i)}
+          />
+
+          <TextField
+            id="wrongans"
+            label={`Wrong answer 3 for Question ${i + 1}`}
+            margin="normal"
+            fullWidth
+            multiline
+            variant="outlined"
+            helperText="These answers will be randomized when published!"
+            onChange={e => this.updateQAns(e.target.value, 3, i)}
+          />
+        </div>
+      );
+      return display;
+    } else {
+      for (let j = 0; j < this.state.response.length; j++) {
+        var options = [
+          this.state.response[j].option1,
+          this.state.response[j].option2,
+          this.state.response[j].option3,
+          this.state.response[j].option4
+        ];
+        display.push(
+          <div>
+            Question{j + 1}: {this.state.response[j].question}
+            <br></br>
+            Answer{j + 1}: {options[this.state.response[j].correctAnswer]}
+            <Button 
+              text="Use this question"
+              onClick={e => this.usePremadeQuestion(i, this.state.response[j].questionId)} //TODO: update backend to expect incoming quesitonId
+            />
+          </div>
+        );
+        if (this.state.questions[i].questionId === this.state.response[j].questionId) { // user has selected this question
+          display.push(
+            <div>
+              Question selected
+              <hr></hr>
+            </div>
+          ) 
+        } else {
+          display.push(
+            <div>
+              <hr></hr>
+            </div>
+          )
+        }
+
+      }
+      return display;
+    }
+
+  };
+
+  usePremadeQuestion = (questionNum, questionId) => {
+    var temp = this.state.questions;
+    temp[questionNum].questionId = questionId;
+    this.setState({ questions: temp });
+    //alert("Your request has been saved");
+    console.log(this.state);
+  }
+
+
+  // updates the question type in the questions array at index qIndex
+  updateQType = (type, qIndex) => {
+    /*
+    var qs = this.state.questions;
+    qs[qIndex].questionType = type;
+    */
+    this.getQuizQuestions();
+    var temp = this.state.questions;
+    temp[qIndex].questionType = type;
+    this.setState({ questions: temp });
+  };
+
+  // end Alfonso added==============================================================================================================
 
   handleSubmit = () => {
     if (!this.fieldsFilled()) {
@@ -123,12 +290,6 @@ class QuizCreation extends React.Component {
     qs[qIndex].answers[ansIndex] = answer;
   };
 
-  // updates the question type in the questions array at index qIndex
-  updateQType = (type, qIndex) => {
-    var qs = this.state.questions;
-    qs[qIndex].questionType = type;
-  };
-
   // loops thru number of questions and generates all fields
   getQuestionFields = () => {
     let fields = [];
@@ -165,49 +326,15 @@ class QuizCreation extends React.Component {
                 label="Long Answer"
                 disabled
               />
+              <FormControlLabel
+                value="2"
+                control={<Radio style={{ color: "#E49C2F" }} />}
+                label="Pre-made Question"
+              />
             </RadioGroup>
           </FormControl>
 
-          <TextField
-            id="correctAns"
-            label={`Correct Answer for Question ${i + 1}`}
-            margin="normal"
-            fullWidth
-            multiline
-            variant="outlined"
-            onChange={e => this.updateQAns(e.target.value, 0, i)}
-          />
-
-          <TextField
-            id="wrongans"
-            label={`Wrong answer 1 for Question ${i + 1}`}
-            margin="normal"
-            fullWidth
-            multiline
-            variant="outlined"
-            onChange={e => this.updateQAns(e.target.value, 1, i)}
-          />
-
-          <TextField
-            id="wrongans"
-            label={`Wrong answer 2 for Question ${i + 1}`}
-            margin="normal"
-            fullWidth
-            multiline
-            variant="outlined"
-            onChange={e => this.updateQAns(e.target.value, 2, i)}
-          />
-
-          <TextField
-            id="wrongans"
-            label={`Wrong answer 3 for Question ${i + 1}`}
-            margin="normal"
-            fullWidth
-            multiline
-            variant="outlined"
-            helperText="These answers will be randomized when published!"
-            onChange={e => this.updateQAns(e.target.value, 3, i)}
-          />
+          {this.getQuestionDisplay(i)}
         </div>
       );
     }
