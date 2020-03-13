@@ -110,7 +110,7 @@ class QuizCreation extends React.Component {
   getQuestionDisplay = i => {
     let display = [];
     if (this.state.questions[i].questionType === "") {
-      display.push(<div>nothing</div>);
+      display.push(<div></div>);
       return display;
     }
     if (this.state.questions[i].questionType !== "2") {
@@ -170,9 +170,9 @@ class QuizCreation extends React.Component {
         ];
         display.push(
           <div>
-            Question{j + 1}: {this.state.response[j].question}
+            Question {j + 1}: {this.state.response[j].question}
             <br></br>
-            Answer{j + 1}: {options[this.state.response[j].correctAnswer]}
+            Answer {j + 1}: {options[this.state.response[j].correctAnswer]}
             <Button 
               text="Use this question"
               onClick={e => this.usePremadeQuestion(i, this.state.response[j].questionId)} //TODO: update backend to expect incoming quesitonId
