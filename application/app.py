@@ -302,54 +302,43 @@ class FilterQuizzes(Resource):
         hasAuthor = author != ""
         hasTags = tagsString != ""
 
-        tags = []
+        db = database_mysql.DatabaseMySql()
+        db.connect()
 
+        tags = []
         if (hasTags):
             for tag in tagsString.split(','):
                 tags.append(tag.strip())
         
+        final_rows = set()
+        
         if (hasName and hasAuthor and hasTags):
             query = 'SELECT quizId, title, numQuestions FROM Quiz;'
+            rows = db.execute(query)
+            for row in rows:
+                final_rows.add(row)
         else:
-            queries = []
             if (hasAuthor):
-                
+                rows = db.execute(f'SELECT DISTINCT quizId, title, numQuestions FROM Quiz WHERE author={author}')
+                for row in rows:
+                    final_rows.add(row)
+            if (hasName):
+                rows = db.execute(f"SELECT DISTINCT quizId, title, numQuestions FROM Quiz WHERE title LIKE '%{quizName}%';")
+                for row in rows:
+                    final_rows.add(row)
+            if (hasTags):
+                query = f'SELECT DISTINCT Quiz.quizId, title, numQuestions FROM HasTags RIGHT JOIN Quiz ON HasTags.quizId=Quiz.quizId WHERE tag="{tags[0]}"'
+                for tag in tags[1:]:
+                    query += f' OR tag="{tag}"'
+                query += ';'
+                rows = db.execute(query)
+                for row in rows:
+                    final_rows.add(row)
 
-
-        db = database_mysql.DatabaseMySql()
-        db.connect()
-
-
-
-
-class FetchQuiz(Resource):
-    def post(self):
-
-
-
-        db = database_mysql.DatabaseMySql()
-        db.connect()
-
-        quizInfoQuery = f'SELECT title, author, numQuestions FROM Quiz WHERE quizId={quizId};'
-        questionsQuery = f'SELECT questionType, question, option1, option2, option3, option4, correctAnswer FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
-
-        try:
-            quizInfo = db.execute(quizInfoQuery)
-            questions = db.execute(questionsQuery)
-        except: 
-            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
-        
-        if (len(quizInfo) == 0):
-            return {'message': f"Quiz {quizId} not found"}, status.HTTP_404_NOT_FOUND
-
-        quizInfo = quizInfo[0]
-
-        retDict = {"quizName": quizInfo[0], "author": quizInfo[1], "numQuestions": quizInfo[2], "questions": []}
-
-        for question in questions:
-            retDict['questions'].append({'questionType': question[0], 'question': question[1], 'answers': [question[2], question[3], question[4], question[5]], 'correct': question[6]})
-
-        return retDict, status.HTTP_200_OK
+        retDict = {'matches': []}
+        for row in list(final_rows):
+            retDict['matches'].append({'quizId': row[0], 'quizName': row[1], 'numQuestions': row[2]})
+        return retDict
 
 
 # add helper parse_args with for loop for adding arguments
@@ -362,7 +351,7 @@ api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
 api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
-
-
+api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+    
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
