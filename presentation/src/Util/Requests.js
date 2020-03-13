@@ -121,14 +121,32 @@ export const updateProfile = async (state) => {
 
 }
 
-export const getUserHistory = async (sessId, userId) => {
-  // var jsonObj = { sessId: sessId, userId: userId };
-  return fetch(`http://${path}:5000/api/v1/getProfile?sessId=${sessId}&userId=${userId}`, {
-    method: "GET", // ??
+
+// POST /api/v1/getUserHistory
+export const getUserHistory = async (uid, numScores) => {
+  var jsonObj = { uid: uid, numScores: numScores };
+  return fetch(`http://${path}:5000/api/v1/getUserHistory`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    // body: JSON.stringify(jsonObj)
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
+
+// POST /api/v1/getUserInfo
+export const getUserInfo = async (uid) => {
+  var jsonObj = { uid: uid };
+  return fetch(`http://${path}:5000/api/v1/getUserInfo`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
   }).then(result => {
     if (result.ok)
       return result.json();

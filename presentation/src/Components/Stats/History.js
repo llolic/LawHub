@@ -6,6 +6,9 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 
+import { getUserHistory } from "../../Util/Requests";
+
+
 import { historyStats } from "../../Constants/stats";
 
 import "../../Styles/history.css"; //TODO
@@ -14,40 +17,40 @@ class History extends React.Component {
 
     componentWillMount() {
     // fetch user history here
-      // getUserHistory(this.props.sessId, this.props.uid).then(data => {
-        // this.setState({
-          // history: data
-        // });
-      // })
-      this.setState({
-        history: [
-          {
-            title: "Test Quiz",
-            date: "2020-03-03",
-            score: 84.9
-          },
-          {
-            title: "LSAT Mock Quiz",
-            date: "2020-03-01",
-            score: 65.2
-          },
-          {
-            title: "BAR Example Test Feb 2020",
-            date: "2020-02-27",
-            score: 79.2
-          },
-          {
-            title: "Criminal Law Quiz",
-            date: "2020-02-16",
-            score: 86.1
-          },
-          {
-            title: "Immigration Law",
-            date: "2020-02-09",
-            score: 100
-          },
-        ]
-      });
+      getUserHistory(this.props.uid, 0).then(data => {
+        this.setState({
+          history: data
+        });
+      })
+      // this.setState({
+      //   history: [
+      //     {
+      //       title: "Test Quiz",
+      //       date: "2020-03-03",
+      //       score: 84.9
+      //     },
+      //     {
+      //       title: "LSAT Mock Quiz",
+      //       date: "2020-03-01",
+      //       score: 65.2
+      //     },
+      //     {
+      //       title: "BAR Example Test Feb 2020",
+      //       date: "2020-02-27",
+      //       score: 79.2
+      //     },
+      //     {
+      //       title: "Criminal Law Quiz",
+      //       date: "2020-02-16",
+      //       score: 86.1
+      //     },
+      //     {
+      //       title: "Immigration Law",
+      //       date: "2020-02-09",
+      //       score: 100
+      //     },
+      //   ]
+      // });
     }
 
     renderQuizHistories = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 import ProfileStats from "./ProfileStats";
 
-import { fetchProfile } from "../Util/Requests";
+import { getUserInfo } from "../Util/Requests";
 
 import profilePic from "../Images/groot.jpg";
 
@@ -21,38 +21,38 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "userId",
+      uid: this.props.uid,
       sessId: "sessId",
-      userType: "student",
-      profileId: "userId"
+      // userType: "student",
+      // profileId: "userId"
     };
   }
 
   // fetch user data...
   componentWillMount() {
-    // fetchProfile(this.state.sessId, this.state.userId).then(result => {
-      // console.log(result);
-      // this.setState({
-      //   firstName: result.firstName,
-      //   lastName: result.lastName,
-      //   studyLevel: result.studyLevel,
-      //   school: result.school,
-      //   bio: result.bio,
-      //   city: result.city,
-      //   stateOrProvince: result.stateOrProvince,
-      //   country: result.country
-      // });
+    getUserInfo(this.props.uid).then(result => {
+      console.log(result);
       this.setState({
-        firstName: "Harry",
-        lastName: "Gunther",
-        studyLevel: "Undergraduate, 4th year",
-        school: "Yale University",
-        bio: "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
-        city: "Hartford",
-        stateOrProvince: "Connecticut",
-        country: "United States"
+        firstName: result.firstName,
+        lastName: result.lastName,
+        studyLevel: result.studyLevel,
+        school: result.school,
+        bio: result.bio,
+        city: result.city,
+        stateOrProvince: result.stateOrProvince,
+        country: result.country
       });
-    // });
+      // this.setState({
+      //   firstName: "Harry",
+      //   lastName: "Gunther",
+      //   studyLevel: "Undergraduate, 4th year",
+      //   school: "Yale University",
+      //   bio: "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
+      //   city: "Hartford",
+      //   stateOrProvince: "Connecticut",
+      //   country: "United States"
+      // });
+    });
   }
 
   render = () => {
@@ -132,7 +132,7 @@ class Profile extends React.Component {
         </div>
 
         <div className="right_profile_container">
-          <ProfileStats />
+          <ProfileStats uid={this.props.uid}/>
         </div>
       </div>
     );

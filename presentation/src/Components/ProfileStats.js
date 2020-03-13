@@ -49,7 +49,7 @@ class ProfileStats extends React.Component {
 
         <OverallStats tab={this.state.tab} />
 
-        <History tab={this.state.tab} />
+        <History tab={this.state.tab} uid={this.props.uid}/>
 
         {/* <SpeedStats tab={this.state.tab} /> */}
 
