@@ -214,7 +214,8 @@ class FetchQuizScores(Resource):
         quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
         leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
 
-        db = database_auth.DatabaseMySql()
+
+        db = database_mysql.DatabaseMySql()
         db.connect()
 
         try:

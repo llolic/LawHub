@@ -5,7 +5,7 @@ import {
 
   studyLevels
 } from "../Constants/registration";
-import { submitRegistration } from "./Requests";
+import { submitRegistration } from "../Util/Requests";
 
 
 import { TextField, MenuItem } from "@material-ui/core";
