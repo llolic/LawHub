@@ -214,7 +214,7 @@ class FetchQuizScores(Resource):
         quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
         leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
 
-        db = database_auth.DatabaseMySql()
+        db = database_mysql.DatabaseMySql()
         db.connect()
 
         try:
@@ -231,6 +231,55 @@ class FetchQuizScores(Resource):
         
         return {'quizName': quizNameRows[0][0], 'scores': scores}, status.HTTP_200_OK
 
+class FetchQuiz(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['quizId'])
+        args = parser.parse_args()
+        quizId = args['quizId']
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        quizInfoQuery = f'SELECT title, author, numQuestions FROM Quiz WHERE quizId={quizId};'
+        questionsQuery = f'SELECT questionType, question, option1, option2, option3, option4, correctAnswer FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
+
+        try:
+            quizInfo = db.execute(quizInfoQuery)
+            questions = db.execute(questionsQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        if (len(quizInfo) == 0):
+            return {'message': f"Quiz {quizId} not found"}, status.HTTP_404_NOT_FOUND
+
+        quizInfo = quizInfo[0]
+
+        retDict = {"quizName": quizInfo[0], "author": quizInfo[1], "numQuestions": quizInfo[2], "questions": []}
+
+        for question in questions:
+            retDict['questions'].append({'questionType': question[0], 'question': question[1], 'answers': [question[2], question[3], question[4], question[5]], 'correct': question[6]})
+
+        return retDict, status.HTTP_200_OK
+
+class FetchQuizList(Resource):
+    def post(self):
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+        quizListQuery = 'SELECT quizId, title FROM Quiz;'
+        try:
+            quizzes = db.execute(quizListQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        retDict = {'quizzes': []}
+        for quiz in quizzes:
+            retDict['quizzes'].append({'quizId': quiz[0], 'quizName': quiz[1]})
+        retDict['numQuizzes'] = len(retDict['quizzes'])
+
+        return retDict
+
+
 class GetUserHistory(Resource):
     def post(self):
         parser = reqparse.RequestParser()
@@ -239,7 +288,7 @@ class GetUserHistory(Resource):
         uid = args['uid']
         numScores = args['numScores']
 
-        db = database_auth.DatabaseMySql()
+        db = database_mysql.DatabaseMySql()
         db.connect()
 
         userHistoryQuery = f"SELECT QuizRecord.quizId, score, title FROM QuizRecord RIGHT JOIN Quiz ON QuizRecord.quizId=Quiz.quizId WHERE uid={uid} ORDER BY score DESC;"
@@ -305,6 +354,10 @@ api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
 api.add_resource(GetUserInfo, '/api/v1/getUserInfo')
 api.add_resource(GetUserHistory, '/api/v1/getUserHistory')
 api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
+api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
+api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
+
+
 
 
 
