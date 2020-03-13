@@ -241,6 +241,7 @@ class FetchQuizScores(Resource):
         else:
             leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
 
+
         db = database_mysql.DatabaseMySql()
         db.connect()
 
@@ -367,7 +368,56 @@ class GetUserInfo(Resource):
                 'school': userInfoRows[7],
                 'bio': userInfoRows[8]}, status.HTTP_200_OK
 
+class FilterQuizzes(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['quizName', 'author', 'tags'])
+        args = parser.parse_args()
+        quizName = args['quizName']
+        author = args['author']
+        tagsString = args['tags']
 
+        hasName = quizName != ""
+        hasAuthor = author != ""
+        hasTags = tagsString != ""
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        tags = []
+        if (hasTags):
+            for tag in tagsString.split(','):
+                tags.append(tag.strip())
+        
+        final_rows = set()
+        
+        if (hasName and hasAuthor and hasTags):
+            query = 'SELECT quizId, title, numQuestions FROM Quiz;'
+            rows = db.execute(query)
+            for row in rows:
+                final_rows.add(row)
+        else:
+            if (hasAuthor):
+                rows = db.execute(f'SELECT DISTINCT quizId, title, numQuestions FROM Quiz WHERE author={author}')
+                for row in rows:
+                    final_rows.add(row)
+            if (hasName):
+                rows = db.execute(f"SELECT DISTINCT quizId, title, numQuestions FROM Quiz WHERE title LIKE '%{quizName}%';")
+                for row in rows:
+                    final_rows.add(row)
+            if (hasTags):
+                query = f'SELECT DISTINCT Quiz.quizId, title, numQuestions FROM HasTags RIGHT JOIN Quiz ON HasTags.quizId=Quiz.quizId WHERE tag="{tags[0]}"'
+                for tag in tags[1:]:
+                    query += f' OR tag="{tag}"'
+                query += ';'
+                rows = db.execute(query)
+                for row in rows:
+                    final_rows.add(row)
+
+        retDict = {'matches': []}
+        for row in list(final_rows):
+            retDict['matches'].append({'quizId': row[0], 'quizName': row[1], 'numQuestions': row[2]})
+        return retDict
 
 
 class FilterStudents(Resource):
@@ -399,10 +449,7 @@ api.add_resource(GetUserHistory, '/api/v1/getUserHistory')
 api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
 api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
 api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
-
-
-
-
-
+api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+    
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

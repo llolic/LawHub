@@ -38,6 +38,27 @@ export const filterStudents = async state => {
 };
 
 // POST /api/v1/register/student OR recruiter
+export const filterQuizzes = async state => {
+
+  return fetch(`http://${path}:5000/api/v1/filterQuizzes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(state)
+  }).then(result => {
+    if (result.ok) {
+      console.log(JSON.stringify(state));
+      //state.quizzes = result.json().matches;
+      return result.json();
+    } else {
+      return false;
+    }
+  });
+
+} ;
+
+
 export const submitRegistration = async (state, type) => {
   return fetch(`http://${path}:5000/api/v1/register/${type}`, {
     method: "POST",

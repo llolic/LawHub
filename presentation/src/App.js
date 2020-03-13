@@ -10,6 +10,7 @@ import QuizCreation from "./Components/QuizCreation";
 import StudentProfile from "./Components/StudentProfile";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
+import QuizFilter from "./Components/QuizFilter";
 // import EmployerProfile from "./Components/EmployerProfile";
 import Profile from "./Components/Profile";
 import Leaderboard from "./Components/Leaderboard";
@@ -109,6 +110,10 @@ class App extends React.Component {
 
             <Route path="/studentFilter">
               <StudentFilter sessId={this.state.sessId} uid={this.state.uid} />
+              </Route>
+
+            <Route path="/quizFilter">
+              <QuizFilter sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/successfulRegistration">
