@@ -152,7 +152,7 @@ class EditProfileStudent(EditProfile):
 class addQuiz(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        reqParser(parser, ['title', 'author', 'tags', 'numQuestions')
+        reqParser(parser, ['title', 'author', 'tags', 'numQuestions'])
         parser.add_argument('questions', action='append', type=dict) # to parse an argument as a list and convert the values to dicts
         args = parser.parse_args()
         
