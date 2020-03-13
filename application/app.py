@@ -264,21 +264,22 @@ class GetUserInfo(Resource):
         reqParser(parser, ['uid'])
         args = parser.parse_args()
         uid = args['uid']
-
-        db = database_auth.DatabaseMySql()
+        print("args: ", args)
+        print("abc")
+        db = database_mysql.DatabaseMySql()
         db.connect()
 
-        userInfoQuery = f"SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, school FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE AppUser.uid={uid};"
+        userInfoQuery = f"SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, school, bio FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE AppUser.uid={uid};"
 
         try:
             userInfoRows = db.execute(userInfoQuery)
         except: 
             return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
-
-        if userInfoQuery == []:
+        print(userInfoRows)
+        if userInfoRows == []:
             return {}, status.HTTP_404_NOT_FOUND
 
-
+        userInfoRows = userInfoRows[0]
         return {'firstName': userInfoRows[0],
                 'lastName': userInfoRows[1],
                 'email': userInfoRows[2],
@@ -286,9 +287,8 @@ class GetUserInfo(Resource):
                 'stateOrProvince': userInfoRows[4],
                 'city': userInfoRows[5],
                 'studyLevel': userInfoRows[6],
-                'school': userInfoRows[7]}, status.HTTP_200_OK
-
-
+                'school': userInfoRows[7],
+                'bio': userInfoRows[8]}, status.HTTP_200_OK
 
 
 
@@ -301,7 +301,10 @@ api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
 api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
+api.add_resource(GetUserInfo, '/api/v1/getUserInfo')
+api.add_resource(GetUserHistory, '/api/v1/getUserHistory')
 api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
+
 
 
 if __name__ == "__main__":
