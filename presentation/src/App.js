@@ -11,7 +11,9 @@ import StudentProfile from "./Components/StudentProfile";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
-import Profile from "./Components/Profile.js";
+import Profile from "./Components/Profile";
+import Leaderboard from "./Components/Leaderboard";
+import QuizLeaderboard from "./Components/QuizLeaderboard";
 
 import { isAuthenticated } from "./Util/Auth";
 
@@ -44,10 +46,11 @@ class App extends React.Component {
   }
 
   // need to update navbar after being unauthenticated
+  // Needs to refresh page?
+  // need to scroll to top on redirect?
 
   render = () => {
 
-    
     return (
       <div className="container">
         <Router>
@@ -65,7 +68,10 @@ class App extends React.Component {
               {/* dashboard (home after login) here */}
             </Route>
 
-            <Route path="/leaderboard">{/* leaderboard here */}</Route>
+            <Route path="/leaderboard">
+              <Leaderboard sessId={this.state.sessId}
+                uid={this.state.uid}/>
+            </Route>
 
             <Route path="/search">{/* search results here */}</Route>
 
@@ -81,6 +87,11 @@ class App extends React.Component {
             <Route path="/takeQuiz">
               <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} quizId={17}/>
             </Route>
+
+            <Route path="/quizLeaderboard">
+              <QuizLeaderboard />
+            </Route>
+
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />

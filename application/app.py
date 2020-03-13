@@ -249,6 +249,7 @@ class FetchQuizScores(Resource):
 
         if quizNameRows == []:
             return {}, status.HTTP_404_NOT_FOUND
+        
         scores = []
         for row in leaderboardRows:
             scores.append({'uid': row[0], 'userName': row[2]+ " " + row[3], 'score': row[1]})

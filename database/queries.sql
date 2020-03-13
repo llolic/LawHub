@@ -8,8 +8,19 @@ SELECT AppUser.uid, firstName, lastName FROM AppUser RIGHT JOIN Student ON AppUs
 SELECT title, author, numQuestions FROM QUIZ WHERE quizId={};
 SELECT Question.questionId, question, questionType, option1, option2, option3, option4, correctAnswer FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={};
 
+
 -- Fetch Quiz List
 SELECT quizId, title FROM Quiz;
+
+
+-- LAM-7: Quiz leaderboard
+SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={} ORDER BY score DESC LIMIT {};
+SELECT title FROM Quiz WHERE quizId={};
+
+-- Notes: First query takes in a quizId and a limit and returns a list of {uid, score, firstName, lastName} in descending order limited to the specified number of rows.
+--        Second query takes in a quizId and returns the title
+
+
 -- LAM-6: Viewing user history and profile
 SELECT QuizRecord.quizId, score, title FROM QuizRecord RIGHT JOIN Quiz ON QuizRecord.quizId=Quiz.quizId WHERE uid={} ORDER BY score DESC;
 SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, school, bio FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE AppUser.uid={};

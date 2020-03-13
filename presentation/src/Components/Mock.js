@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { verifyUser, getQuizzes } from "../Util/Requests";
+import MockQuizRow from "./MockQuizRow";
 
 import { Redirect, Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
@@ -14,8 +15,9 @@ class Mock extends React.Component {
     this.state = {
       createQuiz: 0,
       startQuiz: 0,
-      quizzes: []
-    }
+      quizzes: [],
+      toLeaderboard: 0
+    };
   }
 
   componentWillMount() {
@@ -33,12 +35,11 @@ class Mock extends React.Component {
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ createQuiz: -1 });
-      }
-      else {
+      } else {
         this.setState({ createQuiz: 1 });
       }
-    })
-  }
+    });
+  };
 
   clickStartQuiz = () => {
      this.setState({ startQuiz: 1 });
@@ -46,12 +47,16 @@ class Mock extends React.Component {
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ startQuiz: -1 });
-      }
-      else {
+      } else {
         this.setState({ startQuiz: 1 });
       }
-    })
-  }
+    });
+  };
+
+  clickLeaderboard = () => {
+    this.setState({ toLeaderboard: 1 });
+    return;
+  };
 
   renderQuizzes = () => {
     var quizlist = [];
@@ -68,6 +73,13 @@ class Mock extends React.Component {
               </Link>
             </div>
           </Grid>
+
+// fix this later
+//  <MockQuizRow
+// quizName={this.state.quizzes[i].quizName}
+// clickLeaderboard={this.clickLeaderboard}
+// clickStartQuiz={this.clickStartQuiz}
+// /> 
       )
     }
     return quizlist;
@@ -75,15 +87,17 @@ class Mock extends React.Component {
 
   render = () => {
     if (this.state.createQuiz === 1) {
-      return <Redirect push to="/quizCreation"/>
+      return <Redirect push to="/quizCreation" />;
     }
     if (this.state.startQuiz === 1) {
-      return <Redirect push to="/takeQuiz"/>
+      return <Redirect push to="/takeQuiz" />;
     }
     if (this.state.createQuiz === -1 || this.state.createQuiz === -1) {
-      return <Redirect push to="/login"/>
+      return <Redirect push to="/login" />;
     }
-
+    if (this.state.toLeaderboard === 1) {
+      return <Redirect push to="/quizLeaderboard" />;
+    }
 
     return (
       <div className="mock_container">
@@ -92,51 +106,29 @@ class Mock extends React.Component {
             Mock Quizzes
             {this.props.userType === "recruiter" ? (
               // <Link to="/quizCreation">
-                <Button className="btn_yellow_small" text="Create Quiz" onClick={this.clickCreate}/>
-              // </Link>
+              <Button
+                className="btn_yellow_small"
+                text="Create Quiz"
+                onClick={this.clickCreate}
+              />
             ) : (
+              // </Link>
               <div></div>
             )}
           </div>
-         
         </div>
 
         <Grid container spacing={3}>
-          {this.renderQuizzes()}
-          <Grid item xs={12} className="quiz_card">
-            <div className="quiz_row">
-              <div className="quiz_title">Test Quiz</div>
-              {/* <Link to="/takeQuiz"> */}
-              <Button className="btn_yellow_small" text="Start" onClick={this.clickStartQuiz}/>
-              {/* </Link> */}
-            </div>
-          </Grid>
-          <Grid item xs={12} className="quiz_card">
-            <div className="quiz_row">
-              <div className="quiz_title">BAR Mock Quiz</div>
-              <Button className="btn_yellow_small" text="Start" />
-              
-            </div>
-            
-          </Grid>
-          <Grid item xs={12} className="quiz_card">
-            <div className="quiz_row">
-              <div className="quiz_title">LSAT Mock</div>
-              <Button className="btn_yellow_small" text="Start" />
-            </div>
-          </Grid>
-          <Grid item xs={12} className="quiz_card">
-            <div className="quiz_row">
-              <div className="quiz_title">BAR and LSAT Questions</div>
-              <Button className="btn_yellow_small" text="Start" />
-            </div>
-          </Grid>
-          <Grid item xs={12} className="quiz_card">
-            <div className="quiz_row">
-              <div className="quiz_title">LSAT Mock Quiz</div>
-              <Button className="btn_yellow_small" text="Start" />
-            </div>
-          </Grid>
+        {this.renderQuizzes()}
+          <MockQuizRow
+            quizName="Test Quiz"
+            clickLeaderboard={this.clickLeaderboard}
+            clickStartQuiz={this.clickStartQuiz}
+          />
+          <MockQuizRow quizName="BAR Mock Quiz" />
+          <MockQuizRow quizName="LSAT Mock" />
+          <MockQuizRow quizName="BAR and LSAT Questions" />
+          <MockQuizRow quizName="LSAT Mock Quiz" />
         </Grid>
       </div>
     );
