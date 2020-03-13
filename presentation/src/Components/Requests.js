@@ -4,7 +4,21 @@
 
 const path = "35.227.67.4";
 
-// MOVE THIS.....
+export const fetchQuizQuestions = async () => {
+  //console.log("Attempting to login");
+  return fetch(`http://${path}:5000/api/v1/fetchQuestions`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(result => {
+    if (result.ok) {
+      return result.json(); // userId and sessId ??and userType
+    }
+    return -1;
+  });
+}
+
 export const filterStudents = async state => {
 
   return fetch(`http://${path}:5000/api/v1/filterStudents`, {
@@ -76,6 +90,9 @@ export const updateProfile = async (state) => {
 
 // POST /api/v1/addQuiz
 export const submitNewQuiz = async (state, sessId, userId) => {
+
+  console.log(state);
+
   var jsonObj = {...state, sessId: sessId, userId: userId };
   
   console.log(jsonObj);
@@ -89,10 +106,12 @@ export const submitNewQuiz = async (state, sessId, userId) => {
     console.log(result);
     if (result.ok) {
       console.log("Created new quiz");
+      console.log(result);
       return true;
       // this.setState({ submitted: true }); // change this later
     } else {
       console.log("Failed to create quiz");
+      console.log(result);
       return false;
     }
   });
