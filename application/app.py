@@ -289,7 +289,67 @@ class GetUserInfo(Resource):
                 'school': userInfoRows[7]}, status.HTTP_200_OK
 
 
+class FilterQuizzes(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['quizName', 'author', 'tags'])
+        args = parser.parse_args()
+        quizName = args['quizName']
+        author = args['author']
+        tagsString = args['tags']
 
+        hasName = quizName != ""
+        hasAuthor = author != ""
+        hasTags = tagsString != ""
+
+        tags = []
+
+        if (hasTags):
+            for tag in tagsString.split(','):
+                tags.append(tag.strip())
+        
+        if (hasName and hasAuthor and hasTags):
+            query = 'SELECT quizId, title, numQuestions FROM Quiz;'
+        else:
+            queries = []
+            if (hasAuthor):
+                
+
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+
+
+
+class FetchQuiz(Resource):
+    def post(self):
+
+
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        quizInfoQuery = f'SELECT title, author, numQuestions FROM Quiz WHERE quizId={quizId};'
+        questionsQuery = f'SELECT questionType, question, option1, option2, option3, option4, correctAnswer FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
+
+        try:
+            quizInfo = db.execute(quizInfoQuery)
+            questions = db.execute(questionsQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        if (len(quizInfo) == 0):
+            return {'message': f"Quiz {quizId} not found"}, status.HTTP_404_NOT_FOUND
+
+        quizInfo = quizInfo[0]
+
+        retDict = {"quizName": quizInfo[0], "author": quizInfo[1], "numQuestions": quizInfo[2], "questions": []}
+
+        for question in questions:
+            retDict['questions'].append({'questionType': question[0], 'question': question[1], 'answers': [question[2], question[3], question[4], question[5]], 'correct': question[6]})
+
+        return retDict, status.HTTP_200_OK
 
 
 # add helper parse_args with for loop for adding arguments
