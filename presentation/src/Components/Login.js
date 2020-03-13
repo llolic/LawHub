@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
-import { authenticate } from "./Auth";
-import { submitLogin } from "./Requests";
+import { authenticate } from "../Util/Auth";
+import { submitLogin } from "../Util/Requests";
 
 import { TextField } from "@material-ui/core";
 import { Redirect } from "react-router-dom";

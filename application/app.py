@@ -64,8 +64,8 @@ class Login(Resource):
         if bcrypt.check_password_hash(password_hash.encode(), args['password']):
             #return 200 ok
             sessId = generate_auth_token()
-            insert_auth_uid(uid, sessId)
-            return {"uid": uid, "role": role, "sessId": sessId}
+            # insert_auth_uid(uid, sessId)
+            return {"uid": uid, "sessId": sessId}
         
         #return 401 unauthorized
         return {}, status.HTTP_401_UNAUTHORIZED
@@ -226,6 +226,145 @@ class fetchQuestions(Resource):
         if questions == 0:
             return {}, status.HTTP_400_BAD_REQUEST
         return {"questions": questions}, status.HTTP_200_OK 
+class FetchQuizScores(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['quizId', 'numScores'])
+        args = parser.parse_args()
+        quizId = args['quizId']
+        numScores = args['numScores']
+        # return {'quizName': 'TestQuiz', 'scores': [{'uid': 0, 'userName': 'TestUser1', 'score': 5}, {'uid': 1, 'userName': 'TestUser2', 'score': 10}]}
+
+        quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
+        leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        try:
+            quizNameRows = db.execute(quizNameQuery)
+            leaderboardRows = db.execute(leaderboardQuery)
+        except:
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if quizNameRows == []:
+            return {}, status.HTTP_404_NOT_FOUND
+        scores = []
+        for row in leaderboardRows:
+            scores.append({'uid': row[0], 'userName': row[2]+ " " + row[3], 'score': row[1]})
+        
+        return {'quizName': quizNameRows[0][0], 'scores': scores}, status.HTTP_200_OK
+
+class FetchQuiz(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['quizId'])
+        args = parser.parse_args()
+        quizId = args['quizId']
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        quizInfoQuery = f'SELECT title, author, numQuestions FROM Quiz WHERE quizId={quizId};'
+        questionsQuery = f'SELECT questionType, question, option1, option2, option3, option4, correctAnswer, Question.questionId FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
+
+        try:
+            quizInfo = db.execute(quizInfoQuery)
+            questions = db.execute(questionsQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        if (len(quizInfo) == 0):
+            return {'message': f"Quiz {quizId} not found"}, status.HTTP_404_NOT_FOUND
+
+        quizInfo = quizInfo[0]
+
+        retDict = {"quizName": quizInfo[0], "author": quizInfo[1], "numQuestions": quizInfo[2], "questions": []}
+
+        for question in questions:
+            retDict['questions'].append({'questionType': question[0], 'question': question[1], 'answers': [question[2], question[3], question[4], question[5]], 'correct': question[6], 'questionId': question[7]})
+
+        return retDict, status.HTTP_200_OK
+
+class FetchQuizList(Resource):
+    def post(self):
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+        quizListQuery = 'SELECT quizId, title FROM Quiz;'
+        try:
+            quizzes = db.execute(quizListQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        retDict = {'quizzes': []}
+        for quiz in quizzes:
+            retDict['quizzes'].append({'quizId': quiz[0], 'quizName': quiz[1]})
+        retDict['numQuizzes'] = len(retDict['quizzes'])
+
+        return retDict
+
+
+class GetUserHistory(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid', 'numScores'])
+        args = parser.parse_args()
+        uid = args['uid']
+        numScores = args['numScores']
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        userHistoryQuery = f"SELECT QuizRecord.quizId, score, title FROM QuizRecord RIGHT JOIN Quiz ON QuizRecord.quizId=Quiz.quizId WHERE uid={uid} ORDER BY score DESC;"
+
+        try:
+            userHistoryRows = db.execute(userHistoryQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        if userHistoryQuery == []:
+            return {}, status.HTTP_404_NOT_FOUND
+
+        scores = []
+        for row in userHistoryRows:
+            scores.append({'quizId': row[0], 'score': row[1], 'quizName': row[2]})
+
+        return {'scores': scores}, status.HTTP_200_OK
+
+class GetUserInfo(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid'])
+        args = parser.parse_args()
+        uid = args['uid']
+        print("args: ", args)
+        print("abc")
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        userInfoQuery = f"SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, school, bio FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE AppUser.uid={uid};"
+
+        try:
+            userInfoRows = db.execute(userInfoQuery)
+        except: 
+            return {'message': 'Error when executing queries'}, status.HTTP_500_INTERNAL_SERVER_ERROR
+        print(userInfoRows)
+        if userInfoRows == []:
+            return {}, status.HTTP_404_NOT_FOUND
+
+        userInfoRows = userInfoRows[0]
+        return {'firstName': userInfoRows[0],
+                'lastName': userInfoRows[1],
+                'email': userInfoRows[2],
+                'country': userInfoRows[3],
+                'stateOrProvince': userInfoRows[4],
+                'city': userInfoRows[5],
+                'studyLevel': userInfoRows[6],
+                'school': userInfoRows[7],
+                'bio': userInfoRows[8]}, status.HTTP_200_OK
+
+
+
 
 class FilterStudents(Resource):
     def post(self):
@@ -251,6 +390,15 @@ api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
 api.add_resource(fetchQuestions, '/api/v1/fetchQuestions')
 api.add_resource(FilterStudents, '/api/v1/filterStudents')
+api.add_resource(GetUserInfo, '/api/v1/getUserInfo')
+api.add_resource(GetUserHistory, '/api/v1/getUserHistory')
+api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
+api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
+api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
+
+
+
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

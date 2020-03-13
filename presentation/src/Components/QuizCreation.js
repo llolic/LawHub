@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import { submitNewQuiz } from "./Requests";
-import { fetchQuizQuestions } from "./Requests";
+import { submitNewQuiz, fetchQuizQuestions } from "../Util/Requests";
 
 import {
   TextField,

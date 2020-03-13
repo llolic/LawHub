@@ -119,7 +119,7 @@ export const submitNewQuiz = async (state, sessId, userId) => {
 
 // POST /api/v1/submitQuiz
 export const submitQuizAnswers = async (state) => {
-  console.log("Attempting to submit quiz results");
+  console.log("Attempting to submit quiz results", state);
   return fetch(`http://${path}:5000/api/v1/submitQuiz`, {
     method: "POST",
     headers: {
@@ -206,6 +206,74 @@ export const getUserInfo = async (uid) => {
 
 // POST /api/v1/fetchQuestions
 
+
+
+
+
+
+// POST /api/v1/getUserHistory
+export const getUserHistory = async (uid, numScores) => {
+  var jsonObj = { uid: uid, numScores: numScores };
+  return fetch(`http://${path}:5000/api/v1/getUserHistory`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
+
+// POST /api/v1/getUserInfo
+export const getUserInfo = async (uid) => {
+  var jsonObj = { uid: uid };
+  return fetch(`http://${path}:5000/api/v1/getUserInfo`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
+
+
+export const getQuizzes = async () => {
+  // var jsonObj = { sessId: sessId, userId: userId };
+  return fetch(`http://${path}:5000/api/v1/fetchQuizList`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    // body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
+
+
+export const fetchQuiz = async (quizId) => {
+  var jsonObj = { quizId: quizId };
+  return fetch(`http://${path}:5000/api/v1/fetchQuiz`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}
 
 
 

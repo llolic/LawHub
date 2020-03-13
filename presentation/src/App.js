@@ -9,9 +9,11 @@ import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
 import StudentProfile from "./Components/StudentProfile";
 import StudentFilter from "./Components/StudentFilter";
+import EditProfile from "./Components/EditProfile";
 // import EmployerProfile from "./Components/EmployerProfile";
+import Profile from "./Components/Profile.js";
 
-import { isAuthenticated } from "./Components/Auth";
+import { isAuthenticated } from "./Util/Auth";
 
 import {
   BrowserRouter as Router,
@@ -26,6 +28,7 @@ class App extends React.Component {
       loggedIn: false,
       sessId: null,
       uid: null,
+      quizId: null,
       userType: "recruiter" //testing
     };
   }
@@ -36,9 +39,15 @@ class App extends React.Component {
     console.log(this.state);
   };
 
+  updateQuizId = (quizId) => {
+    this.setState({ quizId: quizId });
+  }
+
   // need to update navbar after being unauthenticated
 
   render = () => {
+
+    
     return (
       <div className="container">
         <Router>
@@ -65,11 +74,12 @@ class App extends React.Component {
                 sessId={this.state.sessId}
                 uid={this.state.uid}
                 userType={this.state.userType}
+                updateQuizId={this.updateQuizId}
               />
             </Route>
 
             <Route path="/takeQuiz">
-              <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} />
+              <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} quizId={17}/>
             </Route>
 
             <Route path="/quizCreation">
@@ -104,8 +114,13 @@ class App extends React.Component {
               <EmployerProfile />
             </Route> */}
 
+            <Route path="/editProfile">
+              <EditProfile />
+            </Route>
+
+
             <Route path="/studentProfile">
-              <StudentProfile sessId={this.state.sessId} uid={this.state.uid} />
+              <Profile sessId={this.state.sessId} uid={this.state.uid}/>
             </Route>
 
 

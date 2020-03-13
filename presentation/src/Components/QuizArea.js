@@ -44,7 +44,7 @@ class QuizArea extends React.Component {
   render = () => {
     return (
       <div>
-        {this.props.question.questionType === "0" ? ( // multiple choice question TODO: string 0
+        {this.props.question.questionType === 0 ? ( // multiple choice question TODO: string 0
           <div className="takeQuizContainer">
             <Grid container spacing={1}>
               <Grid item xs={12} className="question_title">

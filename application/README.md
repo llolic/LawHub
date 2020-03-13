@@ -121,35 +121,6 @@ Endpoints:
 ```
 *message* may potentially be an empty string
 
-# POST /api/v1/viewProfile
-
-**Request Body**
-```json
-{
-    "uid": string,   
-}
-```
-
-**Response**
-
-    - 200 OK for successful profile generation
-    - 400 BAD REQUEST if request body formatted incorrectly
-    - 500 INTERNAL SERVER ERROR for internal error (e.g. db down)
-
-**Response Body**
-```json
-{
-    "role": string,
-    "profilePicturePath": string,
-    "resumePath": string,
-    "bio": string,
-    "studyLevel": string,
-    "school": string,
-    "company": string,
-    "title": string
-}
-```
-depending on the role of the profile, *studyLevel* and *school* or *company* and *title* may be empty strings.
 
 # POST /api/v1/addQuiz
 
@@ -429,7 +400,7 @@ where *name* is first name and last name separated by a space
 }
 ```
 
-**Response**
+**Response**    
 
     - 200 OK if user exists
     - 400 if no info found
