@@ -242,7 +242,7 @@ class FetchQuiz(Resource):
         db.connect()
 
         quizInfoQuery = f'SELECT title, author, numQuestions FROM Quiz WHERE quizId={quizId};'
-        questionsQuery = f'SELECT questionType, option1, option2, option3, option4, correctAnswer, Question.questionId FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
+        questionsQuery = f'SELECT questionType, question, option1, option2, option3, option4, correctAnswer, Question.questionId FROM Question RIGHT JOIN QuizContains ON Question.questionId=QuizContains.questionId WHERE quizId={quizId};'
 
         try:
             quizInfo = db.execute(quizInfoQuery)
