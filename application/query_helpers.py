@@ -19,39 +19,44 @@ def addQuestions(questions):
 		question = questions[i]['question']
 		questionType = int(questions[i]['questionType'])
 
-		if questionType == 1:
-			insert = '''INSERT INTO Question (question, questionType) 
-				VALUES ("{}", {});
-				'''.format(question, questionType)
-			select = '''SELECT questionID FROM Question 
-					WHERE question = "{}" AND questionType = {};
-					'''.format(question, questionType)
+		if questionType == 2: # existing question
+			questionIds.append(questions[i]["questionId"])
 		else:
-			option1 = questions[i]['answers'][0]
-			option2 = questions[i]['answers'][1]
-			option3 = questions[i]['answers'][2]
-			option4 = questions[i]['answers'][3]
-			correctAnswer = int(questions[i]['correct'])
-			insert = '''INSERT INTO Question (question, questionType, option1, option2, option3, option4, correctAnswer) 
-				VALUES ("{}", {}, "{}", "{}", "{}", "{}", {});
-				'''.format(question, questionType, option1, option2, option3, option4, correctAnswer)
-			select = '''SELECT questionID FROM Question 
-					WHERE question = "{}" AND questionType = {} AND option1 = "{}" AND option2 = "{}" AND option3 = "{}" AND option4 = "{}" AND correctAnswer = {};
-					'''.format(question, questionType, option1, option2, option3, option4, correctAnswer)
 
-		#queries made twice here since if option1-4 is null, then we need to set to NULL, not "NULL".  option columns is varchar.
-		try:
-				db.execute(insert)
-				row = db.execute(select)
-		except:
-				return -1         
-				
-		questionIds.append(row[0][0])
+			if questionType == 1:
+				insert = '''INSERT INTO Question (question, questionType) 
+					VALUES ("{}", {});
+					'''.format(question, questionType)
+				select = '''SELECT questionID FROM Question 
+						WHERE question = "{}" AND questionType = {};
+						'''.format(question, questionType)
+			else:
+				option1 = questions[i]['answers'][0]
+				option2 = questions[i]['answers'][1]
+				option3 = questions[i]['answers'][2]
+				option4 = questions[i]['answers'][3]
+				correctAnswer = int(questions[i]['correct'])
+				insert = '''INSERT INTO Question (question, questionType, option1, option2, option3, option4, correctAnswer) 
+					VALUES ("{}", {}, "{}", "{}", "{}", "{}", {});
+					'''.format(question, questionType, option1, option2, option3, option4, correctAnswer)
+				select = '''SELECT questionID FROM Question 
+						WHERE question = "{}" AND questionType = {} AND option1 = "{}" AND option2 = "{}" AND option3 = "{}" AND option4 = "{}" AND correctAnswer = {};
+						'''.format(question, questionType, option1, option2, option3, option4, correctAnswer)
+
+			#queries made twice here since if option1-4 is null, then we need to set to NULL, not "NULL".  option columns is varchar.
+			try:
+					db.execute(insert)
+					row = db.execute(select)
+			except:
+					return -1         
+					
+			questionIds.append(row[0][0])
 
 	try:
 			db.close_connection()
 	except:
 			return -1
+			
 	return questionIds
 
 '''
@@ -158,3 +163,31 @@ def submitEmptyQuiz(userId, quizId):
 	except:
 		return -1
 	return 1
+
+def queryQuestions():
+	db = database_mysql.DatabaseMySql()
+	query = "SELECT * FROM Question;"
+	try:
+		db.connect()
+		rows = db.execute(query)
+		db.close_connection()
+	except:
+		return -1
+
+	if rows == []:
+		return 0
+
+	questions = []
+	for row in rows:
+		question = {}
+		question['questionId'] = row[0]
+		question['question'] = row[1]
+		question['questionType'] = row[2]
+		question['option1'] = row[3]
+		question['option2'] = row[4]
+		question['option3'] = row[5]
+		question['option4'] = row[6]
+		question['correctAnswer'] = row[7]
+		questions.append(question)
+
+	return questions
