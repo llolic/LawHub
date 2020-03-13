@@ -261,8 +261,9 @@ where *message* is potentially an empty string
     "author",
     "numQuestions",
     "questions": [
-        {"questionType",
-         "question",
+        {"questionType": int,
+         "questionId": int,
+         "question": string,
           "answers": [strings],
           "correct": 0} // index of correct answer
     ]
