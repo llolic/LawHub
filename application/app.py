@@ -236,7 +236,10 @@ class FetchQuizScores(Resource):
         # return {'quizName': 'TestQuiz', 'scores': [{'uid': 0, 'userName': 'TestUser1', 'score': 5}, {'uid': 1, 'userName': 'TestUser2', 'score': 10}]}
 
         quizNameQuery = f'SELECT title FROM Quiz WHERE quizId={quizId}'
-        leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
+        if numScores == 0:
+            leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC;'
+        else:
+            leaderboardQuery = f'SELECT QuizRecord.uid, score, firstName, lastName FROM QuizRecord RIGHT JOIN AppUser ON QuizRecord.uid=AppUser.uid WHERE quizId={quizId} ORDER BY score DESC LIMIT {numScores};'
 
         db = database_mysql.DatabaseMySql()
         db.connect()
