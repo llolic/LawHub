@@ -4,6 +4,23 @@
 
 const path = "35.227.67.4";
 
+export const fetchQuizQuestions = async state => {
+  //console.log("Attempting to login");
+  return fetch(`http://${path}:5000/api/v1/fetchQuestions`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(state)
+  }).then(result => {
+    if (result.ok) {
+      return result.json(); // userId and sessId ??and userType
+    }
+    return -1;
+  });
+}
+
+
 export const submitRegistration = async (state, type) => {
   return fetch(`http://${path}:5000/api/v1/register/${type}`, {
     method: "POST",
