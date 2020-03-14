@@ -318,6 +318,32 @@ Collaborators | Ahmad
 -------------------------
 
 
+Class Name | GetUserInfo
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Receives a request with the required user's user ID and responds with a JSON object which contains the user's name, email, country, state, city, study level, school, and bio/description. Used for loading profile pages.
+Collaborators | Shahmeer
+-------------------------
+
+Class Name | GetUserHistory
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Receives a request with the required user's user ID and responds with a JSON object containing an array of the user's previous attempts at quizzes, including the quizID of the quiz, the score, and the name of the quiz.
+Collaborators | Shahmeer
+-------------------------
+
+Class Name | FilterQuizzes
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Receives a POST request with 0 or more tags, an optional 'author' attribute, and an optional 'name' attribute, and returns a JSON object consisting of the corresponding quizzes, which includes the quizId, quiz name, and the number of questions in the quiz.
+Collaborators | Shahmeer
+-------------------------
+
+
+
 ## Architecture
 
 ### _System Interaction_
