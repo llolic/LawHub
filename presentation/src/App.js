@@ -10,7 +10,7 @@ import QuizCreation from "./Components/QuizCreation";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
 import QuizFilter from "./Components/QuizFilter";
-// import EmployerProfile from "./Components/EmployerProfile";
+import RecruiterProfile from "./Components/RecruiterProfile";
 import Profile from "./Components/Profile";
 import Leaderboard from "./Components/Leaderboard";
 import QuizLeaderboard from "./Components/QuizLeaderboard";
@@ -18,6 +18,7 @@ import QuizLeaderboard from "./Components/QuizLeaderboard";
 import { isAuthenticated } from "./Util/Auth";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import RecruiterProfile from "./Components/RecruiterProfile";
 
 class App extends React.Component {
   constructor(props) {
@@ -127,9 +128,9 @@ class App extends React.Component {
               </div>
             </Route>
 
-            {/* <Route path="/employerProfile">
-              <EmployerProfile />
-            </Route> */}
+            <Route path="/recruiterProfile">
+              <RecruiterProfile />
+            </Route>
 
             <Route path="/editProfile">
               <EditProfile />
