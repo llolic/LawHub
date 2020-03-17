@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "./Button";
-import QuizArea from "./QuizArea";
+import Button from "./Navigation/Button";
+import QuizArea from "./QuizInterface/QuizArea";
 import { submitQuizAnswers, fetchQuiz } from "../Util/Requests";
 
 import { response } from "../Constants/quiz";
@@ -34,7 +34,7 @@ class TakeQuiz extends React.Component {
       numMultChoice: 0, //TODO
       done: false,
       submitted: false,
-      error: false,
+      error: false
     };
 
     // this.handleClick = this.handleClick.bind(this);
@@ -46,26 +46,25 @@ class TakeQuiz extends React.Component {
       this.setState({
         title: result.quizName,
         dataSet: result.questions,
-        numQs: result.numQuestions - 1,
-        numMultChoice: result.numQuestions - 1
-      })
-    })
+        numQs: result.numQuestions - 1
+        // numMultChoice: result.numMultChoice
+      });
+    });
   }
 
   addAnswerToList = choice => {
-    this.setState({ curr_answer: choice });
-    var temp = {answer: choice,
-                questionId: this.state.dataSet[this.state.current].questionId,
-                questionType: this.state.dataSet[this.state.current].questionType}
-    const new_arr = this.state.userAnswers.concat(temp); //TODO: user_answers, const
-    //console.log(this.state.user_answers)
-    this.setState({ userAnswers: new_arr }, () => {
-      //TODO: callbacks to guarantee since async
-    }); //Bracket placements
-
-    this.setState({ current: this.state.current + 1 });
-    this.setState({ numMultChoice: this.state.numMultChoice + 1 }); // TODO
-    console.log(this.state.numMultChoice);
+    const ans = this.state.userAnswers;
+    ans.push({
+      answer: choice,
+      questionId: this.state.dataSet[this.state.current].questionId,
+      questionType: this.state.dataSet[this.state.current].questionType
+    });
+    this.setState({
+      userAnswers: ans,
+      current: this.state.current + 1,
+      numMultChoice: this.state.numMultChoice + 1
+    });
+    console.log(this.state.userAnswers);
   };
 
   handleClick = choice => {
@@ -77,20 +76,16 @@ class TakeQuiz extends React.Component {
       } else {
         this.setState({ incorrect: this.state.incorrect + 1 });
       }
+      this.addAnswerToList(choice); //TODO: final add
 
       if (this.state.current === this.state.numQs) {
-        this.addAnswerToList(choice); //TODO: final add
         this.setState({ done: true });
         this.handleSubmit();
-      } else {
-        //TODO
-        this.addAnswerToList(choice);
-
-        //this.state.student_answers[this.state.current] = this.state.curr_answer;
-        //this.setState({student_answers: [...this.state.student_answers, this.state.curr_answer]}) // TODO: https://stackoverflow.com/questions/26505064/what-is-the-best-way-to-add-a-value-to-an-array-in-state
       }
-    } 
-    else if (this.state.dataSet[this.state.current].questionType === "1") {
+      //TODO
+      //this.state.student_answers[this.state.current] = this.state.curr_answer;
+      //this.setState({student_answers: [...this.state.student_answers, this.state.curr_answer]}) // TODO: https://stackoverflow.com/questions/26505064/what-is-the-best-way-to-add-a-value-to-an-array-in-state
+    } else if (this.state.dataSet[this.state.current].questionType === 1) {
       //we have an open response
       //this.setState({curr_answer: choice})
       if (this.state.current === this.state.numQs) {
@@ -98,12 +93,13 @@ class TakeQuiz extends React.Component {
         this.handleSubmit();
       } else {
         //const new_arr = this.state.user_answers.push(this.state.curr_answer)
-        var temp = {answer: choice,
-                    questionId: this.state.dataSet[this.state.current].questionId,
-                    questionType: this.state.dataSet[this.state.current].questionType}
+        var temp = {
+          answer: choice,
+          questionId: this.state.dataSet[this.state.current].questionId,
+          questionType: this.state.dataSet[this.state.current].questionType
+        };
         const new_arr = this.state.userAnswers.push(temp); //TODO: user_answers, const
-        this.setState({ userAnswers: new_arr }, () => {
-        }); //Bracket placements
+        this.setState({ userAnswers: new_arr }, () => {}); //Bracket placements
         this.setState({ current: this.state.current + 1, curr_answer: "" });
       }
     }
@@ -141,12 +137,12 @@ class TakeQuiz extends React.Component {
                     Your results could not submitted, please try again.
                   </div>
                   <div className="centerdiv">
-                  <Button
-                    className="btn_blue"
-                    text="Submit Results"
-                    onClick={this.handleSubmit}
-                  />
-                </div>
+                    <Button
+                      className="btn_blue"
+                      text="Submit Results"
+                      onClick={this.handleSubmit}
+                    />
+                  </div>
                 </div>
               )}
             </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 
 import { Grid } from "@material-ui/core";
 
@@ -10,7 +10,7 @@ class MockQuizRow extends React.Component {
   render = () => {
     return (
       <Grid item xs={12}>
-        <Grid container xs={12} className="quiz_row" spacing={1} alignItems="center">
+        <Grid container item xs={12} className="quiz_row" spacing={1} alignItems="center">
           <Grid item xs={8} className="">
             <div className="quiz_title">{this.props.quizName}</div>
           </Grid>

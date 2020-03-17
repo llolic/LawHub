@@ -1,12 +1,7 @@
 import React from "react";
-import Button from "./Button";
-import {
-  schools,
-
-  studyLevels
-} from "../Constants/registration";
+import Button from "./Navigation/Button";
+import { schools, studyLevels } from "../Constants/registration";
 import { submitRegistration } from "../Util/Requests";
-
 
 import { TextField, MenuItem } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
@@ -25,11 +20,10 @@ class Registration extends React.Component {
       firstName: "",
       lastName: "",
       email: "",
-
-      // school: "",
-      // studylvl: "",
-      // country: "",
-      // stateOrProvince: "",
+      school: "",
+      studylvl: "",
+      country: "",
+      stateOrProvince: "",
       password: "",
       verifyPassword: "",
       // city: "toronto",
@@ -38,14 +32,13 @@ class Registration extends React.Component {
     };
   }
 
-
-  handleSumbit = () => {
+  handleSubmit = () => {
+    console.log("submitting");
     submitRegistration(this.state, this.props.type).then(result => {
       if (result === true) {
         this.setState({ submitted: 1 });
       } else {
         this.setState({ submitted: -1 });
-
       }
     });
   };
@@ -54,7 +47,6 @@ class Registration extends React.Component {
     if (this.props.type === "student") {
       return (
         <div className="row">
-
           <div className="width-60">
             <TextField
               id="school"
@@ -94,14 +86,11 @@ class Registration extends React.Component {
           </div>
         </div>
       );
-
     }
   }
 
   render = () => {
-
     if (this.state.submitted === 1) {
-
       return <Redirect push to="/successfulRegistration" />;
     }
 
@@ -112,13 +101,14 @@ class Registration extends React.Component {
         <div className="card">
           <div className="subtitle">LawHub {title} Registration</div>
 
-
           {this.state.submitted === -1 ? (
-            <div style={{color: "red"}}> An error has occurred, please try again </div>
+            <div style={{ color: "red" }}>
+              {" "}
+              An error has occurred, please try again{" "}
+            </div>
           ) : (
             <div></div>
           )}
-
 
           <TextField
             id="firstname"
@@ -146,9 +136,7 @@ class Registration extends React.Component {
             error={!this.state.email.includes("@") && this.state.email !== ""}
           />
 
-
           {/* {this.getFields()} */}
-
 
           <TextField
             id="password"
@@ -189,14 +177,12 @@ class Registration extends React.Component {
               className="btn_blue"
               text="Submit"
               disabled={
-                this.state.password.length > 6 &&
+                this.state.password.length > 5 &&
                 this.state.password === this.state.verifyPassword
                   ? false
                   : true
               }
-
-              onClick={this.handleSumbit}
-
+              onClick={this.handleSubmit}
             />
           </div>
         </div>

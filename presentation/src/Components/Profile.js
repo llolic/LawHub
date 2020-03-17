@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 import ProfileStats from "./ProfileStats";
 
 import { getUserInfo } from "../Util/Requests";

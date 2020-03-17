@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 import { verifyUser, getQuizzes } from "../Util/Requests";
 import MockQuizRow from "./MockQuizRow";
 
@@ -20,18 +20,17 @@ class Mock extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     getQuizzes().then(result => {
-      console.log(result);
       if (result !== -1) {
-        this.setState({ quizzes: result.quizzes});
+        this.setState({ quizzes: result.quizzes });
       }
-    })
+    });
   }
 
   clickCreate = () => {
-     this.setState({ createQuiz: 1 });
-     return;
+    this.setState({ createQuiz: 1 });
+    return;
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ createQuiz: -1 });
@@ -42,8 +41,8 @@ class Mock extends React.Component {
   };
 
   clickStartQuiz = () => {
-     this.setState({ startQuiz: 1 });
-     return;
+    this.setState({ startQuiz: 1 });
+    return;
     verifyUser(this.props.sessId, this.props.uid).then(result => {
       if (result === false) {
         this.setState({ startQuiz: -1 });
@@ -60,30 +59,38 @@ class Mock extends React.Component {
 
   renderQuizzes = () => {
     var quizlist = [];
-    for (let i = 0; i < this.state.quizzes.length; i++) {
-      quizlist.push(
-        <Grid item xs={12} className="quiz_card">
-            <div className="quiz_row">
-      <div className="quiz_title">{this.state.quizzes[i].quizName}</div>
-              <Link to="/takeQuiz">
-              {/* SEND QUIZID IN START QUIZ */}
-              <Button className="btn_yellow_small" text="Start" 
-              // onClick={this.props.updateQuizId(this.state.quizzes[i].quizId)}
-              />
-              </Link>
-            </div>
-          </Grid>
 
-// fix this later
-//  <MockQuizRow
-// quizName={this.state.quizzes[i].quizName}
-// clickLeaderboard={this.clickLeaderboard}
-// clickStartQuiz={this.clickStartQuiz}
-// /> 
-      )
+    for (let i = 0; i < this.state.quizzes.length; i++) {
+      // quizlist.push(
+      //   <Grid item xs={12} className="quiz_card">
+      //       <div className="quiz_row">
+      // <div className="quiz_title">{this.state.quizzes[i].quizName}</div>
+      //         <Link to="/takeQuiz">
+      //         {/* SEND QUIZID IN START QUIZ */}
+      //         <Button className="btn_yellow_small" text="Start"
+      //         // onClick={this.props.updateQuizId(this.state.quizzes[i].quizId)}
+      //         />
+      //         </Link>
+      //       </div>
+      //     </Grid>)
+
+      quizlist.push(
+        <MockQuizRow
+          quizName={this.state.quizzes[i].quizName}
+          clickLeaderboard={() => {
+            this.props.updateQuizId(this.state.quizzes[i].quizId);
+            this.clickLeaderboard();
+          }}
+          clickStartQuiz={() => {
+            this.props.updateQuizId(this.state.quizzes[i].quizId);
+            this.clickStartQuiz();
+          }}
+          key={i}
+        />
+      );
     }
     return quizlist;
-  }
+  };
 
   render = () => {
     if (this.state.createQuiz === 1) {
@@ -119,8 +126,8 @@ class Mock extends React.Component {
         </div>
 
         <Grid container spacing={3}>
-        {this.renderQuizzes()}
-          <MockQuizRow
+          {this.renderQuizzes()}
+          {/* <MockQuizRow
             quizName="Test Quiz"
             clickLeaderboard={this.clickLeaderboard}
             clickStartQuiz={this.clickStartQuiz}
@@ -128,7 +135,7 @@ class Mock extends React.Component {
           <MockQuizRow quizName="BAR Mock Quiz" />
           <MockQuizRow quizName="LSAT Mock" />
           <MockQuizRow quizName="BAR and LSAT Questions" />
-          <MockQuizRow quizName="LSAT Mock Quiz" />
+          <MockQuizRow quizName="LSAT Mock Quiz" /> */}
         </Grid>
       </div>
     );

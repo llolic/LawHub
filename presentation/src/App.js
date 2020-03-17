@@ -1,13 +1,12 @@
 import React from "react";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Components/Navigation/Navbar";
+import Footer from "./Components/Navigation/Footer";
 import Registration from "./Components/Registration";
 import TakeQuiz from "./Components/TakeQuiz";
 import Login from "./Components/Login";
 import HomePage from "./Components/HomePage";
-import Footer from "./Components/Footer";
 import Mock from "./Components/Mock";
 import QuizCreation from "./Components/QuizCreation";
-import StudentProfile from "./Components/StudentProfile";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
 import QuizFilter from "./Components/QuizFilter";
@@ -18,11 +17,7 @@ import QuizLeaderboard from "./Components/QuizLeaderboard";
 
 import { isAuthenticated } from "./Util/Auth";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -31,34 +26,38 @@ class App extends React.Component {
       loggedIn: false,
       sessId: null,
       uid: null,
-      quizId: null,
+      quizId: null, // 17
       userType: "recruiter" //testing
     };
   }
 
   updateNavbar = (sessId, uid, role) => {
     console.log("login successful", sessId, uid, role);
-    this.setState({ loggedIn: isAuthenticated(), sessId: sessId, uid: uid, userType: role }); // replace this?
+    this.setState({
+      loggedIn: isAuthenticated(),
+      sessId: sessId,
+      uid: uid,
+      userType: role
+    }); // replace this?
     console.log(this.state);
   };
 
-  updateQuizId = (quizId) => {
+  updateQuizId = quizId => {
     this.setState({ quizId: quizId });
-  }
+  };
 
   // need to update navbar after being unauthenticated
   // Needs to refresh page?
   // need to scroll to top on redirect?
 
   render = () => {
-
     return (
       <div className="container">
         <Router>
           <Navbar
             loggedIn={this.state.loggedIn}
             updateNavbar={this.updateNavbar}
-            isRecruiter={this.state.isRecruiter}
+            userType={this.state.userType}
           />
           <Switch>
             <Route path="/login">
@@ -70,8 +69,7 @@ class App extends React.Component {
             </Route>
 
             <Route path="/leaderboard">
-              <Leaderboard sessId={this.state.sessId}
-                uid={this.state.uid}/>
+              <Leaderboard sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/search">{/* search results here */}</Route>
@@ -86,13 +84,16 @@ class App extends React.Component {
             </Route>
 
             <Route path="/takeQuiz">
-              <TakeQuiz sessId={this.state.sessId} uid={this.state.uid} quizId={17}/>
+              <TakeQuiz
+                sessId={this.state.sessId}
+                uid={this.state.uid}
+                quizId={this.state.quizId}
+              />
             </Route>
 
             <Route path="/quizLeaderboard">
-              <QuizLeaderboard />
+              <QuizLeaderboard quizId={this.state.quizId}/>
             </Route>
-
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
@@ -110,7 +111,7 @@ class App extends React.Component {
 
             <Route path="/studentFilter">
               <StudentFilter sessId={this.state.sessId} uid={this.state.uid} />
-              </Route>
+            </Route>
 
             <Route path="/quizFilter">
               <QuizFilter sessId={this.state.sessId} uid={this.state.uid} />
@@ -134,11 +135,9 @@ class App extends React.Component {
               <EditProfile />
             </Route>
 
-
             <Route path="/studentProfile">
-              <Profile sessId={this.state.sessId} uid={this.state.uid}/>
+              <Profile sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
-
 
             <Route path="/">
               <HomePage loggedIn={this.state.loggedIn} />

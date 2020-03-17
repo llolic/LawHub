@@ -23,7 +23,6 @@ const data = [
 
 const LeaderboardBar = props => {
   const { fill, x, y, width, height, name } = props;
-  console.log(props);
 
   return (
     <svg height="300" width="1200">
@@ -56,29 +55,29 @@ class Leaderboard extends React.Component {
     this.setState({
       history: [
         {
-          user: "Harry Gunther",
+          userName: "Harry Gunther",
           numQuizzes: 123,
-          avgScore: 84.9
+          score: 0.84
         },
         {
-          user: "John Smith",
+          userName: "John Smith",
           numQuizzes: 156,
-          avgScore: 83
+          score: 0.83
         },
         {
-          user: "Amanda Lee",
+          userName: "Amanda Lee",
           numQuizzes: 120,
-          avgScore: 82.7
+          score: 0.82
         },
         {
-          user: "Barry Gunther",
+          userName: "Barry Gunther",
           numQuizzes: 133,
-          avgScore: 82.2
+          score: 0.82
         },
         {
-          user: "Mandy Collins",
+          userName: "Mandy Collins",
           numQuizzes: 101,
-          avgScore: 81.5
+          score: 0.81
         }
       ]
     });

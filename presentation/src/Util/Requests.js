@@ -126,12 +126,10 @@ export const submitNewQuiz = async (state, sessId, userId) => {
   }).then(result => {
     console.log(result);
     if (result.ok) {
-      console.log("Created new quiz");
       console.log(result);
       return true;
       // this.setState({ submitted: true }); // change this later
     } else {
-      console.log("Failed to create quiz");
       console.log(result);
       return false;
     }
@@ -173,7 +171,8 @@ export const verifyUser = async (sessId, userId) => {
 
 // POST /api/v1/fetchQuizScores
 export const fetchQuizScores = async (quizId, numScores) => {
-  var jsonObj = { quizId: quizId, numScores: numScores };
+  var jsonObj = { quizId: quizId, numScores: numScores, sessId: "Abc" };
+  console.log(jsonObj);
   return fetch(`http://${path}:5000/api/v1/fetchQuizScores`, {
     method: "POST",
     headers: {
@@ -184,13 +183,11 @@ export const fetchQuizScores = async (quizId, numScores) => {
     if (result.ok)
       return result.json();
     return -1;
+  })
+  .catch(err => {
+    throw err;
   });
 }
-
-
-// POST /api/v1/filterQuizzes
-
-// POST /api/v1/filterStudents
 
 
 // POST /api/v1/getUserHistory
@@ -234,12 +231,15 @@ export const getQuizzes = async () => {
   // var jsonObj = { sessId: sessId, userId: userId };
   return fetch(`http://${path}:5000/api/v1/fetchQuizList`, {
     method: "POST", // ??
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
   });
 }
 
 
 // POST /api/v1/fetchQuestions
-
 
 
 
