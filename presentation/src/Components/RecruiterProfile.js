@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 import profilePic from "../Images/lawhub.png";
 
 import { TextField } from "@material-ui/core";
