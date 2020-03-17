@@ -199,7 +199,7 @@ class SubmitQuiz(Resource):
         #     retval = submitEmptyQuiz('userId', 'quizId')
         # else:
         score = int(args['correct']) / int(args['numMultChoice'])
-        retval = submitQuiz('uid', 'quizId', score)
+        retval = submitQuiz(args['uid'], args['quizId'], score)
 
         if (retval == -1):
             return {"message": "error submitting quiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
