@@ -200,7 +200,6 @@ def queryStudent(args):
 
 	query = generateStudentQuery(study_level, school, country, state, city)
 	db = database_mysql.DatabaseMySql()
-  
 	if rows == []:
 		return 0
 
