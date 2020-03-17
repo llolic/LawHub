@@ -61,19 +61,6 @@ class Mock extends React.Component {
     var quizlist = [];
 
     for (let i = 0; i < this.state.quizzes.length; i++) {
-      // quizlist.push(
-      //   <Grid item xs={12} className="quiz_card">
-      //       <div className="quiz_row">
-      // <div className="quiz_title">{this.state.quizzes[i].quizName}</div>
-      //         <Link to="/takeQuiz">
-      //         {/* SEND QUIZID IN START QUIZ */}
-      //         <Button className="btn_yellow_small" text="Start"
-      //         // onClick={this.props.updateQuizId(this.state.quizzes[i].quizId)}
-      //         />
-      //         </Link>
-      //       </div>
-      //     </Grid>)
-
       quizlist.push(
         <MockQuizRow
           quizName={this.state.quizzes[i].quizName}
