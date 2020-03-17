@@ -10,7 +10,7 @@ import QuizCreation from "./Components/QuizCreation";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
 import QuizFilter from "./Components/QuizFilter";
-import RecruiterProfile from "./Components/RecruiterProfile";
+// import EmployerProfile from "./Components/EmployerProfile";
 import Profile from "./Components/Profile";
 import Leaderboard from "./Components/Leaderboard";
 import QuizLeaderboard from "./Components/QuizLeaderboard";
