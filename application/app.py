@@ -375,7 +375,7 @@ class FilterQuizzes(Resource):
         args = parser.parse_args()
         quizName = args['quizName']
         author = args['author']
-        tagsString = args['tags']
+        tagsString = args['tags'][1:-1]
 
         hasName = quizName != ""
         hasAuthor = author != ""
@@ -387,7 +387,7 @@ class FilterQuizzes(Resource):
         tags = []
         if (hasTags):
             for tag in tagsString.split(','):
-                tags.append(tag.strip())
+                tags.append(tag.strip().strip("'"))
         
         final_rows = set()
         
