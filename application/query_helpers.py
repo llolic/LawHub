@@ -167,13 +167,13 @@ def submitEmptyQuiz(userId, quizId):
 def queryQuestions():
 	db = database_mysql.DatabaseMySql()
 	query = "SELECT * FROM Question;"
-  try:
+	try:
 		db.connect()
 		rows = db.execute(query)
 		db.close_connection()
 	except:
 		return -1
-  	if rows == []:
+	if rows == []:
 		return 0
 
 	questions = []
@@ -200,7 +200,6 @@ def queryStudent(args):
 
 	query = generateStudentQuery(study_level, school, country, state, city)
 	db = database_mysql.DatabaseMySql()
-  
 	if rows == []:
 		return 0
 

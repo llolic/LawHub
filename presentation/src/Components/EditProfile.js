@@ -1,12 +1,12 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 import {
   schools,
   studyLevels,
   countries,
   stateprovinces
 } from "../Constants/registration";
-import { updateProfile, getUserInfo } from "./Requests";
+import { updateProfile, getUserInfo } from "../Util/Requests";
 import profilePic from "../Images/groot.jpg";
 
 import { TextField, MenuItem } from "@material-ui/core";
@@ -42,34 +42,6 @@ class EditProfile extends React.Component {
 
   updateResumePath() {
     alert("Just kidding, you can't upload resumes yet!");
-  }
-
-  // fetch user data...
-  componentWillMount() {
-    // fetchProfile(this.state.sessId, this.state.userId).then(result => {
-    // console.log(result);
-    // this.setState({
-    //   firstName: result.firstName,
-    //   lastName: result.lastName,
-    //   studyLevel: result.studyLevel,
-    //   school: result.school,
-    //   bio: result.bio,
-    //   city: result.city,
-    //   stateOrProvince: result.stateOrProvince,
-    //   country: result.country
-    // });
-    this.setState({
-      firstName: "Harry",
-      lastName: "Gunther",
-      studyLevel: "Undergraduate",
-      school: "Yale University",
-      bio:
-        "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
-      city: "Hartford",
-      stateOrProvince: "Connecticut",
-      country: "United States"
-    });
-    // });
   }
 
   componentWillMount() {

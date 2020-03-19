@@ -8,7 +8,6 @@ import Grid from "@material-ui/core/Grid";
 
 import { getUserHistory } from "../../Util/Requests";
 
-
 import { historyStats } from "../../Constants/stats";
 
 import "../../Styles/history.css"; //TODO
@@ -18,8 +17,9 @@ class History extends React.Component {
     componentWillMount() {
     // fetch user history here
       getUserHistory(this.props.uid, 0).then(data => {
+        console.log(data);
         this.setState({
-          history: data
+          history: data.scores
         });
       })
       // this.setState({
@@ -60,6 +60,21 @@ class History extends React.Component {
         quizTitle={this.state.history[i].title}
         date={this.state.history[i].date}
         score={this.state.history[i].score}
+        key={i}
+        number={-1}/>)
+      }
+      return rows;
+    }
+
+    renderUserQuizzes = () => {
+      let rows = [];
+      for (let i = 0; i < this.state.history.length; i++) {
+        rows.push(<ChartRow className={`history_row_${i%2}`}
+        quizTitle={this.state.history[i].quizName}
+        date={`2020-03-1${i}`}
+        // date={this.state.history[i].date}
+        score={this.state.history[i].score * 100}
+        key={i}
         number={-1}/>)
       }
       return rows;
@@ -85,7 +100,7 @@ class History extends React.Component {
                   <div className="center">Score</div>
                 </Grid>
               </Grid>
-              {this.renderQuizHistories()}
+              {this.renderUserQuizzes()}
             </Grid>
           </Box>
         )}

@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 import quizImg from "../Images/quizInterface.png";
 import profileStats from "../Images/profileStats.png";
 import leaderboardImg from "../Images/leaderboard.png";

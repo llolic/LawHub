@@ -1,13 +1,13 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import Button from "./Button";
-import { removeAccessToken } from "../Util/Auth";
+import { removeAccessToken } from "../../Util/Auth";
 
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-import logo from "../Images/lawhub.png";
-import "../Styles/navbar.css";
+import logo from "../../Images/lawhub.png";
+import "../../Styles/navbar.css";
 
 /**
  * Navigation bar for the web application.

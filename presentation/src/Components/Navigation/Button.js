@@ -1,5 +1,5 @@
 import React from "react";
-import "../Styles/button.css";
+import "../../Styles/button.css";
 
 /**
  * This is a functional component, it shouldn't need a state

@@ -413,7 +413,6 @@ where *name* is first name and last name separated by a space
     "studyLevel": int, 
     "school": string, 
     "bio": string, 
-    "city": string, 
     "stateOrProvince": string, 
     "country": string
 }
@@ -450,5 +449,121 @@ A request body is not required for this request
             "correctAnswer": int
         }
                 ]
+}
+```
+
+# POST /api/v1/createPosting
+
+**Request Body**
+```json
+{
+    "uid": int,
+    "title": string,
+    "description": string,
+    "stateOrProvince": string,
+    "quizIds": list of ints
+}
+```
+where *uid* must be a recruiter, and *quizIds* is a list of quizIds
+
+**Response**
+
+    - 200 OK if posting was created
+    - 500 for any server errors
+    
+**Response Body**
+```json
+{
+    "message": string
+}
+```
+
+# POST /api/v1/fetchPostings
+
+**Request Body**
+```json
+{
+    "uid": int,
+    "stateOrProvince": string
+}
+```
+where *uid* may be -1, or *stateOrProvince* may be left as an empty string to indicate not to filter postings based on the respective field 
+
+**Response**
+
+    - 200 OK if posting were found
+    - 400 if no postings were found
+    - 500 for any server errors
+    
+**Response Body**
+```json
+{
+    "postings": [
+        {
+            "postingId": int,
+            "title": string,
+            "description": string,
+            "stateOrProvince": string,
+            "recruiterName": string,
+            "quizzes": [
+                {
+                 "quizId": int,
+                 "quizName" string
+                }
+            ],
+       ]
+}
+```
+
+# POST /api/v1/editProfile/recruiter
+
+**Request Body**
+```json
+{
+    "uid": string,
+    "companyName": string,
+    "title": string,
+    "bio": string
+}
+```
+
+**Response**
+
+    - 200 OK for successful edit
+    - 400 BAD REQUEST if request body formatted incorrectly, string too long (potentially)
+    - 500 INTERNAL SERVER ERROR for internal error (e.g. db down)
+
+**Response Body**
+```json
+{
+    "message": string
+}
+```
+*message* may potentially be an empty string
+
+# POST /api/v1/getRecruiterInfo
+
+**Request Body**
+```json
+{
+    "uid": int
+}
+```
+
+**Response**    
+
+    - 200 OK if user exists
+    - 400 if no info found
+    
+**Response Body**
+```json
+{
+    "firstName": string, 
+    "lastName": string, 
+    "companyName": string, 
+    "title": string, 
+    "bio": string, 
+    "stateOrProvince": string, 
+    "country": string
 }
 ```

@@ -1,3 +1,14 @@
+LAWHUB USERS
+-----------------------------------------------------------
+Students:
+- harry@lawhub.com gunther
+- john@gmail.com student
+
+Recruiters:
+- recruiter@lawhub.com recruiter 
+
+
+
 RUNNING CREATE-REACT-APP 
 - Install node.js v10.16 (this should install npm as well)
 - npm install -g create-react-app
@@ -6,7 +17,6 @@ RUNNING CREATE-REACT-APP
 - npm install js-cookie *NEW*
 - npm install react-compound-timer *NEW*
 - npm install recharts *NEW*
-
 
 - go to presentation folder and run "npm start" 
     - if this breaks, try "npm install" then "npm start"

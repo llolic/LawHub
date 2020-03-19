@@ -1,12 +1,12 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 import {
   schools,
   studyLevels,
   countries,
   stateprovinces
 } from "../Constants/registration";
-import { filterStudents } from "./Requests"; 
+import { filterStudents } from "../Util/Requests"; 
 
 import { TextField, MenuItem } from "@material-ui/core";
 

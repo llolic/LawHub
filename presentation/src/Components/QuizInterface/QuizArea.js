@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "../Navigation/Button";
 import AnswerList from "./AnswerList";
 import Question from "./Question";
 
@@ -10,7 +10,7 @@ import Timer from "react-compound-timer";
 
 //import { Redirect } from "react-router-dom";
 
-import "../Styles/registration.css";
+import "../../Styles/registration.css";
 
 /**
  * Student Registration card for the student user.
@@ -87,17 +87,22 @@ class QuizArea extends React.Component {
                 handler={this.updateAns}
                 selected={this.state.selectedAns}
               />
-              <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-              <Button
-                className="btn_blue"
-                text={this.props.qNum === this.props.qTotal ? "SUBMIT" : "NEXT"}
-                onClick={this.resetState}
-                style={{textAlign: "right"}}
-              />
-
-            </div>
-               
-  
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%"
+                }}
+              >
+                <Button
+                  className="btn_blue"
+                  text={
+                    this.props.qNum === this.props.qTotal ? "SUBMIT" : "NEXT"
+                  }
+                  onClick={this.resetState}
+                  style={{ textAlign: "right" }}
+                />
+              </div>
             </Grid>
           </div>
         ) : (

@@ -199,7 +199,7 @@ class SubmitQuiz(Resource):
         #     retval = submitEmptyQuiz('userId', 'quizId')
         # else:
         score = int(args['correct']) / int(args['numMultChoice'])
-        retval = submitQuiz('uid', 'quizId', score)
+        retval = submitQuiz(args['uid'], args['quizId'], score)
 
         if (retval == -1):
             return {"message": "error submitting quiz"}, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -375,7 +375,7 @@ class FilterQuizzes(Resource):
         args = parser.parse_args()
         quizName = args['quizName']
         author = args['author']
-        tagsString = args['tags']
+        tagsString = args['tags'][1:-1]
 
         hasName = quizName != ""
         hasAuthor = author != ""
@@ -387,7 +387,7 @@ class FilterQuizzes(Resource):
         tags = []
         if (hasTags):
             for tag in tagsString.split(','):
-                tags.append(tag.strip())
+                tags.append(tag.strip().strip("'"))
         
         final_rows = set()
         

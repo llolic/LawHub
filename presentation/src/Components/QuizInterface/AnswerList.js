@@ -3,7 +3,7 @@ import Answer from "./Answer";
 
 import { Grid } from "@material-ui/core";
 
-import "../Styles/registration.css";
+import "../../Styles/registration.css";
 
 /**
  * Student Registration card for the student user.

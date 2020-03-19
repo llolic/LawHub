@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./Navigation/Button";
 import { filterQuizzes } from "../Util/Requests"; 
 
 import { TextField } from "@material-ui/core";
