@@ -40,16 +40,29 @@
 
 .posting_header {
     align-items: baseline;
-    padding-right: 1em;
-    margin-bottom: 0;
+    /* padding-right: 1em; */
     border-bottom: 2px solid rgb(241, 183, 96);
 }
 
 .posting_location {
+    /* display: flex; */
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
     font-weight: 300;
-    text-align: end;
 }
 
 .posting_body {
     padding-top: 1em;
+}
+
+.posting_recruiter {
+    font-weight: 300;
+    display: flex;
+}
+
+.posting_quiz_list {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
 }

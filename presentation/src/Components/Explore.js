@@ -12,7 +12,9 @@ class Explore extends React.Component {
     super(props);
     this.state = {
       startQuiz: 0,
-      postings: []
+      toRecruiterProfile: 0,
+      postings: [],
+      doneQuizzes: []
     };
   }
 
@@ -22,11 +24,20 @@ class Explore extends React.Component {
     //     this.setState({ postings: result.postings });
     //   }
     // });
+        // getUserHistory(this.props.uid, 0).then(result => {
+    //   var doneQuizzes = this.state.doneQuizzes;
+    //   for (let i = 0; i < result.scores.length; i++) {
+    //     doneQuizzes.push(result.scores[i].quizId);
+    //   }
+    //
+    // });
+    this.setState({ doneQuizzes: [17] });
     this.setState({
       postings: [
         {
           postingId: 1,
           title: "Test Posting",
+          recruiterName: "Test Recruiter",
           description: "Get hired now!",
           stateOrProvince: "California",
           quizzes: [
@@ -39,6 +50,7 @@ class Explore extends React.Component {
         {
           postingId: 2,
           title: "White & Case Legal Intern Fall 2020",
+          recruiterName: "James Smith",
           description:
             "As a Legal Intern at White & Case you will work with the company's Deputy and General Counsel in many projects and will have a major impact on all departments company-wide.",
           stateOrProvince: "New York",
@@ -52,6 +64,7 @@ class Explore extends React.Component {
         {
           postingId: 3,
           title: "Norton Rose Fulbright Summer 2020 CA ",
+          recruiterName: "Jessica Peterson",
           description:
             "Norton Rose Fulbright is looking for a Law intern to join this prestigious internship program at our Irvine, California headquarters.",
           stateOrProvince: "California",
@@ -79,6 +92,11 @@ class Explore extends React.Component {
     return;
   };
 
+  clickRecruiter = () => {
+    this.setState({ toRecruiterProfile: 1 });
+    return;
+  };
+
   renderPostings = () => {
     var postgrid = [];
 
@@ -86,10 +104,15 @@ class Explore extends React.Component {
       postgrid.push(
         <Posting
           {...this.state.postings[i]}
-          clickStartQuiz={() => {
-            this.props.updateQuizId(this.state.quizzes[i].quizId);
-            this.clickStartQuiz();
-          }}
+          doneQuizzes={this.state.doneQuizzes}
+          // clickStartQuiz={() => {
+          //   this.props.updateQuizId(this.state.postings[i].quizId);
+          //   this.clickStartQuiz();
+          // }}
+          clickRecruiter={this.clickRecruiter}
+          clickStartQuiz={this.clickStartQuiz}
+          updateQuizId={this.props.updateQuizId}
+          updateProfileUid={this.props.updateProfileUid}
           key={i}
         />
       );
@@ -98,8 +121,8 @@ class Explore extends React.Component {
   };
 
   render = () => {
-    if (this.state.createQuiz === 1) {
-      return <Redirect push to="/quizCreation" />;
+    if (this.state.toRecruiterProfile === 1) {
+      return <Redirect push to="/recruiterProfile" />;
     }
     if (this.state.startQuiz === 1) {
       return <Redirect push to="/takeQuiz" />;
@@ -109,7 +132,7 @@ class Explore extends React.Component {
       <div className="explore_container">
         <div className="title">EXPLORE POSTINGS</div>
         <div>
-          Complete all quizzes listed on a posting to automatically be considered an applicant for that posting.
+          Complete all quizzes listed on a posting to automatically be considered as an applicant for that posting.
         </div>
         <Grid container>{this.renderPostings()}</Grid>
       </div>

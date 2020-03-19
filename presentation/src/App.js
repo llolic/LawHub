@@ -28,6 +28,7 @@ class App extends React.Component {
       loggedIn: false,
       sessId: null,
       uid: null,
+      profileUid: null,
       quizId: null, // 17
       userType: "recruiter" //testing
     };
@@ -47,6 +48,11 @@ class App extends React.Component {
   updateQuizId = quizId => {
     this.setState({ quizId: quizId });
   };
+
+  updateProfileId = profileUid => {
+    this.setState({ profileUid: profileUid });
+  };
+
 
   // need to update navbar after being unauthenticated
   // Needs to refresh page?
@@ -107,6 +113,7 @@ class App extends React.Component {
                 uid={this.state.uid}
                 userType={this.state.userType}
                 updateQuizId={this.updateQuizId}
+                updateProfileId={this.updateProfileId}
 
               />
             </Route>
