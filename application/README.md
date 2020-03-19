@@ -504,9 +504,14 @@ where *uid* may be -1, or *stateOrProvince* may be left as an empty string to in
             "title": string,
             "description": string,
             "stateOrProvince": string,
-            "quizIds": list of int,
-        }
-                ]
+            "recruiterName": string,
+            "quizzes": [
+                {
+                 "quizId": int,
+                 "quizName" string
+                }
+            ],
+       ]
 }
 ```
 
