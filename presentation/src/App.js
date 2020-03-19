@@ -6,6 +6,7 @@ import TakeQuiz from "./Components/TakeQuiz";
 import Login from "./Components/Login";
 import HomePage from "./Components/HomePage";
 import Mock from "./Components/Mock";
+import Explore from "./Components/Explore";
 import QuizCreation from "./Components/QuizCreation";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
@@ -93,14 +94,22 @@ class App extends React.Component {
             </Route>
 
             <Route path="/quizLeaderboard">
-              <QuizLeaderboard quizId={this.state.quizId}/>
+              <QuizLeaderboard quizId={this.state.quizId} />
             </Route>
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
-            <Route path="/explore">{/* explore here */}</Route>
+            <Route path="/explore">
+              <Explore
+                sessId={this.state.sessId}
+                uid={this.state.uid}
+                userType={this.state.userType}
+                updateQuizId={this.updateQuizId}
+
+              />
+            </Route>
 
             <Route path="/register">
               <Registration type="student" />
