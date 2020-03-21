@@ -125,3 +125,12 @@ create table PostingContains (
     FOREIGN KEY (postingId) REFERENCES Posting(postingId),
     FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
 );
+
+create table Posting (
+    postingId SERIAL NULL primary key,
+    recruiterId BIGINT UNSIGNED NOT NULL,
+    title varchar(300) NOT NULL,
+    description varchar(3000),
+    stateOrProvince varchar(100) NOT NULL,
+    FOREIGN KEY (recruiterId) REFERENCES Recruiter(uid)
+);
