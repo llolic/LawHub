@@ -37,3 +37,11 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 -- Notes: First query gets all the quiz records associated with a specified student
 --        Second query gets all the information about a specified student
+
+
+-----------
+-- Sprint 4
+-----------
+
+-- LAM-17: create posting
+INSERT INTO Posting (recruiterId, title, description, stateOrProvince) VALUES ({}, {}, {}, {});
