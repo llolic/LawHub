@@ -45,3 +45,4 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 -- LAM-17: create posting
 INSERT INTO Posting (recruiterId, title, description, stateOrProvince) VALUES ({}, {}, {}, {});
+INSERT INTO PostingContains (postingId, quizId) VALUES ({}, {});
