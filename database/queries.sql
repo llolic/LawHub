@@ -43,3 +43,4 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 -- LAM-12: view recruiter profile and postings
 SELECT firstName, lastName, company, title, bio, stateOrProvince, country FROM AppUser INNER JOIN Recruiter ON AppUser.uid=Recruiter.uid WHERE Recruiter.uid={};
+SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, firstName, lastName FROM Posting RIGHT JOIN AppUser ON Posting.recruiterId=AppUser.uid WHERE Posting.recruiterId={};
