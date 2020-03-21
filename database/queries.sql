@@ -43,3 +43,4 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 -- LAM-4: posting suggestions
 SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, firstName, lastName FROM Posting RIGHT JOIN AppUser ON Posting.recruiterId=AppUser.uid WHERE Posting.stateOrProvince={};
+SELECT quizId FROM PostingContains WHERE postingId={};
