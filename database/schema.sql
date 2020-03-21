@@ -119,15 +119,15 @@ create table Recruiter (
 ---------------
 
 create table PostingContains (
-    postingId BIGINT UNSIGNED NOT NULL, --add foreign key constraint
-    quizId BIGINT UNSIGNED NOT NULL --add foreign key constraint
+    postingId BIGINT UNSIGNED NOT NULL,
+    quizId BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY(postingId, quizId),
     FOREIGN KEY (postingId) REFERENCES Posting(postingId),
     FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
 );
 
 create table Posting (
-    postingId SERIAL NULL primary key,
+    postingId SERIAL NOT NULL primary key,
     recruiterId BIGINT UNSIGNED NOT NULL,
     title varchar(300) NOT NULL,
     description varchar(3000),
