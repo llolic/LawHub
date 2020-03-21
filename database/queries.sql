@@ -37,3 +37,9 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 -- Notes: First query gets all the quiz records associated with a specified student
 --        Second query gets all the information about a specified student
+
+
+
+
+-- LAM-12: view recruiter profile and postings
+SELECT firstName, lastName, company, title, bio, stateOrProvince, country FROM AppUser INNER JOIN Recruiter ON AppUser.uid=Recruiter.uid WHERE Recruiter.uid={};
