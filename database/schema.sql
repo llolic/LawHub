@@ -12,7 +12,7 @@ create table AppUser (
 
 -- INSERT INTO AppUser(password, firstName, lastName, email, role, country, stateOrProvince, city) VALUES($2, $3, $4, $5, 'student', $7, $8, $9);
 
--- 104.196.152.154
+-- 35.227.67.4
 -- port: 3306
 -- database name: 'lh_db'
 -- user: 'user1'
@@ -111,4 +111,17 @@ create table Recruiter (
     profilePicturePath varchar(1000),
     bio varchar(3000),
     FOREIGN KEY (uid) REFERENCES AppUser(uid)
+);
+
+
+---------------
+-- Sprint 4
+---------------
+
+create table PostingContains (
+    postingId BIGINT UNSIGNED NOT NULL, --add foreign key constraint
+    quizId BIGINT UNSIGNED NOT NULL --add foreign key constraint
+    PRIMARY KEY(postingId, quizId),
+    FOREIGN KEY (postingId) REFERENCES Posting(postingId),
+    FOREIGN KEY (quizId) REFERENCES Quiz(quizId)
 );
