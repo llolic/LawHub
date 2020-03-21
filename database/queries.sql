@@ -37,3 +37,9 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 -- Notes: First query gets all the quiz records associated with a specified student
 --        Second query gets all the information about a specified student
+
+
+
+
+-- LAM-16: recruiter customize profile
+UPDATE Recruiter SET company={}, title={}, bio={} WHERE uid={};
