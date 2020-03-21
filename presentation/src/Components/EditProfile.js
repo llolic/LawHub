@@ -97,12 +97,12 @@ class EditProfile extends React.Component {
           </div>
           <div className="upload_row">
             <Button
-              className="btn_yellow_small"
+              className="btn_small"
               text="Upload Picture"
               onClick={this.updateProfilePicturePath}
             />
             <Button
-              className="btn_yellow_small"
+              className="btn_small"
               text="Upload Resume"
               onClick={this.updateResumePath}
             />

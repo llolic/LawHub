@@ -105,10 +105,6 @@ class Explore extends React.Component {
         <Posting
           {...this.state.postings[i]}
           doneQuizzes={this.state.doneQuizzes}
-          // clickStartQuiz={() => {
-          //   this.props.updateQuizId(this.state.postings[i].quizId);
-          //   this.clickStartQuiz();
-          // }}
           clickRecruiter={this.clickRecruiter}
           clickStartQuiz={this.clickStartQuiz}
           updateQuizId={this.props.updateQuizId}

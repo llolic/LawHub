@@ -11,7 +11,7 @@ import QuizCreation from "./Components/QuizCreation";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
 import QuizFilter from "./Components/QuizFilter";
-// import EmployerProfile from "./Components/EmployerProfile";
+import EditRecruiterProfile from "./Components/EditRecruiterProfile";
 import Profile from "./Components/Profile";
 import Leaderboard from "./Components/Leaderboard";
 import QuizLeaderboard from "./Components/QuizLeaderboard";
@@ -19,7 +19,6 @@ import QuizLeaderboard from "./Components/QuizLeaderboard";
 import { isAuthenticated } from "./Util/Auth";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import RecruiterProfile from "./Components/RecruiterProfile";
 
 class App extends React.Component {
   constructor(props) {
@@ -49,7 +48,7 @@ class App extends React.Component {
     this.setState({ quizId: quizId });
   };
 
-  updateProfileId = profileUid => {
+  updateProfileUid = profileUid => {
     this.setState({ profileUid: profileUid });
   };
 
@@ -113,7 +112,7 @@ class App extends React.Component {
                 uid={this.state.uid}
                 userType={this.state.userType}
                 updateQuizId={this.updateQuizId}
-                updateProfileId={this.updateProfileId}
+                updateProfileUid={this.updateProfileUid}
 
               />
             </Route>
@@ -144,9 +143,13 @@ class App extends React.Component {
               </div>
             </Route>
 
-            <Route path="/recruiterProfile">
-              <RecruiterProfile />
+            <Route path="/editRecruiterProfile">
+              <EditRecruiterProfile />
             </Route>
+
+            {/* <Route path="/recruiterProfile"> */}
+              {/* <Profile /> */}
+            {/* </Route> */}
 
             <Route path="/editProfile">
               <EditProfile />
