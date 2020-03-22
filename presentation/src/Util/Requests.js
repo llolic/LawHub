@@ -4,6 +4,22 @@
 
 const path = "35.227.67.4";
 
+export const submitNewPosting = async state => {
+  console.log(state);
+    return fetch(`http://${path}:5000/api/v1/createPosting`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(state)
+    }).then(result => {
+      console.log(result);
+      return result.ok;
+    }, function(error) { // idk if this works
+      return false;
+  });
+};
+
 export const fetchQuizQuestions = async () => {
   //console.log("Attempting to login");
   return fetch(`http://${path}:5000/api/v1/fetchQuestions`, {
