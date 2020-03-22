@@ -15,6 +15,7 @@ import Profile from "./Components/Profile";
 import Leaderboard from "./Components/Leaderboard";
 import QuizLeaderboard from "./Components/QuizLeaderboard";
 import CreatePosting from "./Components/CreatePosting";
+import SuggestPostings from "./Components/SuggestPostings";
 
 import { isAuthenticated } from "./Util/Auth";
 
@@ -143,6 +144,10 @@ class App extends React.Component {
 
             <Route path="/createPosting">
               <CreatePosting sessId={this.state.sessId} uid={this.state.uid} />
+            </Route>
+
+            <Route path="/suggestPostings">
+              <SuggestPostings sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/">

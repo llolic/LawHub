@@ -1,174 +1,162 @@
 import React from "react";
 import Button from "./Navigation/Button";
-import { filterQuizzes } from "../Util/Requests"; 
+import { getPostings, getUserInfo } from "../Util/Requests";
 
 import { TextField } from "@material-ui/core";
 
-import "../Styles/quizfilter.css"; 
+import "../Styles/suggestpostings.css";
 
-/**
- * Filter Quizzes card for finding quizzes using our platform
- * Includes logic to send/receive requests to the flask server
- */
-class QuizFilter extends React.Component {
+class SuggestPostings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       uid: this.props.uid,
       sessId: this.props.sessId,
-      quizName: "", 
-      author: "",
-      tag1: "",
-      tag2: "",
-      tag3: "",
-      tags: [], //TODO: default 3 empty strings, reference others?
+      stateOrProvince: "Hardcoded",
+      postings: [
+        {
+          postingId: 1,
+          title: "Hard Coded Title 1",
+          description: "Hard Coded Description 1",
+          stateOrProvince: "Hardcoded",
+          recruiterName: "Hard Coded Recruiter 1",
+          quizzes: [
+            {
+              quizId: 1,
+              quizName: "Hard Coded Quiz 1"
+            }
+          ]
+        },
+        {
+          postingId: 2,
+          title: "Hard Coded Title 2",
+          description: "Hard Coded Description 2",
+          stateOrProvince: "Hardcoded",
+          recruiterName: "Hard Coded Recruiter 2",
+          quizzes: [
+            {
+              quizId: 1,
+              quizName: "Hard Coded Quiz 1"
+            },
+            {
+              quizId: 2,
+              quizName: "Hard Coded Quiz 2"
+            }
+          ]
+        },
+        {
+          postingId: 3,
+          title: "Hard Coded Title 3",
+          description: "Hard Coded Description 3",
+          stateOrProvince: "Hardcoded",
+          recruiterName: "Hard Coded Recruiter 3",
+          quizzes: [
+            {
+              quizId: 1,
+              quizName: "Hard Coded Quiz 1"
+            },
+            {
+              quizId: 2,
+              quizName: "Hard Coded Quiz 2"
+            },
+            {
+              quizId: 3,
+              quizName: "Hard Coded Quiz 3"
+            }
+          ]
+        }
+      ],
       submitted: false,
-      error: false,
-      quizzes: [
-        {quizId: 1, quizName: "Quiz 1", numQuestions: 1},
-        {quizId: 2, quizName: "Quiz 2", numQuestions: 2},
-        {quizId: 3, quizName: "Quiz 3", numQuestions: 3},
-        {quizId: 4, quizName: "Quiz 4", numQuestions: 4},
-        {quizId: 5, quizName: "Quiz 5", numQuestions: 5}
-      ] //TODO: hard coded
+      error: false
     };
   }
 
   //https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
   createTable = () => {
+    if (this.state.postings.length === 0) {
+      this.loadStateOrProvince();
+      this.loadPostings();
+    }
 
     let table = [];
 
     let header = [];
-    header.push(<tr><th>Quiz ID</th><th>Quiz Name</th><th>Number of Questions</th></tr>)
+    header.push(
+      <tr>
+        <th>Posting ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Recruiter Name</th>
+        <th>Quiz IDs</th>
+      </tr>
+    );
 
-    table.push(header)
+    table.push(header);
 
-    for (let i=0; i<this.state.quizzes.length; i++) {
+    for (let i = 0; i < this.state.postings.length; i++) {
+      let children = [];
 
-      let children = []
-  
       //note: {i}, not ${i} since $ is for string
-      children.push(<td>{this.state.quizzes[i].quizId}</td>)
-      children.push(<td>{this.state.quizzes[i].quizName}</td>)
-      children.push(<td>{this.state.quizzes[i].numQuestions}</td>)
-      
-      table.push(<tr>{children}</tr>)
+      children.push(<td>{this.state.postings[i].postingId}</td>);
+      children.push(<td>{this.state.postings[i].title}</td>);
+      children.push(<td>{this.state.postings[i].description}</td>);
+      children.push(<td>{this.state.postings[i].recruiterName}</td>);
 
+      let quizzes = [];
+        for (let j = 0; j < this.state.postings[i].quizzes.length; j++) {
+          quizzes.push(this.state.postings[i].quizzes[j].quizName);
+          if ((j !== this.state.postings[i].quizzes.length - 1) && (this.state.postings[i].quizzes.length > 1)) {
+            quizzes.push(",");
+          }
+        }
+      children.push(<td>{quizzes}</td>);
+
+      table.push(<tr>{children}</tr>);
     }
 
     return table;
+  };
 
-  }
-
-
-  submitQuizFilters = async () => {
-    const new_arr = [];
-    new_arr.push(this.state.tag1);
-    new_arr.push(this.state.tag2);
-    new_arr.push(this.state.tag3);
-    this.setState({ tags: new_arr }, () => {
-      console.log(this.state.tags);
-      //TODO: callbacks to guarantee since async
-    }); //Bracket placements
-
-    
-
-
-
-    filterQuizzes(this.state).then(result => {
+  loadStateOrProvince = async () => {
+    getUserInfo(this.state.uid).then(result => {
       if (result === false) {
         this.setState({ error: true });
-        
-        return
+        return;
       }
       this.setState({ submitted: true }); // change this later
-      this.setState({ quizzes: result.matches });
-    })
+      this.setState({ stateOrProvince: result.stateOrProvince });
+    });
+  };
+
+  loadPostings = async () => {
+    getPostings(this.state).then(result => {
+      if (result === false) {
+        this.setState({ error: true });
+        return;
+      }
+      this.setState({ submitted: true }); // change this later
+      this.setState({ postings: result.postings });
+    });
   };
 
   render = () => {
     return (
-      <div className="quizfilter_container">
+      <div className="suggestpostings_container">
         <div className="card">
-          <div className="subtitle"> Enter filters below to narrow your search for quizzes: </div>
-
-          <TextField
-            id="quizName"
-            label="Quiz Name"
-            value={this.state.quizName}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ quizName: e.target.value })}
-            multiline
-          />
-
-          <TextField
-            id="author"
-            label="Quiz Author"
-            value={this.state.author}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ author: e.target.value })}
-            multiline
-          />
-
-          <TextField
-            id="tag1"
-            label="Quiz Tag 1"
-            value={this.state.tag1}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ tag1: e.target.value })}
-            multiline
-          />
-
-          <TextField
-            id="tag2"
-            label="Quiz Tag 2"
-            value={this.state.tag2}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ tag2: e.target.value })}
-            multiline
-          />
-
-          <TextField
-            id="tag3"
-            label="Quiz Tag 3"
-            value={this.state.tag3}
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            onChange={e => this.setState({ tag3: e.target.value })}
-            multiline
-          />
-
-          <div className="centerdiv">
-            <Button
-              className="btn_blue"
-              text="Filter Quizzes"
-              onClick={this.submitQuizFilters}
-            />
+          <div className="subtitle">
+            {" "}
+            Here are some job postings based on your location:{" "}
           </div>
 
-          <div className="centerdiv">
-              <table id="quizzes">
-                  {this.createTable()}
-              </table>
-          </div>
+          <h3>Location: {this.state.stateOrProvince}</h3>
 
+          <div className="centerdiv">
+            <table id="postings">{this.createTable()}</table>
+          </div>
         </div>
       </div>
     );
   };
 }
 
-export default QuizFilter;
-
-
-
+export default SuggestPostings;

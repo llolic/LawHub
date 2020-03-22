@@ -4,6 +4,23 @@
 
 const path = "35.227.67.4";
 
+export const getPostings = async state => {
+  return fetch(`http://${path}:5000/api/v1/fetchPostings`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(state)
+  }).then(result => {
+    console.log(result);
+    if (result.ok) {
+      return result.json();
+    } else {
+      return false;
+    }
+  });
+}
+
 export const submitNewPosting = async state => {
   console.log(state);
     return fetch(`http://${path}:5000/api/v1/createPosting`, {
