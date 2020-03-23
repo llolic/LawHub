@@ -432,7 +432,44 @@ class FilterStudents(Resource):
             return {}, status.HTTP_400_BAD_REQUEST
         
         return {"matches": matches}, status.HTTP_200_OK
-      
+
+class FetchPostings(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid', 'stateOrProvince'])
+        args = parser.parse_args()
+        uid = int(args['uid'])
+        state = args['stateOrProvince']
+
+        isUid = uid != -1
+        isState = state != ""
+
+        uidQuery = ""
+        if isUid:
+            uidQuery += f" AND Posting.recruiterId={uid}"
+        stateQuery = ""
+        if isState:
+            stateQuery += f" AND Posting.stateOrProvince='{state}'"
+
+        query = f"SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, recruiterId, firstName, lastName FROM Posting INNER JOIN AppUser ON Posting.recruiterId=AppUser.uid WHERE True {uidQuery} {stateQuery};"
+
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        postingsRows = db.execute(query)
+        postings = []
+        for row in postingsRows:
+            postings.append({"postingId":row[0], 'title':row[1], 'description':row[2], 'stateOrProvince':row[3], 'recruiterId':row[4], 'recruiterName':row[5] + ' ' + row[6], 'quizzes': []})
+
+        for posting in postings:
+            print(f'SELECT quizId FROM PostingContains WHERE postingId={posting["postingId"]};')
+            quizRows = db.execute(f'SELECT quizId FROM PostingContains WHERE postingId={posting["postingId"]};')
+            for row in quizRows:
+                name = db.execute(f"SELECT title FROM Quiz WHERE quizId={row[0]}")[0][0]
+                posting['quizzes'].append({'quizId': row[0], 'quizName': name})
+
+        return {"postings": postings}
+
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
 api.add_resource(RegisterStudent, '/api/v1/register/student')
@@ -450,6 +487,8 @@ api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
 api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
 api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
 api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+api.add_resource(FetchPostings, '/api/v1/fetchPostings')
+
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
