@@ -124,21 +124,26 @@ class EditProfile(Resource):
         for key in role_args.keys():
             query_role += key + ' = "' + role_args[key] + '", '
     
-        query_role = query_role[0:-2] #truncate extra comma and space
+        query_role = query_role[0:-2] # truncate extra comma and space
         query_role += " WHERE uid = " + uid + ";"
 
         query_user = "UPDATE AppUser SET "
         for key in appuser_args.keys():
             query_user += key + ' = "' + appuser_args[key] + '", '
         
-        query_user = query_user[0:-2] #truncate extra comma and space
+        query_user = query_user[0:-2] # truncate extra comma and space
         query_user += " WHERE uid = " + uid + ";"
 
         db = database_mysql.DatabaseMySql()
+
+        print(query_role)
+        print(query_user)
+
+        return {}, status.HTTP_200_OK
         try:
             db.connect()
             db.execute(query_role)
-            db.execute(query_user)
+            # db.execute(query_user) currently not updating any info in appuser table
             db.close_connection()
         except:
             #return 500
@@ -152,18 +157,38 @@ class EditProfileStudent(EditProfile):
     def post(self):
         # create two different parsers to separate args needed to match the table they correspond to 
         parser_role = reqparse.RequestParser() # role specific information
-        parser_user = reqparse.RequestParser() # general user information
+        #parser_user = reqparse.RequestParser() # general user information
 
         reqParser(parser_role, ['studyLevel', 'school', 'bio'])
-        reqParser(parser_user, ['country', 'stateOrProvince'])
+        #reqParser(parser_user, ['country', 'stateOrProvince'])
+
 
         role_args = parser_role.parse_args()
-        appuser_args = parser_user.parse_args()
+        #appuser_args = parser_user.parse_args()
+        appuser_args = {}
 
-        parser.add_argument('uid', required=True, location='json')
-        uid = parser.parse_args()['uid']
+        parser_role.add_argument('uid', required=True, location='json')
+        uid = parser_role.parse_args()['uid']
         
         return super().post('Student', uid, role_args, appuser_args)
+
+class EditProfileRecruiter(EditProfile):
+    def post(self):
+        # create two different parsers to separate args needed to match the table they correspond to 
+        parser_role = reqparse.RequestParser() # role specific information
+        #parser_user = reqparse.RequestParser() # general user information
+
+        reqParser(parser_role, ['company', 'title', 'bio'])
+        #reqParser(parser_user, ['country', 'stateOrProvince'])
+
+        role_args = parser_role.parse_args()
+        #appuser_args = parser_user.parse_args()
+        appuser_args = {} # currently no info is being edited in the appuser table
+
+        parser_role.add_argument('uid', required=True, location='json')
+        uid = parser_role.parse_args()['uid']
+        
+        return super().post('Recruiter', uid, role_args, appuser_args)
 
 class addQuiz(Resource):
     def post(self):
@@ -432,6 +457,19 @@ class FilterStudents(Resource):
             return {}, status.HTTP_400_BAD_REQUEST
         
         return {"matches": matches}, status.HTTP_200_OK
+
+class CreatePosting(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid', 'title', 'description', 'stateOrProvince', 'quizIds'])
+        args = parser.parse_args()
+
+        quizIds = args['quizIds'][1:-1]
+        quizzes = []
+        for quiz in quizIds.split(','):
+            quizzes.append(int(quiz))
+
+        return insertPosting(int(args['uid']), args['title'], args['description'], args['stateOrProvince'], quizzes)
       
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
@@ -439,6 +477,7 @@ api.add_resource(RegisterStudent, '/api/v1/register/student')
 api.add_resource(RegisterRecruiter, '/api/v1/register/recruiter')
 api.add_resource(Login, '/api/v1/login')
 api.add_resource(EditProfileStudent, '/api/v1/editProfile/student')
+api.add_resource(EditProfileRecruiter, '/api/v1/editProfile/recruiter')
 api.add_resource(VerifyUser, '/api/v1/verifyUser')
 api.add_resource(addQuiz, '/api/v1/addQuiz')
 api.add_resource(SubmitQuiz, '/api/v1/submitQuiz')
@@ -450,6 +489,7 @@ api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
 api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
 api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
 api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+api.add_resource(CreatePosting, '/api/v1/createPosting')
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
