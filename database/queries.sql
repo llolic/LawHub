@@ -42,5 +42,5 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 
 -- LAM-11: student view postings
-SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, recruiterId, firstName, lastName FROM Posting RIGHT JOIN AppUser ON Posting.recruiterId=AppUser.uid;
+SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, recruiterId, firstName, lastName FROM Posting INNER JOIN AppUser ON Posting.recruiterId=AppUser.uid;
 SELECT quizId FROM PostingContains WHERE postingId={};
