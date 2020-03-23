@@ -432,7 +432,25 @@ class FilterStudents(Resource):
             return {}, status.HTTP_400_BAD_REQUEST
         
         return {"matches": matches}, status.HTTP_200_OK
-      
+
+
+class GetRecruiterInfo(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid'])
+        args = parser.parse_args()
+        uid = args['uid']
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        rows = db.execute(f"SELECT firstName, lastName, company, title, bio, stateOrProvince, country FROM AppUser INNER JOIN Recruiter ON AppUser.uid=Recruiter.uid WHERE Recruiter.uid={uid};")
+        if rows == []:
+            return {}, status.HTTP_404_NOT_FOUND
+        recruiter = rows[0]
+        return {"firstName": recruiter[0], "lastName": recruiter[1], "companyName": recruiter[2], "title": recruiter[3], "bio": recruiter[4], "stateOrProvince": recruiter[5], "country": recruiter[6]}
+
+
+
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
 api.add_resource(RegisterStudent, '/api/v1/register/student')
@@ -450,6 +468,8 @@ api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
 api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
 api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
 api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+api.add_resource(GetRecruiterInfo, '/api/v1/getRecruiterInfo')
+
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
