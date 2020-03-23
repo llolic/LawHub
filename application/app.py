@@ -457,6 +457,19 @@ class FilterStudents(Resource):
             return {}, status.HTTP_400_BAD_REQUEST
         
         return {"matches": matches}, status.HTTP_200_OK
+
+class CreatePosting(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid', 'title', 'description', 'stateOrProvince', 'quizIds'])
+        args = parser.parse_args()
+
+        quizIds = args['quizIds'][1:-1]
+        quizzes = []
+        for quiz in quizIds.split(','):
+            quizzes.append(int(quiz))
+
+        return insertPosting(int(args['uid']), args['title'], args['description'], args['stateOrProvince'], quizzes)
       
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
@@ -476,6 +489,7 @@ api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
 api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
 api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
 api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+api.add_resource(CreatePosting, '/api/v1/createPosting')
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
