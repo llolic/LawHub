@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Navigation/Button";
-import ProfileStats from "./ProfileStats";
+import ProfilePostings from "./Postings/ProfilePostings";
 
 import { getUserInfo } from "../Util/Requests";
 
@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 
 import "../Styles/profile.css"; //TODO
 
-class Profile extends React.Component {
+class RecruiterProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,48 +95,17 @@ class Profile extends React.Component {
 
             <div className="about_me_title">About me</div>
             <div className="about_me">{`${this.state.bio}`}</div>
-          </div>
-          <div className="similar_card">
-            <div className="subtitle">Similar Candidates </div>
-
-            <div className="row">
-              {/* THIS DOESN'T SCROLL TO TOP */}
-              <Link to="/">
-                <div className="candidate">
-                  <img
-                    src={profilePic}
-                    alt="your pic here"
-                    className="similar_icon"
-                  />
-                  <Button className="btn_small_blk" text="Barry Gunther" />
-                </div>
-              </Link>
-              <div className="candidate">
-                <img
-                  src={profilePic}
-                  alt="your pic here"
-                  className="similar_icon"
-                />
-                Barry Gunther
-              </div>
-              <div className="candidate">
-                <img
-                  src={profilePic}
-                  alt="your pic here"
-                  className="similar_icon"
-                />
-                Barry Gunther
-              </div>
-            </div>
+  
           </div>
         </div>
 
         <div className="right_profile_container">
-          <ProfileStats uid={this.props.uid}/>
+        <div className="overview_title"> ALL POSTINGS </div>
+          <ProfilePostings uid={this.props.uid}/>
         </div>
       </div>
     );
   };
 }
 
-export default Profile;
+export default RecruiterProfile;

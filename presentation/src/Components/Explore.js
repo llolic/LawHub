@@ -109,6 +109,7 @@ class Explore extends React.Component {
           clickStartQuiz={this.clickStartQuiz}
           updateQuizId={this.props.updateQuizId}
           updateProfileUid={this.props.updateProfileUid}
+          size={6}
           key={i}
         />
       );

@@ -13,6 +13,7 @@ import EditProfile from "./Components/EditProfile";
 import QuizFilter from "./Components/QuizFilter";
 import EditRecruiterProfile from "./Components/EditRecruiterProfile";
 import Profile from "./Components/Profile";
+import RecruiterProfile from "./Components/RecruiterProfile";
 import Leaderboard from "./Components/Leaderboard";
 import QuizLeaderboard from "./Components/QuizLeaderboard";
 
@@ -147,9 +148,13 @@ class App extends React.Component {
               <EditRecruiterProfile />
             </Route>
 
-            {/* <Route path="/recruiterProfile"> */}
-              {/* <Profile /> */}
-            {/* </Route> */}
+            <Route path="/recruiterProfile">
+              <RecruiterProfile 
+                sessId={this.state.sessId}
+                uid={this.state.uid}
+                updateQuizId={this.updateQuizId}
+              />
+            </Route>
 
             <Route path="/editProfile">
               <EditProfile />
