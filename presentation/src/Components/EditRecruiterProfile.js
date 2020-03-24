@@ -9,7 +9,7 @@ import "../Styles/employerprofile.css";
  * Recruiter Profile card for recruiter profile customization.
  * Includes logic to send/receive requests to the flask server
  */
-class RecruiterProfile extends React.Component {
+class EditRecruiterProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,7 +56,7 @@ class RecruiterProfile extends React.Component {
   render = () => {
 
     return (
-      <div className="recruiterprofile_container">
+      <div className="studentprofile_container">
         <div className="card">
             <div className="subtitle">Customize Your Recruiter Profile </div>
           
@@ -65,8 +65,12 @@ class RecruiterProfile extends React.Component {
 
             <div className = "center">
                 <img src={profilePic} alt="your pic here" style={{ width: "150px", height: "150px" }} />
-                <Button text = "Upload Picture" 
+                
+            </div>
+            <div className = "center">
+            <Button text = "Upload Picture" 
                     onClick = {this.updateProfilePicturePath}
+                    className="btn_small"
                 />
             </div>
                 
@@ -116,4 +120,4 @@ class RecruiterProfile extends React.Component {
   };
 }
 
-export default RecruiterProfile;
+export default EditRecruiterProfile;
