@@ -1,8 +1,7 @@
 import React from "react";
-import Button from "./Navigation/Button";
 import Posting from "./Postings/Posting";
 
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
 import "../Styles/explore.css";

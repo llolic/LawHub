@@ -4,7 +4,8 @@ import ProfileStats from "./ProfileStats";
 
 import { getUserInfo } from "../Util/Requests";
 
-import profilePic from "../Images/groot.jpg";
+import profilePic from "../Images/harry.png";
+import similarPics from "../Images/groot.jpg";
 
 // import { harry } from "../Constants/profile";
 
@@ -21,7 +22,7 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      uid: this.props.uid,
+      uid: this.props.uid
       // sessId: "sessId",
       // userType: "student",
       // profileId: "userId"
@@ -30,29 +31,30 @@ class Profile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    getUserInfo(this.props.uid).then(result => {
-      console.log(result);
-      this.setState({
-        firstName: result.firstName,
-        lastName: result.lastName,
-        studyLevel: result.studyLevel,
-        school: result.school,
-        bio: result.bio,
-        city: result.city,
-        stateOrProvince: result.stateOrProvince,
-        country: result.country
-      });
-      // this.setState({
-      //   firstName: "Harry",
-      //   lastName: "Gunther",
-      //   studyLevel: "Undergraduate, 4th year",
-      //   school: "Yale University",
-      //   bio: "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
-      //   city: "Hartford",
-      //   stateOrProvince: "Connecticut",
-      //   country: "United States"
-      // });
+    // getUserInfo(this.props.uid).then(result => {
+    //   console.log(result);
+    //   this.setState({
+    //     firstName: result.firstName,
+    //     lastName: result.lastName,
+    //     studyLevel: result.studyLevel,
+    //     school: result.school,
+    //     bio: result.bio,
+    //     city: result.city,
+    //     stateOrProvince: result.stateOrProvince,
+    //     country: result.country
+    //   });
+    this.setState({
+      firstName: "Harry",
+      lastName: "Gunther",
+      studyLevel: "Undergraduate, 4th year",
+      school: "Yale University",
+      bio:
+        "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
+      // city: "Hartford",
+      stateOrProvince: "Connecticut",
+      country: "United States"
     });
+    // });
   }
 
   render = () => {
@@ -62,9 +64,9 @@ class Profile extends React.Component {
           <div className="profile_card">
             <div className="profile_name">
               {`${this.state.firstName} ${this.state.lastName}`}
-              {this.state.userType === "student" && (
+              {this.props.uid === this.props.profileUid && (
                 <Link to="/editProfile">
-                  {this.state.userId === this.state.profileId && <EditIcon />}
+                  <EditIcon />
                 </Link>
               )}
             </div>
@@ -89,7 +91,7 @@ class Profile extends React.Component {
               <li className="profile_list_item">
                 {" "}
                 <LocationOnIcon />{" "}
-                {`${this.state.city}, ${this.state.stateOrProvince}, ${this.state.country}`}
+                {`${this.state.stateOrProvince}, ${this.state.country}`}
               </li>
             </ul>
 
@@ -104,7 +106,7 @@ class Profile extends React.Component {
               <Link to="/">
                 <div className="candidate">
                   <img
-                    src={profilePic}
+                    src={similarPics}
                     alt="your pic here"
                     className="similar_icon"
                   />
@@ -113,7 +115,7 @@ class Profile extends React.Component {
               </Link>
               <div className="candidate">
                 <img
-                  src={profilePic}
+                  src={similarPics}
                   alt="your pic here"
                   className="similar_icon"
                 />
@@ -121,7 +123,7 @@ class Profile extends React.Component {
               </div>
               <div className="candidate">
                 <img
-                  src={profilePic}
+                  src={similarPics}
                   alt="your pic here"
                   className="similar_icon"
                 />
@@ -132,7 +134,7 @@ class Profile extends React.Component {
         </div>
 
         <div className="right_profile_container">
-          <ProfileStats uid={this.props.uid}/>
+          <ProfileStats uid={this.props.uid} />
         </div>
       </div>
     );

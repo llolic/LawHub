@@ -46,6 +46,7 @@ class Posting extends React.Component {
               {this.props.stateOrProvince}, USA
             </Grid>
 
+          {this.props.profile ? <div></div> :
             <Grid item xs={12} className="posting_recruiter">
               Posted by:
               <Button
@@ -57,6 +58,8 @@ class Posting extends React.Component {
             }}
               />
             </Grid>
+          }
+            
           </Grid>
           <Grid item xs={12} className="posting_body">
             <Grid item xs={12} className="posting_description">

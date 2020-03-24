@@ -153,6 +153,7 @@ class App extends React.Component {
                 sessId={this.state.sessId}
                 uid={this.state.uid}
                 updateQuizId={this.updateQuizId}
+                profileUid={this.state.profileUid}
               />
             </Route>
 
@@ -161,7 +162,7 @@ class App extends React.Component {
             </Route>
 
             <Route path="/studentProfile">
-              <Profile sessId={this.state.sessId} uid={this.state.uid} />
+              <Profile sessId={this.state.sessId} uid={this.state.uid} profileUid={this.state.profileUid} />
             </Route>
 
             <Route path="/">

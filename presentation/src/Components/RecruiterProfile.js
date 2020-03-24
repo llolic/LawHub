@@ -1,14 +1,11 @@
 import React from "react";
-import Button from "./Navigation/Button";
 import ProfilePostings from "./Postings/ProfilePostings";
 
-import { getUserInfo } from "../Util/Requests";
+import { getRecruiterInfo } from "../Util/Requests";
 
-import profilePic from "../Images/groot.jpg";
+import profilePic from "../Images/jessica.png";
 
-// import { harry } from "../Constants/profile";
-
-import SchoolIcon from "@material-ui/icons/School";
+import WorkIcon from "@material-ui/icons/Work";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import EditIcon from "@material-ui/icons/Edit";
@@ -21,7 +18,7 @@ class RecruiterProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      uid: this.props.uid,
+      uid: this.props.uid
       // sessId: "sessId",
       // userType: "student",
       // profileId: "userId"
@@ -30,29 +27,29 @@ class RecruiterProfile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    getUserInfo(this.props.uid).then(result => {
-      console.log(result);
-      this.setState({
-        firstName: result.firstName,
-        lastName: result.lastName,
-        studyLevel: result.studyLevel,
-        school: result.school,
-        bio: result.bio,
-        city: result.city,
-        stateOrProvince: result.stateOrProvince,
-        country: result.country
-      });
-      // this.setState({
-      //   firstName: "Harry",
-      //   lastName: "Gunther",
-      //   studyLevel: "Undergraduate, 4th year",
-      //   school: "Yale University",
-      //   bio: "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
-      //   city: "Hartford",
-      //   stateOrProvince: "Connecticut",
-      //   country: "United States"
-      // });
+    // getRecruiterInfo(this.props.uid).then(result => {
+    //   console.log(result);
+    //   this.setState({
+    //     firstName: result.firstName,
+    //     lastName: result.lastName,
+    //     studyLevel: result.studyLevel,
+    //     school: result.school,
+    //     bio: result.bio,
+    //     city: result.city,
+    //     stateOrProvince: result.stateOrProvince,
+    //     country: result.country
+    //   });
+    this.setState({
+      firstName: "Jessica",
+      lastName: "Peterson",
+      companyName: "White & Case",
+      title: "Senior Lawyer",
+      bio:
+        "I am looking to hire a new first year lawyer to help draft documents, read through cases, and assist fellow lawyers this summer.",
+      stateOrProvince: "New York",
+      country: "United States"
     });
+    // });
   }
 
   render = () => {
@@ -62,9 +59,9 @@ class RecruiterProfile extends React.Component {
           <div className="profile_card">
             <div className="profile_name">
               {`${this.state.firstName} ${this.state.lastName}`}
-              {this.state.userType === "student" && (
-                <Link to="/editProfile">
-                  {this.state.userId === this.state.profileId && <EditIcon />}
+              {this.props.uid === this.props.profileUid && (
+                <Link to="/editRecruiterProfile">
+                  <EditIcon />
                 </Link>
               )}
             </div>
@@ -79,29 +76,28 @@ class RecruiterProfile extends React.Component {
 
             <ul className="profile_list">
               <li className="profile_list_item">
-                <LocationCityIcon /> {`${this.state.school}`}
+                <LocationCityIcon /> {`${this.state.companyName}`}
               </li>
 
               <li className="profile_list_item">
                 {" "}
-                <SchoolIcon /> {`${this.state.studyLevel}`}
+                <WorkIcon /> {`${this.state.title}`}
               </li>
               <li className="profile_list_item">
                 {" "}
                 <LocationOnIcon />{" "}
-                {`${this.state.city}, ${this.state.stateOrProvince}, ${this.state.country}`}
+                {`${this.state.stateOrProvince}, ${this.state.country}`}
               </li>
             </ul>
 
             <div className="about_me_title">About me</div>
             <div className="about_me">{`${this.state.bio}`}</div>
-  
           </div>
         </div>
 
         <div className="right_profile_container">
-        <div className="overview_title"> ALL POSTINGS </div>
-          <ProfilePostings uid={this.props.uid}/>
+          <div className="overview_title"> ALL POSTINGS </div>
+          <ProfilePostings uid={this.props.uid} />
         </div>
       </div>
     );
