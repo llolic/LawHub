@@ -37,3 +37,10 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 
 -- Notes: First query gets all the quiz records associated with a specified student
 --        Second query gets all the information about a specified student
+
+
+
+
+-- LAM-11: student view postings
+SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, recruiterId, firstName, lastName FROM Posting INNER JOIN AppUser ON Posting.recruiterId=AppUser.uid;
+SELECT quizId FROM PostingContains WHERE postingId={};
