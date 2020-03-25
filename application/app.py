@@ -65,7 +65,7 @@ class Login(Resource):
             #return 200 ok
             sessId = generate_auth_token()
             # insert_auth_uid(uid, sessId)
-            return {"uid": uid, "sessId": sessId}
+            return {"uid": uid, "role": role, "sessId": sessId}
         
         #return 401 unauthorized
         return {}, status.HTTP_401_UNAUTHORIZED
@@ -511,6 +511,23 @@ class FetchPostings(Resource):
 
         return {"postings": postings}
 
+class GetRecruiterInfo(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid'])
+        args = parser.parse_args()
+        uid = args['uid']
+        db = database_mysql.DatabaseMySql()
+        db.connect()
+
+        rows = db.execute(f"SELECT firstName, lastName, company, title, bio, stateOrProvince, country FROM AppUser INNER JOIN Recruiter ON AppUser.uid=Recruiter.uid WHERE Recruiter.uid={uid};")
+        if rows == []:
+            return {}, status.HTTP_404_NOT_FOUND
+        recruiter = rows[0]
+        return {"firstName": recruiter[0], "lastName": recruiter[1], "companyName": recruiter[2], "title": recruiter[3], "bio": recruiter[4], "stateOrProvince": recruiter[5], "country": recruiter[6]}
+
+
+
 # add helper parse_args with for loop for adding arguments
 api.add_resource(Index, '/')
 api.add_resource(RegisterStudent, '/api/v1/register/student')
@@ -531,6 +548,8 @@ api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
 api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
 api.add_resource(CreatePosting, '/api/v1/createPosting')
 api.add_resource(FetchPostings, '/api/v1/fetchPostings')
+api.add_resource(GetRecruiterInfo, '/api/v1/getRecruiterInfo')
+
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

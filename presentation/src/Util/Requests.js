@@ -4,21 +4,24 @@
 
 const path = "35.227.67.4";
 
-
 export const submitNewPosting = async state => {
   console.log(state);
-    return fetch(`http://${path}:5000/api/v1/createPosting`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(state)
-    }).then(result => {
+  return fetch(`http://${path}:5000/api/v1/createPosting`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(state)
+  }).then(
+    result => {
       console.log(result);
       return result.ok;
-    }, function(error) { // idk if this works
+    },
+    function(error) {
+      // idk if this works
       return false;
-  });
+    }
+  );
 };
 
 export const fetchQuizQuestions = async () => {
@@ -34,10 +37,9 @@ export const fetchQuizQuestions = async () => {
     }
     return -1;
   });
-}
+};
 
 export const filterStudents = async state => {
-
   return fetch(`http://${path}:5000/api/v1/filterStudents`, {
     method: "POST",
     headers: {
@@ -56,7 +58,6 @@ export const filterStudents = async state => {
 
 // POST /api/v1/register/student OR recruiter
 export const filterQuizzes = async state => {
-
   return fetch(`http://${path}:5000/api/v1/filterQuizzes`, {
     method: "POST",
     headers: {
@@ -72,9 +73,7 @@ export const filterQuizzes = async state => {
       return false;
     }
   });
-
-} ;
-
+};
 
 export const submitRegistration = async (state, type) => {
   return fetch(`http://${path}:5000/api/v1/register/${type}`, {
@@ -83,12 +82,16 @@ export const submitRegistration = async (state, type) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(state)
-  }).then(result => {
-    console.log(result);
-    return result.ok;
-  }, function(error) { // idk if this works
-    return false;
-  });
+  }).then(
+    result => {
+      console.log(result);
+      return result.ok;
+    },
+    function(error) {
+      // idk if this works
+      return false;
+    }
+  );
 };
 
 // POST /api/v1/login (NEED TO RETURN USER TYPE)
@@ -111,10 +114,10 @@ export const submitLogin = async state => {
 };
 
 // POST /api/v1/editProfile/student OR recruiter(not implemented yet)
-export const updateProfile = async (state) => {
+export const updateProfile = async state => {
   console.log("Attempting to update student profile");
   return fetch(`http://${path}:5000/api/v1/editProfile/student`, {
-    method: 'POST',
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
@@ -122,17 +125,16 @@ export const updateProfile = async (state) => {
   }).then(result => {
     return result.ok;
   });
-}
+};
 
 // POST /api/v1/viewProfile ???????
 
 // POST /api/v1/addQuiz
 export const submitNewQuiz = async (state, sessId, userId) => {
-
   console.log(state);
 
-  var jsonObj = {...state, sessId: sessId, userId: userId };
-  
+  var jsonObj = { ...state, sessId: sessId, userId: userId };
+
   console.log(jsonObj);
   return fetch(`http://${path}:5000/api/v1/addQuiz`, {
     method: "POST",
@@ -154,7 +156,7 @@ export const submitNewQuiz = async (state, sessId, userId) => {
 };
 
 // POST /api/v1/submitQuiz
-export const submitQuizAnswers = async (state) => {
+export const submitQuizAnswers = async state => {
   console.log("Attempting to submit quiz results", state);
   return fetch(`http://${path}:5000/api/v1/submitQuiz`, {
     method: "POST",
@@ -166,8 +168,6 @@ export const submitQuizAnswers = async (state) => {
     console.log(result);
     return result.ok;
   });
-
-
 };
 
 // POST /api/v1/verifyUser
@@ -184,7 +184,7 @@ export const verifyUser = async (sessId, userId) => {
   }).then(result => {
     return result.ok;
   });
-}
+};
 
 // POST /api/v1/fetchQuizScores
 export const fetchQuizScores = async (quizId, numScores) => {
@@ -196,16 +196,15 @@ export const fetchQuizScores = async (quizId, numScores) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(jsonObj)
-  }).then(result => {
-    if (result.ok)
-      return result.json();
-    return -1;
   })
-  .catch(err => {
-    throw err;
-  });
-}
-
+    .then(result => {
+      if (result.ok) return result.json();
+      return -1;
+    })
+    .catch(err => {
+      throw err;
+    });
+};
 
 // POST /api/v1/getUserHistory
 export const getUserHistory = async (uid, numScores) => {
@@ -217,15 +216,13 @@ export const getUserHistory = async (uid, numScores) => {
     },
     body: JSON.stringify(jsonObj)
   }).then(result => {
-    if (result.ok)
-      return result.json();
+    if (result.ok) return result.json();
     return -1;
   });
-}
-
+};
 
 // POST /api/v1/getUserInfo
-export const getUserInfo = async (uid) => {
+export const getUserInfo = async uid => {
   const jsonObj = { uid: uid };
   return fetch(`http://${path}:5000/api/v1/getUserInfo`, {
     method: "POST",
@@ -234,33 +231,39 @@ export const getUserInfo = async (uid) => {
     },
     body: JSON.stringify(jsonObj)
   }).then(result => {
-    if (result.ok)
-      return result.json();
+    if (result.ok) return result.json();
     return -1;
   });
-}
+};
 
-// POST /api/v1/fetchQuestions
-
-
+// POST /api/v1/getUserInfo
+export const getRecruiterInfo = async uid => {
+  const jsonObj = { uid: uid };
+  return fetch(`http://${path}:5000/api/v1/getRecruiterInfo`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok) return result.json();
+    return -1;
+  });
+};
 
 export const getQuizzes = async () => {
   // var jsonObj = { sessId: sessId, userId: userId };
   return fetch(`http://${path}:5000/api/v1/fetchQuizList`, {
-    method: "POST", // ??
+    method: "POST" // ??
   }).then(result => {
-    if (result.ok)
-      return result.json();
+    if (result.ok) return result.json();
     return -1;
   });
-}
-
+};
 
 // POST /api/v1/fetchQuestions
 
-
-
-export const fetchQuiz = async (quizId) => {
+export const fetchQuiz = async quizId => {
   var jsonObj = { quizId: quizId };
   return fetch(`http://${path}:5000/api/v1/fetchQuiz`, {
     method: "POST", // ??
@@ -269,12 +272,10 @@ export const fetchQuiz = async (quizId) => {
     },
     body: JSON.stringify(jsonObj)
   }).then(result => {
-    if (result.ok)
-      return result.json();
+    if (result.ok) return result.json();
     return -1;
   });
-}
-
+};
 
 export const getPostings = async () => {
   var jsonObj = { uid: -1, stateOrProvince: "" };
@@ -285,28 +286,39 @@ export const getPostings = async () => {
     },
     body: JSON.stringify(jsonObj)
   }).then(result => {
-    if (result.ok)
-      return result.json();
+    if (result.ok) return result.json();
     return -1;
   });
-}
+};
 
-// getSuggestedPostings
-// export const getPostings = async argStateOrProvince => {
-//   var jsonObj = { uid: -1, stateOrProvince: argStateOrProvince };
-//   return fetch(`http://${path}:5000/api/v1/fetchPostings`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify(jsonObj)
-//   }).then(result => {
-//     console.log(result);
-//     if (result.ok) {
-//       return result.json();
-//     } else {
-//       return false;
-//     }
-//   });
-// }
+export const getSuggestedPostings = async argStateOrProvince => {
+  var jsonObj = { uid: -1, stateOrProvince: argStateOrProvince };
+  return fetch(`http://${path}:5000/api/v1/fetchPostings`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    console.log(result);
+    if (result.ok) {
+      return result.json();
+    } else {
+      return false;
+    }
+  });
+};
 
+export const getRecruiterPostings = async uid => {
+  var jsonObj = { uid: uid, stateOrProvince: "" };
+  return fetch(`http://${path}:5000/api/v1/fetchPostings`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok) return result.json();
+    return -1;
+  });
+};

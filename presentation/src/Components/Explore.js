@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "./Navigation/Button";
 import Posting from "./Postings/Posting";
+import Button from "./Navigation/Button";
 import { getPostings, getUserHistory } from "../Util/Requests";
 
 import { Redirect, Link } from "react-router-dom";
@@ -114,6 +114,7 @@ class Explore extends React.Component {
           clickStartQuiz={this.clickStartQuiz}
           updateQuizId={this.props.updateQuizId}
           updateProfileUid={this.props.updateProfileUid}
+          size={6}
           key={i}
         />
       );
@@ -132,6 +133,9 @@ class Explore extends React.Component {
     return (
       <div className="explore_container">
         <div className="title">EXPLORE POSTINGS</div>
+        <Link to="/suggestPostings">
+              <Button className="btn_small" text="Explore Postings" />
+            </Link>
         <div>
           Complete all quizzes listed on a posting to automatically be considered as an applicant for that posting.
         </div>

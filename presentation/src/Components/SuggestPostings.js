@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Navigation/Button";
-import { getPostings, getUserInfo } from "../Util/Requests";
+import { getSuggestedPostings, getUserInfo } from "../Util/Requests";
 
 import { TextField } from "@material-ui/core";
 
@@ -139,7 +139,7 @@ class SuggestPostings extends React.Component {
       //this.setState({ submitted: true }); // change this later
       console.log(result);
       this.setState({ stateOrProvince: result.stateOrProvince });
-      getPostings(result.stateOrProvince).then(result => {
+      getSuggestedPostings(result.stateOrProvince).then(result => {
         if (result === false) {
           this.setState({ error: true });
           return;

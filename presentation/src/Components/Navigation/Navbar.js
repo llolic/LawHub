@@ -44,7 +44,7 @@ class Navbar extends React.Component {
 
           {this.props.loggedIn ? (
             <div className="row">
-              <Link to="/studentProfile">
+              <Link to="/profile">
 
                 <AccountCircleIcon
                   style={{ color: "#FFFFFF", fontSize: "2.5em" }}

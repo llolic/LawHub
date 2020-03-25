@@ -1,15 +1,11 @@
 import React from "react";
-import Button from "./Navigation/Button";
-import ProfileStats from "./ProfileStats";
+import ProfilePostings from "./Postings/ProfilePostings";
 
-import { getUserInfo } from "../Util/Requests";
+import { getRecruiterPostings } from "../Util/Requests";
 
-import profilePic from "../Images/harry.png";
-import similarPics from "../Images/groot.jpg";
+import profilePic from "../Images/jessica.png";
 
-// import { harry } from "../Constants/profile";
-
-import SchoolIcon from "@material-ui/icons/School";
+import WorkIcon from "@material-ui/icons/Work";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import EditIcon from "@material-ui/icons/Edit";
@@ -18,7 +14,7 @@ import { Link } from "react-router-dom";
 
 import "../Styles/profile.css"; //TODO
 
-class Profile extends React.Component {
+class RecruiterProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +27,7 @@ class Profile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    getUserInfo(this.props.uid).then(result => {
+    getRecruiterPostings(this.props.uid).then(result => {
       console.log(result);
       this.setState({
         firstName: result.firstName,
@@ -44,14 +40,13 @@ class Profile extends React.Component {
         country: result.country
       });
     // this.setState({
-    //   firstName: "Harry",
-    //   lastName: "Gunther",
-    //   studyLevel: "Undergraduate, 4th year",
-    //   school: "Yale University",
+    //   firstName: "Jessica",
+    //   lastName: "Peterson",
+    //   companyName: "White & Case",
+    //   title: "Senior Lawyer",
     //   bio:
-    //     "Law school undergraduate looking to apply knowledge of laws, legal codes, and court proceedings and precedents to an attorney position.",
-    //   // city: "Hartford",
-    //   stateOrProvince: "Connecticut",
+    //     "I am looking to hire a new first year lawyer to help draft documents, read through cases, and assist fellow lawyers this summer.",
+    //   stateOrProvince: "New York",
     //   country: "United States"
     // });
     });
@@ -65,7 +60,7 @@ class Profile extends React.Component {
             <div className="profile_name">
               {`${this.state.firstName} ${this.state.lastName}`}
               {this.props.uid === this.props.profileUid && (
-                <Link to="/editProfile">
+                <Link to="/editRecruiterProfile">
                   <EditIcon />
                 </Link>
               )}
@@ -81,12 +76,12 @@ class Profile extends React.Component {
 
             <ul className="profile_list">
               <li className="profile_list_item">
-                <LocationCityIcon /> {`${this.state.school}`}
+                <LocationCityIcon /> {`${this.state.companyName}`}
               </li>
 
               <li className="profile_list_item">
                 {" "}
-                <SchoolIcon /> {`${this.state.studyLevel}`}
+                <WorkIcon /> {`${this.state.title}`}
               </li>
               <li className="profile_list_item">
                 {" "}
@@ -98,47 +93,15 @@ class Profile extends React.Component {
             <div className="about_me_title">About me</div>
             <div className="about_me">{`${this.state.bio}`}</div>
           </div>
-          <div className="similar_card">
-            <div className="subtitle">Similar Candidates </div>
-
-            <div className="row">
-              {/* THIS DOESN'T SCROLL TO TOP */}
-              <Link to="/">
-                <div className="candidate">
-                  <img
-                    src={similarPics}
-                    alt="your pic here"
-                    className="similar_icon"
-                  />
-                  <Button className="btn_small_blk" text="Barry Gunther" />
-                </div>
-              </Link>
-              <div className="candidate">
-                <img
-                  src={similarPics}
-                  alt="your pic here"
-                  className="similar_icon"
-                />
-                Barry Gunther
-              </div>
-              <div className="candidate">
-                <img
-                  src={similarPics}
-                  alt="your pic here"
-                  className="similar_icon"
-                />
-                Barry Gunther
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="right_profile_container">
-          <ProfileStats uid={this.props.uid} />
+          <div className="overview_title"> ALL POSTINGS </div>
+          <ProfilePostings uid={this.props.uid} />
         </div>
       </div>
     );
   };
 }
 
-export default Profile;
+export default RecruiterProfile;

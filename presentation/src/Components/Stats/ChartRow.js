@@ -20,7 +20,7 @@ class ChartRow extends React.Component {
           {this.props.date}
         </Grid>
         <Grid item xs={3} className="quiz_history_score">
-          {`${this.props.score}%`}
+          {`${this.props.score}`}{this.props.percentage ? `%` : ``}
         </Grid>
       </Grid>
     );

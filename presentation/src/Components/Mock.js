@@ -15,6 +15,7 @@ class Mock extends React.Component {
     this.state = {
       createQuiz: 0,
       startQuiz: 0,
+      toFilter: 0,
       quizzes: [],
       toLeaderboard: 0
     };
@@ -38,6 +39,11 @@ class Mock extends React.Component {
         this.setState({ createQuiz: 1 });
       }
     });
+  };
+
+  clickFilter = () => {
+    this.setState({ toFilter: 1 });
+    return;
   };
 
   clickStartQuiz = () => {
@@ -83,6 +89,9 @@ class Mock extends React.Component {
     if (this.state.createQuiz === 1) {
       return <Redirect push to="/quizCreation" />;
     }
+    if (this.state.toFilter === 1) {
+      return <Redirect push to="/quizFilter" />;
+    }
     if (this.state.startQuiz === 1) {
       return <Redirect push to="/takeQuiz" />;
     }
@@ -100,34 +109,28 @@ class Mock extends React.Component {
             Mock Quizzes
             <Link to="/createPosting">
               <Button className="btn_yellow" text="Create Posting" />
-            <Link to="/suggestPostings">
-              <Button className="btn_yellow" text="Explore Postings" />
-            </Link>
-            {this.props.userType === "recruiter" ? (
-              // <Link to="/quizCreation">
+              </Link>
+         
+              <div className="row">
+              {this.props.userType === "recruiter" && (
               <Button
-                className="btn_yellow_small"
+                className="btn_small"
                 text="Create Quiz"
                 onClick={this.clickCreate}
               />
-            ) : (
-              // </Link>
-              <div></div>
-            )}
+              )}
+              <Button
+                className="btn_small"
+                text="Filter Quizzes"
+                onClick={this.clickFilter}
+              />
+              </div>
+
           </div>
         </div>
 
         <Grid container spacing={3}>
           {this.renderQuizzes()}
-          {/* <MockQuizRow
-            quizName="Test Quiz"
-            clickLeaderboard={this.clickLeaderboard}
-            clickStartQuiz={this.clickStartQuiz}
-          />
-          <MockQuizRow quizName="BAR Mock Quiz" />
-          <MockQuizRow quizName="LSAT Mock" />
-          <MockQuizRow quizName="BAR and LSAT Questions" />
-          <MockQuizRow quizName="LSAT Mock Quiz" /> */}
         </Grid>
       </div>
     );
