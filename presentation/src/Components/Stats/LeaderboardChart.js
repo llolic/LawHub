@@ -25,6 +25,7 @@ class LeaderboardChart extends React.Component {
           quizTitle={this.props.data[i].userName}
           date={this.props.data[i].numQuizzes}
           score={this.props.data[i].score * 100}
+          percentage={true}
           key={i}
           number={i + 1}
         />

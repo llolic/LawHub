@@ -1,8 +1,10 @@
 import React from "react";
 import Button from "./Navigation/Button";
+import ChartRow from "./Stats/ChartRow";
 import { filterQuizzes } from "../Util/Requests"; 
 
 import { TextField } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 import "../Styles/quizfilter.css"; 
 
@@ -25,41 +27,66 @@ class QuizFilter extends React.Component {
       submitted: false,
       error: false,
       quizzes: [
-        {quizId: 1, quizName: "Quiz 1", numQuestions: 1},
-        {quizId: 2, quizName: "Quiz 2", numQuestions: 2},
-        {quizId: 3, quizName: "Quiz 3", numQuestions: 3},
-        {quizId: 4, quizName: "Quiz 4", numQuestions: 4},
-        {quizId: 5, quizName: "Quiz 5", numQuestions: 5}
+        // {quizId: 1, quizName: "Quiz 1", numQuestions: 1},
+        // {quizId: 2, quizName: "Quiz 2", numQuestions: 2},
+        // {quizId: 3, quizName: "Quiz 3", numQuestions: 3},
+        // {quizId: 4, quizName: "Quiz 4", numQuestions: 4},
+        // {quizId: 5, quizName: "Quiz 5", numQuestions: 5}
       ] //TODO: hard coded
     };
   }
 
   //https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
-  createTable = () => {
+  // createTable = () => {
 
-    let table = [];
+  //   let table = [];
 
-    let header = [];
-    header.push(<tr><th>Quiz ID</th><th>Quiz Name</th><th>Number of Questions</th></tr>)
+  //   let header = [];
+  //   header.push(<tr><th>Quiz ID</th><th>Quiz Name</th><th>Number of Questions</th></tr>)
 
-    table.push(header)
+  //   table.push(header)
 
-    for (let i=0; i<this.state.quizzes.length; i++) {
+  //   for (let i=0; i<this.state.quizzes.length; i++) {
 
-      let children = []
+  //     let children = []
   
-      //note: {i}, not ${i} since $ is for string
-      children.push(<td>{this.state.quizzes[i].quizId}</td>)
-      children.push(<td>{this.state.quizzes[i].quizName}</td>)
-      children.push(<td>{this.state.quizzes[i].numQuestions}</td>)
+  //     //note: {i}, not ${i} since $ is for string
+  //     children.push(<td>{this.state.quizzes[i].quizId}</td>)
+  //     children.push(<td>{this.state.quizzes[i].quizName}</td>)
+  //     children.push(<td>{this.state.quizzes[i].numQuestions}</td>)
       
-      table.push(<tr>{children}</tr>)
+  //     table.push(<tr>{children}</tr>)
 
+  //   }
+
+  //   return table;
+
+  // }
+
+  renderFilters = () => {
+    let rows = [];
+    if (this.state.quizzes.length === 0) {
+      return (
+        <div>
+          Enter some filters!
+        </div>
+      )
     }
 
-    return table;
-
-  }
+    for (let i = 0; i < this.state.quizzes.length; i++) {
+      rows.push(
+        <ChartRow
+          className={`history_row_${i % 2}`}
+          quizTitle={this.state.quizzes[i].quizId}
+          date={this.state.quizzes[i].quizName}
+          score={this.state.quizzes[i].numQuestions}
+          key={i}
+          number={-1}
+        />
+      );
+    }
+    return rows;
+  };
 
 
   submitQuizFilters = async () => {
@@ -71,9 +98,6 @@ class QuizFilter extends React.Component {
       console.log(this.state.tags);
       //TODO: callbacks to guarantee since async
     }); //Bracket placements
-
-    
-
 
 
     filterQuizzes(this.state).then(result => {
@@ -156,11 +180,26 @@ class QuizFilter extends React.Component {
             />
           </div>
 
-          <div className="centerdiv">
+          <Grid container spacing={0}>
+          <Grid container item xs={12} spacing={0} className="grid_header">
+            <Grid item xs={6}>
+              <div className="center">Quiz ID</div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="center">Quiz Name</div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="center">Number of Questions</div>
+            </Grid>
+          </Grid>
+          {this.renderFilters()}
+        </Grid>
+
+          {/* <div className="centerdiv">
               <table id="quizzes">
                   {this.createTable()}
               </table>
-          </div>
+          </div> */}
 
         </div>
       </div>

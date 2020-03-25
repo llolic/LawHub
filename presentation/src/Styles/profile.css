@@ -41,7 +41,9 @@
 
 .profile_img {
   border-radius: 100%;
+  object-fit: cover;
   width: 10em;
+  height: 10em;
   border: 8px solid #89A3CB;
 }
 
