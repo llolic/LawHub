@@ -49,3 +49,5 @@ SELECT quizId FROM PostingContains WHERE postingId={};
 -- LAM-4: posting suggestions
 SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, recruiterId, firstName, lastName FROM Posting INNER JOIN AppUser ON Posting.recruiterId=AppUser.uid WHERE Posting.stateOrProvince={};
  SELECT quizId FROM PostingContains WHERE postingId={};
+-- LAM-16: recruiter customize profile
+UPDATE Recruiter SET company={}, title={}, bio={} WHERE uid={};
