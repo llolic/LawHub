@@ -62,11 +62,9 @@ class Profile extends React.Component {
           <div className="profile_card">
             <div className="profile_name">
               {`${this.state.firstName} ${this.state.lastName}`}
-              {this.state.userType === "student" && (
                 <Link to="/editProfile">
-                  {this.state.userId === this.state.profileId && <EditIcon />}
+                  {<EditIcon />}
                 </Link>
-              )}
             </div>
             <div className="center">
               <img

@@ -433,6 +433,9 @@ class FilterStudents(Resource):
         
         return {"matches": matches}, status.HTTP_200_OK
 
+# this endpoint is used for both 
+# Post Suggestions user story and
+# Students can view postings user story
 class FetchPostings(Resource):
     def post(self):
         parser = reqparse.RequestParser()
