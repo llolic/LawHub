@@ -25,7 +25,7 @@ class RecruiterProfile extends React.Component {
   }
 
   updateProfilePicturePath() { //TODO
-    alert("Just kidding, you can't upload pictures yet!")
+    alert("Sorry, you can't upload pictures for this product release yet!")
   }
 
   submitRecruiterProfileUpdates = async () => {
