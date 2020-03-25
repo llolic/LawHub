@@ -65,7 +65,7 @@ class Login(Resource):
             #return 200 ok
             sessId = generate_auth_token()
             # insert_auth_uid(uid, sessId)
-            return {"uid": uid, "sessId": sessId}
+            return {"uid": uid, "role": role, "sessId": sessId}
         
         #return 401 unauthorized
         return {}, status.HTTP_401_UNAUTHORIZED
