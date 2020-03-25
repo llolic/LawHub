@@ -295,4 +295,17 @@ export const fetchQuiz = async (quizId) => {
 
 
 
-
+export const getPostings = async () => {
+  var jsonObj = { uid: -1, stateOrProvince: "" };
+  return fetch(`http://${path}:5000/api/v1/fetchPostings`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}

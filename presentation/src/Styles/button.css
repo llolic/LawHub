@@ -88,4 +88,17 @@ button {
   font-weight: 700;
   color: rgb(18, 51, 122);
 }
+
+
+.btn_simple {
+  background: none;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.btn_simple:hover {
+  text-decoration: underline;
+  color: rgb(18, 51, 122);
+}
+  
   
