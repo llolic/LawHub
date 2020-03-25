@@ -12,7 +12,9 @@ class SuggestPostings extends React.Component {
     this.state = {
       uid: this.props.uid,
       sessId: this.props.sessId,
-      stateOrProvince: "Hardcoded",
+      stateOrProvince: "",
+      postings: [],
+      /*,
       postings: [
         {
           postingId: 1,
@@ -65,18 +67,29 @@ class SuggestPostings extends React.Component {
             }
           ]
         }
-      ],
+      ]*/
       submitted: false,
       error: false
     };
   }
 
+  
+  componentWillMount() {
+    this.loadStateOrProvince();
+    //this.loadPostings();
+    console.log(this.state);
+  }  
+  
+
   //https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
   createTable = () => {
-    if (this.state.postings.length === 0) {
+    /*
+    if (this.state.submitted === false) {
       this.loadStateOrProvince();
       this.loadPostings();
+      this.setState({ submitted: true });
     }
+    */
 
     let table = [];
 
@@ -87,7 +100,7 @@ class SuggestPostings extends React.Component {
         <th>Title</th>
         <th>Description</th>
         <th>Recruiter Name</th>
-        <th>Quiz IDs</th>
+        <th>Quiz Names</th>
       </tr>
     );
 
@@ -123,20 +136,24 @@ class SuggestPostings extends React.Component {
         this.setState({ error: true });
         return;
       }
-      this.setState({ submitted: true }); // change this later
+      //this.setState({ submitted: true }); // change this later
+      console.log(result);
       this.setState({ stateOrProvince: result.stateOrProvince });
+      getPostings(result.stateOrProvince).then(result => {
+        if (result === false) {
+          this.setState({ error: true });
+          return;
+        }
+        //this.setState({ submitted: true }); // change this later
+        console.log(result);
+        this.setState({ postings: result.postings });
+      });
+      
     });
   };
 
   loadPostings = async () => {
-    getPostings(this.state).then(result => {
-      if (result === false) {
-        this.setState({ error: true });
-        return;
-      }
-      this.setState({ submitted: true }); // change this later
-      this.setState({ postings: result.postings });
-    });
+    
   };
 
   render = () => {

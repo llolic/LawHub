@@ -4,13 +4,14 @@
 
 const path = "35.227.67.4";
 
-export const getPostings = async state => {
+export const getPostings = async argStateOrProvince => {
+  var jsonObj = { uid: -1, stateOrProvince: argStateOrProvince };
   return fetch(`http://${path}:5000/api/v1/fetchPostings`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(state)
+    body: JSON.stringify(jsonObj)
   }).then(result => {
     console.log(result);
     if (result.ok) {

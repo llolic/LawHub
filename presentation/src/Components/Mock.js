@@ -98,6 +98,9 @@ class Mock extends React.Component {
         <div className="title_row">
           <div className="title">
             Mock Quizzes
+            <Link to="/suggestPostings">
+              <Button className="btn_yellow" text="Explore Postings" />
+            </Link>
             {this.props.userType === "recruiter" ? (
               // <Link to="/quizCreation">
               <Button
