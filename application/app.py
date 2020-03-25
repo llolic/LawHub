@@ -139,14 +139,14 @@ class EditProfile(Resource):
         print(query_role)
         print(query_user)
 
-        return {}, status.HTTP_200_OK
         try:
             db.connect()
             db.execute(query_role)
             # db.execute(query_user) currently not updating any info in appuser table
             db.close_connection()
-        except:
+        except Exception as e:
             #return 500
+            print(e)
             return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
         return {}, status.HTTP_200_OK
