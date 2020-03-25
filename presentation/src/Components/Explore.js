@@ -31,6 +31,7 @@ class Explore extends React.Component {
       for (let i = 0; i < result.scores.length; i++) {
         doneQuizzes.push(result.scores[i].quizId);
       }
+    });
     }
 
     
