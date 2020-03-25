@@ -6,20 +6,21 @@ import TakeQuiz from "./Components/TakeQuiz";
 import Login from "./Components/Login";
 import HomePage from "./Components/HomePage";
 import Mock from "./Components/Mock";
+import Explore from "./Components/Explore";
 import QuizCreation from "./Components/QuizCreation";
 import StudentFilter from "./Components/StudentFilter";
 import EditProfile from "./Components/EditProfile";
 import QuizFilter from "./Components/QuizFilter";
-// import EmployerProfile from "./Components/EmployerProfile";
+import EditRecruiterProfile from "./Components/EditRecruiterProfile";
 import Profile from "./Components/Profile";
 import Leaderboard from "./Components/Leaderboard";
 import QuizLeaderboard from "./Components/QuizLeaderboard";
 import CreatePosting from "./Components/CreatePosting";
+import SuggestPostings from "./Components/SuggestPostings";
 
 import { isAuthenticated } from "./Util/Auth";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import RecruiterProfile from "./Components/RecruiterProfile";
 
 class App extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class App extends React.Component {
       loggedIn: false,
       sessId: null,
       uid: null,
+      profileUid: null,
       quizId: null, // 17
       userType: "recruiter" //testing
     };
@@ -47,6 +49,11 @@ class App extends React.Component {
   updateQuizId = quizId => {
     this.setState({ quizId: quizId });
   };
+
+  updateProfileUid = profileUid => {
+    this.setState({ profileUid: profileUid });
+  };
+
 
   // need to update navbar after being unauthenticated
   // Needs to refresh page?
@@ -94,14 +101,23 @@ class App extends React.Component {
             </Route>
 
             <Route path="/quizLeaderboard">
-              <QuizLeaderboard quizId={this.state.quizId}/>
+              <QuizLeaderboard quizId={this.state.quizId} />
             </Route>
 
             <Route path="/quizCreation">
               <QuizCreation sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
-            <Route path="/explore">{/* explore here */}</Route>
+            <Route path="/explore">
+              <Explore
+                sessId={this.state.sessId}
+                uid={this.state.uid}
+                userType={this.state.userType}
+                updateQuizId={this.updateQuizId}
+                updateProfileUid={this.updateProfileUid}
+
+              />
+            </Route>
 
             <Route path="/register">
               <Registration type="student" />
@@ -129,9 +145,13 @@ class App extends React.Component {
               </div>
             </Route>
 
-            <Route path="/recruiterProfile">
-              <RecruiterProfile />
+            <Route path="/editRecruiterProfile">
+              <EditRecruiterProfile />
             </Route>
+
+            {/* <Route path="/recruiterProfile"> */}
+              {/* <Profile /> */}
+            {/* </Route> */}
 
             <Route path="/editProfile">
               <EditProfile />
@@ -143,6 +163,10 @@ class App extends React.Component {
 
             <Route path="/createPosting">
               <CreatePosting sessId={this.state.sessId} uid={this.state.uid} />
+            </Route>
+
+            <Route path="/suggestPostings">
+              <SuggestPostings sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/">

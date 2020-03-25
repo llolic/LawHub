@@ -1,0 +1,54 @@
+.suggestpostings_container {
+    padding-top: 3em;
+    padding-bottom: 3em;
+    position: relative;
+    margin: auto;
+    width: 60%; 
+    
+  }
+  
+  .subtitle {
+    width: 100%;
+    color: #446598;
+  
+    font-family: 'Roboto', sans-serif;
+    font-style: bold;
+    font-weight: 700;
+    font-size: 28px;
+  
+    padding-bottom: 0.5em;
+  }
+  
+  .card {
+    border-radius: 8px;
+    border: 1px solid #89A3CB;
+    box-shadow: 5px 5px 5px rgb(184, 184, 184);
+    padding: 1em;
+  }
+
+
+
+
+
+  #postings {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 35%;
+  }
+  
+  #postings td, #postings th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #postings tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #postings tr:hover {background-color: #ddd;}
+  
+  #postings th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #b22222;
+    color: white;
+  }
