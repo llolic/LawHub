@@ -129,6 +129,7 @@ class EditProfile(Resource):
 
         query_user = "UPDATE AppUser SET "
         for key in appuser_args.keys():
+            print("edit profile", key)
             query_user += key + ' = "' + appuser_args[key] + '", '
         
         query_user = query_user[0:-2] # truncate extra comma and space
@@ -166,7 +167,6 @@ class EditProfileStudent(EditProfile):
 
         role_args = parser_role.parse_args()
         appuser_args = parser_user.parse_args()
-        appuser_args = {}
 
         parser_role.add_argument('uid', required=True, location='json')
         uid = parser_role.parse_args()['uid']
@@ -184,7 +184,6 @@ class EditProfileRecruiter(EditProfile):
 
         role_args = parser_role.parse_args()
         appuser_args = parser_user.parse_args()
-        appuser_args = {} # currently no info is being edited in the appuser table
 
         parser_role.add_argument('uid', required=True, location='json')
         uid = parser_role.parse_args()['uid']
