@@ -98,6 +98,8 @@ class Mock extends React.Component {
         <div className="title_row">
           <div className="title">
             Mock Quizzes
+            <Link to="/createPosting">
+              <Button className="btn_yellow" text="Create Posting" />
             <Link to="/suggestPostings">
               <Button className="btn_yellow" text="Explore Postings" />
             </Link>

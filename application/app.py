@@ -458,6 +458,19 @@ class FilterStudents(Resource):
         
         return {"matches": matches}, status.HTTP_200_OK
 
+class CreatePosting(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        reqParser(parser, ['uid', 'title', 'description', 'stateOrProvince', 'quizIds'])
+        args = parser.parse_args()
+
+        quizIds = args['quizIds'][1:-1]
+        quizzes = []
+        for quiz in quizIds.split(','):
+            quizzes.append(int(quiz))
+
+        return insertPosting(int(args['uid']), args['title'], args['description'], args['stateOrProvince'], quizzes)
+      
 # this endpoint is used for both 
 # Post Suggestions user story and
 # Students can view postings user story
@@ -516,8 +529,8 @@ api.add_resource(FetchQuizScores, '/api/v1/fetchQuizScores')
 api.add_resource(FetchQuiz, '/api/v1/fetchQuiz')
 api.add_resource(FetchQuizList, '/api/v1/fetchQuizList')
 api.add_resource(FilterQuizzes, '/api/v1/filterQuizzes')
+api.add_resource(CreatePosting, '/api/v1/createPosting')
 api.add_resource(FetchPostings, '/api/v1/fetchPostings')
-
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

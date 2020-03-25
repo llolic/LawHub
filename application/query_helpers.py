@@ -239,3 +239,41 @@ def generateStudentQuery(study_level, school, country, state, city):
 	# 	query += " city='"+city+"'"
 	query += ";"
 	return query
+
+def insertPosting(uid, title, description, state, quizzes):
+	insert_posting = '''INSERT INTO Posting (recruiterId, title, description, stateOrProvince) VALUES ({}, "{}", "{}", "{}");
+	'''.format(uid, title, description, state)
+
+	db = database_mysql.DatabaseMySql()
+	try:
+		db.connect()
+		db.execute(insert_posting)
+	except Exception as e:
+		print(e)
+		return {"message": "insert into Posting failed"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+	select_posting = '''SELECT postingId FROM Posting WHERE recruiterId = {} AND title = "{}" AND description = "{}" AND stateOrProvince = "{}";
+	'''.format(uid, title, description, state)
+
+	try:
+		row = db.execute(select_posting)
+	except Exception as e:
+		print(e)
+		return {"message": "select failed"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+	
+	postingId = row[0][0]
+	for quiz in quizzes:
+		insert_posting = "INSERT INTO PostingContains (postingId, quizId) VALUES ({}, {});".format(postingId, quiz)
+		try:
+			db.execute(insert_posting)
+		except Exception as e:
+			print(e)
+			return {"message": "failed inserting into PostingContains quizId " + quiz}, status.HTTP_500_INTERNAL_SERVER_ERROR
+	
+	try:
+		db.close_connection()
+	except Exception as e:
+		print(e)
+		return {"message": "insert into postingContains failed"}, status.HTTP_500_INTERNAL_SERVER_ERROR
+	
+	return {}, status.HTTP_200_OK

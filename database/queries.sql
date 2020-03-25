@@ -39,8 +39,13 @@ SELECT firstName, lastName, email, country, stateOrProvince, city, studyLevel, s
 --        Second query gets all the information about a specified student
 
 
+-----------
+-- Sprint 4
+-----------
 
-
+-- LAM-17: create posting
+INSERT INTO Posting (recruiterId, title, description, stateOrProvince) VALUES ({}, {}, {}, {});
+INSERT INTO PostingContains (postingId, quizId) VALUES ({}, {});
 
 -- LAM-11: student view postings
 SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, recruiterId, firstName, lastName FROM Posting INNER JOIN AppUser ON Posting.recruiterId=AppUser.uid;
@@ -48,6 +53,7 @@ SELECT quizId FROM PostingContains WHERE postingId={};
  
 -- LAM-4: posting suggestions
 SELECT DISTINCT postingId, title, description, Posting.stateOrProvince, recruiterId, firstName, lastName FROM Posting INNER JOIN AppUser ON Posting.recruiterId=AppUser.uid WHERE Posting.stateOrProvince={};
- SELECT quizId FROM PostingContains WHERE postingId={};
+SELECT quizId FROM PostingContains WHERE postingId={};
+ 
 -- LAM-16: recruiter customize profile
 UPDATE Recruiter SET company={}, title={}, bio={} WHERE uid={};
