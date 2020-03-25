@@ -1,5 +1,6 @@
 import React from "react";
 import Posting from "./Posting";
+import { getRecruiterPostings } from "../../Util/Requests";
 
 import { Grid } from "@material-ui/core";
 
@@ -15,50 +16,50 @@ class ProfilePostings extends React.Component {
     };
   }
   componentDidMount() {
-    // getPostings().then(result => {
-    //   if (result !== -1) {
-    //     this.setState({ postings: result.postings });
-    //   }
-    // });
+    getRecruiterPostings(this.props.uid).then(result => {
+      if (result !== -1) {
+        this.setState({ postings: result.postings });
+      }
+    });
     // getUserHistory(this.props.uid, 0).then(result => {
     //   var doneQuizzes = this.state.doneQuizzes;
     //   for (let i = 0; i < result.scores.length; i++) {
     //     doneQuizzes.push(result.scores[i].quizId);
     //   }
-    //
+    
     // });
-    this.setState({ doneQuizzes: [17] });
-    this.setState({
-      postings: [
-        {
-          postingId: 1,
-          title: "Test Posting",
-          recruiterName: "",
-          description: "Get hired now!",
-          stateOrProvince: "California",
-          quizzes: [
-            {
-              quizId: 17,
-              quizName: "3 Sample Bar Questions"
-            }
-          ]
-        },
-        {
-          postingId: 2,
-          title: "White & Case Legal Intern Fall 2020",
-          recruiterName: "",
-          description:
-            "As a Legal Intern at White & Case you will work with the company's Deputy and General Counsel in many projects and will have a major impact on all departments company-wide.",
-          stateOrProvince: "New York",
-          quizzes: [
-            {
-              quizId: 17,
-              quizName: "3 Sample Bar Questions"
-            }
-          ]
-        }
-      ]
-    });
+    // this.setState({ doneQuizzes: [17] });
+    // this.setState({
+    //   postings: [
+    //     {
+    //       postingId: 1,
+    //       title: "Test Posting",
+    //       recruiterName: "",
+    //       description: "Get hired now!",
+    //       stateOrProvince: "California",
+    //       quizzes: [
+    //         {
+    //           quizId: 17,
+    //           quizName: "3 Sample Bar Questions"
+    //         }
+    //       ]
+    //     },
+    //     {
+    //       postingId: 2,
+    //       title: "White & Case Legal Intern Fall 2020",
+    //       recruiterName: "",
+    //       description:
+    //         "As a Legal Intern at White & Case you will work with the company's Deputy and General Counsel in many projects and will have a major impact on all departments company-wide.",
+    //       stateOrProvince: "New York",
+    //       quizzes: [
+    //         {
+    //           quizId: 17,
+    //           quizName: "3 Sample Bar Questions"
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // });
   }
   renderPostings = () => {
     var postgrid = [];

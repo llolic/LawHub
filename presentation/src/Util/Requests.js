@@ -288,3 +288,19 @@ export const getPostings = async () => {
     return -1;
   });
 }
+
+
+export const getRecruiterPostings = async (uid) => {
+  var jsonObj = { uid: uid, stateOrProvince: "" };
+  return fetch(`http://${path}:5000/api/v1/fetchPostings`, {
+    method: "POST", // ??
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonObj)
+  }).then(result => {
+    if (result.ok)
+      return result.json();
+    return -1;
+  });
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import ProfilePostings from "./Postings/ProfilePostings";
 
-import { getRecruiterInfo } from "../Util/Requests";
+import { getRecruiterPostings } from "../Util/Requests";
 
 import profilePic from "../Images/jessica.png";
 
@@ -27,29 +27,29 @@ class RecruiterProfile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    // getRecruiterInfo(this.props.uid).then(result => {
-    //   console.log(result);
-    //   this.setState({
-    //     firstName: result.firstName,
-    //     lastName: result.lastName,
-    //     studyLevel: result.studyLevel,
-    //     school: result.school,
-    //     bio: result.bio,
-    //     city: result.city,
-    //     stateOrProvince: result.stateOrProvince,
-    //     country: result.country
-    //   });
-    this.setState({
-      firstName: "Jessica",
-      lastName: "Peterson",
-      companyName: "White & Case",
-      title: "Senior Lawyer",
-      bio:
-        "I am looking to hire a new first year lawyer to help draft documents, read through cases, and assist fellow lawyers this summer.",
-      stateOrProvince: "New York",
-      country: "United States"
-    });
+    getRecruiterPostings(this.props.uid).then(result => {
+      console.log(result);
+      this.setState({
+        firstName: result.firstName,
+        lastName: result.lastName,
+        studyLevel: result.studyLevel,
+        school: result.school,
+        bio: result.bio,
+        city: result.city,
+        stateOrProvince: result.stateOrProvince,
+        country: result.country
+      });
+    // this.setState({
+    //   firstName: "Jessica",
+    //   lastName: "Peterson",
+    //   companyName: "White & Case",
+    //   title: "Senior Lawyer",
+    //   bio:
+    //     "I am looking to hire a new first year lawyer to help draft documents, read through cases, and assist fellow lawyers this summer.",
+    //   stateOrProvince: "New York",
+    //   country: "United States"
     // });
+    });
   }
 
   render = () => {

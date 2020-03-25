@@ -148,7 +148,16 @@ class App extends React.Component {
               <EditRecruiterProfile />
             </Route>
 
-            <Route path="/recruiterProfile">
+     
+
+            <Route path="/editProfile">
+              <EditProfile />
+            </Route>
+
+
+            {this.state.userType === "recruiter" ? 
+            
+            <Route path="/profile">
               <RecruiterProfile 
                 sessId={this.state.sessId}
                 uid={this.state.uid}
@@ -156,14 +165,13 @@ class App extends React.Component {
                 profileUid={this.state.profileUid}
               />
             </Route>
-
-            <Route path="/editProfile">
-              <EditProfile />
-            </Route>
-
-            <Route path="/studentProfile">
+            :
+            <Route path="/profile">
               <Profile sessId={this.state.sessId} uid={this.state.uid} profileUid={this.state.profileUid} />
             </Route>
+            
+            }
+            
 
             <Route path="/">
               <HomePage loggedIn={this.state.loggedIn} />
