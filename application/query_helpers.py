@@ -264,6 +264,11 @@ def insertPosting(uid, title, description, state, quizzes):
 	postingId = row[0][0]
 	for quiz in quizzes:
 		insert_posting = "INSERT INTO PostingContains (postingId, quizId) VALUES ({}, {});".format(postingId, quiz)
+		try:
+			db.execute(insert_posting)
+		except Exception as e:
+			print(e)
+			return {"message": "failed inserting into PostingContains quizId " + quiz}, status.HTTP_500_INTERNAL_SERVER_ERROR
 	
 	try:
 		db.close_connection()
