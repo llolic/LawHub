@@ -1,7 +1,7 @@
 import React from "react";
 import ProfilePostings from "./Postings/ProfilePostings";
 
-import { getRecruiterPostings } from "../Util/Requests";
+import { getRecruiterInfo } from "../Util/Requests";
 
 import profilePic from "../Images/jessica.png";
 
@@ -27,15 +27,15 @@ class RecruiterProfile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    getRecruiterPostings(this.props.uid).then(result => {
+    getRecruiterInfo(this.props.uid).then(result => {
       console.log(result);
       this.setState({
         firstName: result.firstName,
         lastName: result.lastName,
-        studyLevel: result.studyLevel,
-        school: result.school,
+        companyName: result.companyName,
+        title: result.title,
         bio: result.bio,
-        city: result.city,
+        // city: result.city,
         stateOrProvince: result.stateOrProvince,
         country: result.country
       });
@@ -90,7 +90,7 @@ class RecruiterProfile extends React.Component {
               </li>
             </ul>
 
-            <div className="about_me_title">About me</div>
+            <div className="about_me_title">About Us</div>
             <div className="about_me">{`${this.state.bio}`}</div>
           </div>
         </div>

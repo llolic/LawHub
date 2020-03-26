@@ -124,7 +124,7 @@ class Explore extends React.Component {
 
   render = () => {
     if (this.state.toRecruiterProfile === 1) {
-      return <Redirect push to="/recruiterProfile" />;
+      return <Redirect push to="/profile" />;
     }
     if (this.state.startQuiz === 1) {
       return <Redirect push to="/takeQuiz" />;
@@ -133,9 +133,15 @@ class Explore extends React.Component {
     return (
       <div className="explore_container">
         <div className="title">EXPLORE POSTINGS</div>
-        <Link to="/suggestPostings">
+        {this.props.userType === "recruiter" && (
+          <Link to="/createPosting">
+              <Button className="btn_small" text="Create Posting" />
+              </Link>
+        )}
+
+        {/* <Link to="/suggestPostings">
               <Button className="btn_small" text="Explore Postings" />
-            </Link>
+            </Link> */}
         <div>
           Complete all quizzes listed on a posting to automatically be considered as an applicant for that posting.
         </div>

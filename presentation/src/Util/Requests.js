@@ -114,9 +114,9 @@ export const submitLogin = async state => {
 };
 
 // POST /api/v1/editProfile/student OR recruiter(not implemented yet)
-export const updateProfile = async state => {
+export const updateProfile = async (state, userType) => {
   console.log("Attempting to update student profile");
-  return fetch(`http://${path}:5000/api/v1/editProfile/student`, {
+  return fetch(`http://${path}:5000/api/v1/editProfile/${userType}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -126,8 +126,6 @@ export const updateProfile = async state => {
     return result.ok;
   });
 };
-
-// POST /api/v1/viewProfile ???????
 
 // POST /api/v1/addQuiz
 export const submitNewQuiz = async (state, sessId, userId) => {

@@ -1,8 +1,10 @@
 import React from "react";
 import Button from "./Navigation/Button";
 import { getSuggestedPostings, getUserInfo } from "../Util/Requests";
+import FilterRow from "./Stats/FilterRow";
 
 import { TextField } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 import "../Styles/suggestpostings.css";
 
@@ -12,7 +14,7 @@ class SuggestPostings extends React.Component {
     this.state = {
       uid: this.props.uid,
       sessId: this.props.sessId,
-      stateOrProvince: "",
+      stateOrProvince: "Toronto",
       postings: [],
       /*,
       postings: [
@@ -90,7 +92,6 @@ class SuggestPostings extends React.Component {
       this.setState({ submitted: true });
     }
     */
-
     let table = [];
 
     let header = [];
@@ -130,6 +131,32 @@ class SuggestPostings extends React.Component {
     return table;
   };
 
+  renderFilters = () => {
+    let rows = [];
+    if (this.state.postings.length === 0) {
+      return (
+        <div>
+          There seems to be no postings near you.
+        </div>
+      )
+    }
+
+    for (let i = 0; i < this.state.postings.length; i++) {
+      rows.push(
+        <FilterRow
+          className={`history_row_${i % 2}`}
+          title={this.state.postings[i].title}
+          description={this.state.postings[i].description}
+          recruiterName={this.state.postings[i].recruiterName}
+          quizzes={this.state.postings[i].quizzes}
+          key={i}
+        />
+      );
+    }
+    return rows;
+  };
+
+
   loadStateOrProvince = async () => {
     getUserInfo(this.state.uid).then(result => {
       if (result === false) {
@@ -152,25 +179,40 @@ class SuggestPostings extends React.Component {
     });
   };
 
-  loadPostings = async () => {
-    
-  };
-
   render = () => {
     return (
       <div className="suggestpostings_container">
-        <div className="card">
+        {/* <div className="card"> */}
           <div className="subtitle">
             {" "}
-            Here are some job postings based on your location:{" "}
+            POSTING SUGGESTIONS{" "}
           </div>
 
-          <h3>Location: {this.state.stateOrProvince}</h3>
+          <div className="">These are based on postings near {this.state.stateOrProvince}</div>
 
           <div className="centerdiv">
-            <table id="postings">{this.createTable()}</table>
+            {/* <table id="postings"> */}
+            {/* {this.createTable()}</table> */}
+
+            <Grid container spacing={0}>
+          <Grid container item xs={12} spacing={0} className="grid_header">
+            <Grid item xs={3}>
+              <div className="center">Posting Title</div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="center">Posting Description</div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="center">Recruiter Name</div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="center">Quizzes</div>
+            </Grid>
+          </Grid>
+          {this.renderFilters()}
+        </Grid>
           </div>
-        </div>
+        {/* </div> */}
       </div>
     );
   };

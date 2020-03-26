@@ -21,7 +21,12 @@ import SuggestPostings from "./Components/SuggestPostings";
 
 import { isAuthenticated } from "./Util/Auth";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route
+} from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -55,7 +60,6 @@ class App extends React.Component {
     this.setState({ profileUid: profileUid });
   };
 
-
   // need to update navbar after being unauthenticated
   // Needs to refresh page?
   // need to scroll to top on redirect?
@@ -67,6 +71,7 @@ class App extends React.Component {
           <Navbar
             loggedIn={this.state.loggedIn}
             updateNavbar={this.updateNavbar}
+            updateProfileUid={this.updateProfileUid}
             userType={this.state.userType}
           />
           <Switch>
@@ -75,6 +80,10 @@ class App extends React.Component {
             </Route>
 
             <Route path="/dashboard">
+              <SuggestPostings
+                sessId={this.state.sessId}
+                uid={this.state.uid}
+              />
               {/* dashboard (home after login) here */}
             </Route>
 
@@ -116,7 +125,6 @@ class App extends React.Component {
                 userType={this.state.userType}
                 updateQuizId={this.updateQuizId}
                 updateProfileUid={this.updateProfileUid}
-
               />
             </Route>
 
@@ -147,45 +155,58 @@ class App extends React.Component {
             </Route>
 
             <Route path="/editRecruiterProfile">
-              <EditRecruiterProfile />
-            </Route>
-
-     
-
-            <Route path="/editProfile">
-              <EditProfile />
-            </Route>
-
-
-            {this.state.userType === "recruiter" ? 
-            
-            <Route path="/profile">
-              <RecruiterProfile 
-                sessId={this.state.sessId}
+              <EditRecruiterProfile
                 uid={this.state.uid}
-                updateQuizId={this.updateQuizId}
-                profileUid={this.state.profileUid}
+                userType={this.state.userType}
               />
             </Route>
-            :
-            <Route path="/profile">
-              <Profile sessId={this.state.sessId} uid={this.state.uid} profileUid={this.state.profileUid} />
+
+            <Route path="/editProfile">
+              <EditProfile
+                uid={this.state.uid}
+                userType={this.state.userType}
+              />
             </Route>
-            
-            }
-            
+
+            {this.state.userType === "recruiter" ? (
+              <Route path="/profile">
+                <RecruiterProfile
+                  sessId={this.state.sessId}
+                  uid={this.state.uid}
+                  updateQuizId={this.updateQuizId}
+                  // profileUid={this.state.profileUid}
+                  profileUid={this.state.uid}
+                />
+              </Route>
+            ) : (
+              <Route path="/profile">
+                <Profile
+                  sessId={this.state.sessId}
+                  uid={this.state.uid}
+                  profileUid={this.state.uid}
+                  // profileUid={this.state.profileUid}
+                />
+              </Route>
+            )}
 
             <Route path="/createPosting">
               <CreatePosting sessId={this.state.sessId} uid={this.state.uid} />
             </Route>
 
             <Route path="/suggestPostings">
-              <SuggestPostings sessId={this.state.sessId} uid={this.state.uid} />
+              <SuggestPostings
+                sessId={this.state.sessId}
+                uid={this.state.uid}
+              />
             </Route>
 
             <Route path="/">
-              <HomePage loggedIn={this.state.loggedIn} />
-              {/* {this.state.loggedIn ? <Redirect to="/dashboard" /> : <HomePage />} */}
+              {/* <HomePage loggedIn={this.state.loggedIn} /> */}
+              {this.state.loggedIn && this.state.userType === "student" ? (
+                <Redirect to="/dashboard" />
+              ) : (
+                <HomePage loggedIn={this.state.loggedIn} userType={this.state.userType}/>
+              )}
             </Route>
           </Switch>
         </Router>

@@ -53,7 +53,7 @@ class EditProfile extends React.Component {
       studyLevel: result.studyLevel,
       school: result.school,
       bio: result.bio,
-      city: result.city,
+      // city: result.city,
       stateOrProvince: result.stateOrProvince,
       country: result.country
     });
@@ -72,7 +72,7 @@ class EditProfile extends React.Component {
   }
 
   submitStudentProfileUpdates = async () => {
-    updateProfile(this.state).then(result => {
+    updateProfile(this.state, this.props.userType).then(result => {
       if (result === false) {
         this.setState({ error: true });
 
