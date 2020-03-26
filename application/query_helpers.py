@@ -268,7 +268,7 @@ def insertPosting(uid, title, description, state, quizzes):
 			db.execute(insert_posting)
 		except Exception as e:
 			print(e)
-			return {"message": "failed inserting into PostingContains quizId " + quiz}, status.HTTP_500_INTERNAL_SERVER_ERROR
+			return {"message": "failed inserting into PostingContains quizId"}, status.HTTP_500_INTERNAL_SERVER_ERROR
 	
 	try:
 		db.close_connection()

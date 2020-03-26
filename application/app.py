@@ -129,6 +129,7 @@ class EditProfile(Resource):
 
         query_user = "UPDATE AppUser SET "
         for key in appuser_args.keys():
+            print("edit profile", key)
             query_user += key + ' = "' + appuser_args[key] + '", '
         
         query_user = query_user[0:-2] # truncate extra comma and space
@@ -139,15 +140,16 @@ class EditProfile(Resource):
         print(query_role)
         print(query_user)
 
-        return {}, status.HTTP_200_OK
         try:
             db.connect()
             db.execute(query_role)
-            # db.execute(query_user) currently not updating any info in appuser table
+            db.execute(query_user)
             db.close_connection()
-        except:
+        except Exception as e:
             #return 500
-            return {}, status.HTTP_500_INTERNAL_SERVER_ERROR
+            print(e)
+            return {"message": "inserting into student/recruiter/appuser failed"
+            }, status.HTTP_500_INTERNAL_SERVER_ERROR
 
         return {}, status.HTTP_200_OK
 
@@ -157,15 +159,14 @@ class EditProfileStudent(EditProfile):
     def post(self):
         # create two different parsers to separate args needed to match the table they correspond to 
         parser_role = reqparse.RequestParser() # role specific information
-        #parser_user = reqparse.RequestParser() # general user information
+        parser_user = reqparse.RequestParser() # general user information
 
         reqParser(parser_role, ['studyLevel', 'school', 'bio'])
-        #reqParser(parser_user, ['country', 'stateOrProvince'])
+        reqParser(parser_user, ['country', 'stateOrProvince'])
 
 
         role_args = parser_role.parse_args()
-        #appuser_args = parser_user.parse_args()
-        appuser_args = {}
+        appuser_args = parser_user.parse_args()
 
         parser_role.add_argument('uid', required=True, location='json')
         uid = parser_role.parse_args()['uid']
@@ -176,14 +177,13 @@ class EditProfileRecruiter(EditProfile):
     def post(self):
         # create two different parsers to separate args needed to match the table they correspond to 
         parser_role = reqparse.RequestParser() # role specific information
-        #parser_user = reqparse.RequestParser() # general user information
+        parser_user = reqparse.RequestParser() # general user information
 
         reqParser(parser_role, ['company', 'title', 'bio'])
-        #reqParser(parser_user, ['country', 'stateOrProvince'])
+        reqParser(parser_user, ['country', 'stateOrProvince'])
 
         role_args = parser_role.parse_args()
-        #appuser_args = parser_user.parse_args()
-        appuser_args = {} # currently no info is being edited in the appuser table
+        appuser_args = parser_user.parse_args()
 
         parser_role.add_argument('uid', required=True, location='json')
         uid = parser_role.parse_args()['uid']
