@@ -127,10 +127,11 @@ create table PostingContains (
 );
 
 create table Posting (
-    postingId SERIAL NOT NULL primary key,
+    postingId SERIAL NOT NULL,
     recruiterId BIGINT UNSIGNED NOT NULL,
     title varchar(300) NOT NULL,
     description varchar(3000),
     stateOrProvince varchar(100) NOT NULL,
+    PRIMARY KEY(recruiterId, title),
     FOREIGN KEY (recruiterId) REFERENCES Recruiter(uid)
 );
