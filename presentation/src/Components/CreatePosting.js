@@ -55,7 +55,7 @@ class CreatePosting extends React.Component {
           <div>
             Quiz Name: {this.state.response[i].quizName}
             <Checkbox 
-              onChange={e => this.updateQuizzesUsed(i)}
+              onChange={e => this.updateQuizzesUsed(i, e)}
             />
           </div>
         );
@@ -64,10 +64,25 @@ class CreatePosting extends React.Component {
       return display;
   }
 
-  updateQuizzesUsed = i => {
-    const new_arr = this.state.quizIds.concat(this.state.response[i].quizId); //TODO: user_answers, const
-    this.setState({ quizIds: new_arr }, () => {}); //Bracket placements
-    console.log("Quizzes used: " + this.state.quizIds);
+  updateQuizzesUsed = (i, event) => {
+    if (event.target.checked) { // checkbox has newly been checked, add to list
+
+      this.state.quizIds.push(this.state.response[i].quizId);
+      console.log("Quizzes used: ");
+      console.log(this.state.quizIds);
+
+    } else { // checkbox has been unchecked, remove from list
+
+      var array = this.state.quizIds; // make a separate copy of the array
+      var index = array.indexOf(this.state.response[i].quizId)
+      if (index !== -1) {
+        array.splice(index, 1);
+        this.setState({ quizIds: array });
+      }
+      console.log("Quizzes used: ");
+      console.log(this.state.quizIds);
+
+    }
   }
 
   fieldsFilled = () => {
