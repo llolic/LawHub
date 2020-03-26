@@ -109,8 +109,7 @@ class EditRecruiterProfile extends React.Component {
             onChange={e => this.setState({ title: e.target.value })}
           />
 
-          
-<div className="row">
+          <div className="row">
             <div className="width-50">
               <TextField
                 id="country"

@@ -36,6 +36,7 @@ class App extends React.Component {
       sessId: null,
       uid: null,
       profileUid: null,
+      profileType: "recruiter",
       quizId: null, // 17
       userType: "recruiter" //testing
     };
@@ -56,8 +57,8 @@ class App extends React.Component {
     this.setState({ quizId: quizId });
   };
 
-  updateProfileUid = profileUid => {
-    this.setState({ profileUid: profileUid });
+  updateProfileUid = (profileUid, profileType) => {
+    this.setState({ profileUid: profileUid, profileType: profileType });
   };
 
   // need to update navbar after being unauthenticated
@@ -80,10 +81,17 @@ class App extends React.Component {
             </Route>
 
             <Route path="/dashboard">
-              <SuggestPostings
-                sessId={this.state.sessId}
-                uid={this.state.uid}
-              />
+              {this.state.loggedIn && this.state.userType === "student" ? (
+                <SuggestPostings
+                  sessId={this.state.sessId}
+                  uid={this.state.uid}
+                  updateQuizId={this.updateQuizId}
+                  updateProfileUid={this.updateProfileUid}
+                />
+              ) : (
+                <Redirect to="/" />
+              )}
+
               {/* dashboard (home after login) here */}
             </Route>
 
@@ -168,14 +176,14 @@ class App extends React.Component {
               />
             </Route>
 
-            {this.state.userType === "recruiter" ? (
+            {this.state.profileType === "recruiter" ? (
               <Route path="/profile">
                 <RecruiterProfile
                   sessId={this.state.sessId}
                   uid={this.state.uid}
                   updateQuizId={this.updateQuizId}
-                  // profileUid={this.state.profileUid}
-                  profileUid={this.state.uid}
+                  profileUid={this.state.profileUid}
+                  // profileUid={this.state.uid}
                 />
               </Route>
             ) : (
@@ -183,8 +191,9 @@ class App extends React.Component {
                 <Profile
                   sessId={this.state.sessId}
                   uid={this.state.uid}
-                  profileUid={this.state.uid}
-                  // profileUid={this.state.profileUid}
+                  updateQuizId={this.updateQuizId}
+                  // profileUid={this.state.uid}
+                  profileUid={this.state.profileUid}
                 />
               </Route>
             )}
@@ -205,7 +214,10 @@ class App extends React.Component {
               {this.state.loggedIn && this.state.userType === "student" ? (
                 <Redirect to="/dashboard" />
               ) : (
-                <HomePage loggedIn={this.state.loggedIn} userType={this.state.userType}/>
+                <HomePage
+                  loggedIn={this.state.loggedIn}
+                  userType={this.state.userType}
+                />
               )}
             </Route>
           </Switch>

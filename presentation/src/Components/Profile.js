@@ -31,7 +31,7 @@ class Profile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    getUserInfo(this.props.uid).then(result => {
+    getUserInfo(this.props.profileUid).then(result => {
       console.log(result);
       this.setState({
         firstName: result.firstName,
@@ -134,7 +134,7 @@ class Profile extends React.Component {
         </div>
 
         <div className="right_profile_container">
-          <ProfileStats uid={this.props.uid} />
+          <ProfileStats uid={this.props.profileUid} />
         </div>
       </div>
     );

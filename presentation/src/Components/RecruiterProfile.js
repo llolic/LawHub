@@ -27,7 +27,7 @@ class RecruiterProfile extends React.Component {
 
   // fetch user data...
   componentWillMount() {
-    getRecruiterInfo(this.props.uid).then(result => {
+    getRecruiterInfo(this.props.profileUid).then(result => {
       console.log(result);
       this.setState({
         firstName: result.firstName,
@@ -97,7 +97,7 @@ class RecruiterProfile extends React.Component {
 
         <div className="right_profile_container">
           <div className="overview_title"> ALL POSTINGS </div>
-          <ProfilePostings uid={this.props.uid} />
+          <ProfilePostings uid={this.props.profileUid} />
         </div>
       </div>
     );

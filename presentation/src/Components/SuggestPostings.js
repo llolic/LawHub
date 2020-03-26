@@ -1,10 +1,19 @@
 import React from "react";
 import Button from "./Navigation/Button";
-import { getSuggestedPostings, getUserInfo } from "../Util/Requests";
-import FilterRow from "./Stats/FilterRow";
+import Posting from "./Postings/Posting";
+
+import {
+  getSuggestedPostings,
+  getUserInfo,
+  getUserHistory
+} from "../Util/Requests";
 
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+
+import {
+  Redirect
+} from "react-router-dom";
 
 import "../Styles/suggestpostings.css";
 
@@ -16,6 +25,7 @@ class SuggestPostings extends React.Component {
       sessId: this.props.sessId,
       stateOrProvince: "Toronto",
       postings: [],
+      doneQuizzes: [],
       /*,
       postings: [
         {
@@ -75,87 +85,49 @@ class SuggestPostings extends React.Component {
     };
   }
 
-  
   componentWillMount() {
-    this.loadStateOrProvince();
+    getUserHistory(this.props.uid, 0).then(result => {
+      var doneQuizzes = this.state.doneQuizzes;
+      for (let i = 0; i < result.scores.length; i++) {
+        doneQuizzes.push(result.scores[i].quizId);
+      }
+      this.loadStateOrProvince();
+    });
+
     //this.loadPostings();
     console.log(this.state);
-  }  
-  
+  }
 
-  //https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
-  createTable = () => {
-    /*
-    if (this.state.submitted === false) {
-      this.loadStateOrProvince();
-      this.loadPostings();
-      this.setState({ submitted: true });
-    }
-    */
-    let table = [];
-
-    let header = [];
-    header.push(
-      <tr>
-        <th>Posting ID</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Recruiter Name</th>
-        <th>Quiz Names</th>
-      </tr>
-    );
-
-    table.push(header);
-
-    for (let i = 0; i < this.state.postings.length; i++) {
-      let children = [];
-
-      //note: {i}, not ${i} since $ is for string
-      children.push(<td>{this.state.postings[i].postingId}</td>);
-      children.push(<td>{this.state.postings[i].title}</td>);
-      children.push(<td>{this.state.postings[i].description}</td>);
-      children.push(<td>{this.state.postings[i].recruiterName}</td>);
-
-      let quizzes = [];
-        for (let j = 0; j < this.state.postings[i].quizzes.length; j++) {
-          quizzes.push(this.state.postings[i].quizzes[j].quizName);
-          if ((j !== this.state.postings[i].quizzes.length - 1) && (this.state.postings[i].quizzes.length > 1)) {
-            quizzes.push(",");
-          }
-        }
-      children.push(<td>{quizzes}</td>);
-
-      table.push(<tr>{children}</tr>);
-    }
-
-    return table;
+  clickStartQuiz = () => {
+    this.setState({ startQuiz: 1 });
+    return;
   };
 
-  renderFilters = () => {
-    let rows = [];
-    if (this.state.postings.length === 0) {
-      return (
-        <div>
-          There seems to be no postings near you.
-        </div>
-      )
-    }
+  clickRecruiter = () => {
+    this.setState({ toRecruiterProfile: 1 });
+    return;
+  };
+
+
+  renderPostings = () => {
+    var postgrid = [];
 
     for (let i = 0; i < this.state.postings.length; i++) {
-      rows.push(
-        <FilterRow
-          className={`history_row_${i % 2}`}
-          title={this.state.postings[i].title}
-          description={this.state.postings[i].description}
-          recruiterName={this.state.postings[i].recruiterName}
-          quizzes={this.state.postings[i].quizzes}
+      postgrid.push(
+        <Posting
+          {...this.state.postings[i]}
+          doneQuizzes={this.state.doneQuizzes}
+          clickRecruiter={this.clickRecruiter}
+          clickStartQuiz={this.clickStartQuiz}
+          updateQuizId={this.props.updateQuizId}
+          updateProfileUid={this.props.updateProfileUid}
+          size={12}
           key={i}
         />
       );
     }
-    return rows;
+    return postgrid;
   };
-
 
   loadStateOrProvince = async () => {
     getUserInfo(this.state.uid).then(result => {
@@ -175,43 +147,31 @@ class SuggestPostings extends React.Component {
         console.log(result);
         this.setState({ postings: result.postings });
       });
-      
     });
   };
 
   render = () => {
+    if (this.state.toRecruiterProfile === 1) {
+      return <Redirect push to="/profile" />;
+    }
+    if (this.state.startQuiz === 1) {
+      return <Redirect push to="/takeQuiz" />;
+    }
+
     return (
       <div className="suggestpostings_container">
         {/* <div className="card"> */}
-          <div className="subtitle">
-            {" "}
-            POSTING SUGGESTIONS{" "}
-          </div>
+        <div className="subtitle"> POSTING SUGGESTIONS </div>
 
-          <div className="">These are based on postings near {this.state.stateOrProvince}</div>
+        <div className="">
+          These are based on postings near you.
+        </div>
 
-          <div className="centerdiv">
-            {/* <table id="postings"> */}
-            {/* {this.createTable()}</table> */}
-
-            <Grid container spacing={0}>
-          <Grid container item xs={12} spacing={0} className="grid_header">
-            <Grid item xs={3}>
-              <div className="center">Posting Title</div>
-            </Grid>
-            <Grid item xs={3}>
-              <div className="center">Posting Description</div>
-            </Grid>
-            <Grid item xs={3}>
-              <div className="center">Recruiter Name</div>
-            </Grid>
-            <Grid item xs={3}>
-              <div className="center">Quizzes</div>
-            </Grid>
+        <div className="centerdiv">
+          <Grid container item>
+            {this.renderPostings()}
           </Grid>
-          {this.renderFilters()}
-        </Grid>
-          </div>
+        </div>
         {/* </div> */}
       </div>
     );

@@ -53,7 +53,7 @@ class Posting extends React.Component {
                 text={` ${this.props.recruiterName}`}
                 className="btn_simple"
                 onClick={() => {
-              this.props.updateProfileUid(18); // this.props.recruiterUid //!!!!!!!!!!!!!
+              this.props.updateProfileUid(this.props.recruiterId, "recruiter"); // this.props.recruiterUid //!!!!!!!!!!!!!
               this.props.clickRecruiter();
             }}
               />
