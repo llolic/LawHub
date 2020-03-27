@@ -28,7 +28,7 @@ Class Name | App
 Parent class | React.Component
 Classname subclasses | Everything below this
 Responsibilities | Provides all the routing for the website. Stores state for session id and user type for login purposes. Renders all components based on the route, and redirects to login page if session id expires. 
-Collaborators | Alfonso, Michelle
+Collaborators | React-router-dom
 -------------------------
 
 
@@ -37,40 +37,40 @@ Class Name | Button
 Parent class | React.Component
 Classname subclasses | N/A
 Responsibilities | Renders itself based on props and css classnames. This is a functional component, so it has no state. This component can be a subclass of any other component.
-Collaborators | Michelle
+Collaborators | N/A
 -------------------------
 
 
 Class Name | NavBar
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (React-router-dom) Link, Button, SearchBar
+Classname subclasses | Button, SearchBar
 Responsibilities | Provides a way to navigate throughout the website. Uses react-router-dom Links with buttons, so they canl redirect users to a new page. 
-Collaborators | Michelle
+Collaborators | (React-router-dom) Link
 -------------------------
 
 Class Name | SearchBar
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (React-router-dom) Link, Button, SearchBar
+Classname subclasses |  Button, SearchBar
 Responsibilities | Resets the search bar on redirection to a new page. Sends search queries to the backend, and redirects to search results.
-Collaborators | Michelle
+Collaborators | (React-router-dom) Link
 -------------------------
 
 Class Name | StudentRegistration
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) TextField, MenuItem (React-router-dom) Redirect
+Classname subclasses | N/A
 Responsibilities | Displays a student registration form. The component is able to validate form entries such as email and password. The state stores all user input and sends a POST request on submit. The component will handle redirection to a new page on success. 
-Collaborators | Michelle
+Collaborators | (Material-UI) TextField, MenuItem (React-router-dom) RedirectMichelle
 -------------------------
 
 Class Name | HomePage
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) Grid, (React-router-dom) Link, Button
+Classname subclasses | Button
 Responsibilities | Displays the LawHub homepage when no user is logged on. This includes the slogan and information about the web application. The component contains buttons for student and recruiter registration.
-Collaborators | Michelle
+Collaborators | (Material-UI) Grid, (React-router-dom) Link
 -------------------------
 
 
@@ -85,9 +85,9 @@ Collaborators | Alfonso
 Class Name | Mock
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) Grid, (React-router-dom) Link, Button
+Classname subclasses | Button
 Responsibilities | Temporary component to display mock quizzes. A button for creating a quiz will appear if the logged in user is a recruiter. 
-Collaborators | Michelle
+Collaborators | (Material-UI) Grid, (React-router-dom) Link
 -------------------------
 
 Class Name | Requests
@@ -95,16 +95,16 @@ Class Name | Requests
 Parent class | React.Component
 Classname subclasses | N/A
 Responsibilities | Handles fetch requests to the backend. All functions run asynchronously. Also stores a variable for the ip address, if it needs to change.
-Collaborators | Michelle
+Collaborators | N/A
 -------------------------
 
 
 Class Name | Auth
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (js-cookies) Cookies
+Classname subclasses | N/A
 Responsibilities | Handles authentication for a user. Adds sessId as a cookie to the browser. Sends requests to backend to verify that a user’s token has not expired.
-Collaborators | Michelle
+Collaborators | (js-cookies) Cookies
 -------------------------
 
 
@@ -138,9 +138,9 @@ Collaborators | Alfonso
 Class Name | QuizArea
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) LinearProgress, Grid, TextField, (React-Compound-Timer) Timer
+Classname subclasses | Button, Question, Answer
 Responsibilities | Create the display for each question in the quiz completion UI. Include a timer, progress bar, and a “Next” button to proceed to the next question after a student has selected their answer to a multiple choice question (so it doesn’t automatically proceed after they click an answer by accident).
-Collaborators | Alfonso, Michelle
+Collaborators | (Material-UI) LinearProgress, Grid, TextField, (React-Compound-Timer) Timer
 -------------------------
 
 
@@ -174,7 +174,7 @@ Class Name | Profile
 Parent class | React.Component
 Classname subclasses | Button, ProfileStats
 Responsibilities | Displays a student user's information. This includes their biography, school, study level, country and state. Also displays graphs based on user quiz history.
-Collaborators | Michelle
+Collaborators | N/A
 -------------------------
 
 Class Name | ProfileStats
@@ -182,15 +182,15 @@ Class Name | ProfileStats
 Parent class | React.Component
 Classname subclasses | OverallStats, History, CategoryStats
 Responsibilities | The component that functions as a tab window to switch between different stats to display. This includes the overall statistics, quiz history and category breakdown. 
-Collaborators | Michelle
+Collaborators | Recharts
 -------------------------
 
 Class Name | Leaderboard
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Recharts) Bar, BarGraph, LeaderboardChart
+Classname subclasses | N/A
 Responsibilities | The overall leaderboard across all users. Users are ranked by their average score. Displays an animated leaderboard visual with the top 3 users and a chart consisting of the top users with their total quizzes done and average scores.
-Collaborators | Michelle
+Collaborators | (Recharts) Bar, BarGraph, LeaderboardChart
 -------------------------
 
 Class Name | QuizLeaderboard
@@ -198,7 +198,7 @@ Class Name | QuizLeaderboard
 Parent class | React.Component
 Classname subclasses | LeaderboardChart
 Responsibilities | The leaderboard for a specific quiz. Users are ranked by highest score on the quiz. Columns in the leaderboard chart include the user's name, date of completion and quiz score.
-Collaborators | Michelle
+Collaborators | N/A
 -------------------------
 
 Class Name | StudentFilter
@@ -220,11 +220,43 @@ Collaborators | Alfonso
 Class Name | QuizCreation
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) TextField, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, (React-router-dom) Redirect, Button
+Classname subclasses | Button
 Responsibilities | Creates the quiz creation form. This includes text fields for the quiz title, tags, questions, correct answers and wrong answers. A quiz needs at least 3 questions and the fields will be rendered as the user changes the number of questions. Error checking ensures that no field is left blank. For using pre-made quiz questions, it fetches all existing quiz questions in the database for the quiz creator to use if they desire. Also updates the display for each question to have the text boxes if the user would like to create their own question, or provides a list of questions (and their one correct  solution) to choose from.
-
-Collaborators | Michelle, Alfonso
+Collaborators | (Material-UI) TextField, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, (React-router-dom) Redirect
 -------------------------
+
+Class Name | Explore
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | Posting, Button
+Responsibilities | The explore page displays all postings that have been created by recruiters. This includes the posting title, recruiter name, posting description and required quizzes. They are placed in a grid with two columns.
+Collaborators | (React-router-dom) Redirect, Link, (Material-UI) Grid, (Requests) getPostings, getUserHistory
+-------------------------
+
+Class Name | Posting
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | Button
+Responsibilities | This component focuses on rendering a single posting. It will display if the currently logged in user has completed any of the required quizzes or not. The recruiter and quizzes all have links to their respective pages.
+Collaborators | (Material-UI) Grid, CheckCircleOutlineIcon, HighlightOffIcon, LocationOnOutlinedIcon
+-------------------------
+
+Class Name | ProfilePostings
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | Posting
+Responsibilities | This component renders all postings made by a specific recruiter. This is displayed on the right side of the recruiter profile. The postings are rendered in a list of one column.
+Collaborators | (Material-UI) Grid, (Requests) getRecruiterPostings
+-------------------------
+
+Class Name | RecruiterProfile
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | ProfilePostings
+Responsibilities | This component renders the recruiter's info (company, location, title) and their postings.
+Collaborators | (Material-UI) WorkIcon, LocationCityIcon, LocationOnIcon, EditIcon, (Requests) getRecruiterInfo
+-------------------------
+
 
 ### _Back-end Components_
 
