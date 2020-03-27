@@ -77,9 +77,9 @@ Collaborators | (Material-UI) Grid, (React-router-dom) Link
 Class Name | Login
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) TextField, MenuItem, (React-router-dom) Redirect
+Classname subclasses | Button
 Responsibilities | Displays a login page for both students and recruiters. This page validates its form entries for email and password.. The state stores user input and sends a POST request, which will redirect the user to a successful login page or tell them their credentials could not be verified based on the server response.
-Collaborators | Alfonso
+Collaborators | (Material-UI) TextField, MenuItem, (React-router-dom) Redirect
 -------------------------
 
 Class Name | Mock
@@ -111,27 +111,27 @@ Collaborators | (js-cookies) Cookies
 Class Name | Answer
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) Grid, Radio
+Classname subclasses | N/A
 Responsibilities | Create a button corresponding to a possible answer for a multiple choice question in the quiz completion UI.
-Collaborators | Alfonso
+Collaborators | (Material-UI) Grid, Radio
 -------------------------
 
 
 Class Name | AnswerList
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) Grid
+Classname subclasses | Answer
 Responsibilities | Create a grid for all the possible answers for a multiple choice question in the quiz completion UI.
-Collaborators | Alfonso
+Collaborators | (Material-UI) Grid
 -------------------------
 
 
 Class Name | Question
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) Grid
+Classname subclasses | N/A
 Responsibilities | Display the question in different text for a multiple question in the quiz completion UI.
-Collaborators | Alfonso
+Collaborators | (Material-UI) Grid
 -------------------------
 
 
@@ -147,26 +147,18 @@ Collaborators | (Material-UI) LinearProgress, Grid, TextField, (React-Compound-T
 Class Name | TakeQuiz
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses |
+Classname subclasses | Button, QuizArea
 Responsibilities | Create the page that will handle quiz completion for student users. Handle HTTP requests with the backend for quiz retrieval, quiz result submission, handling errors and handling click events.
-Collaborators | Alfonso
+Collaborators | N/A
 -------------------------
 
 
 Class Name | EditProfile
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) TextField, MenuItem
+Classname subclasses | N/A
 Responsibilities | Create the page for student profile customization. Includes buttons for profile picture and resume file uploading (not functional yet, just placeholders). Also include drop-down menus for indicating their post-secondary institution, level of study, and a text field for a biography.
-Collaborators | Alfonso
--------------------------
-
-Class Name | RecruiterProfile
------------- | -------------
-Parent class | React.Component
-Classname subclasses | (Material-UI) TextField
-Responsibilities | Create the page for recruiter profile customization. Includes a button for profile picture file uploading (not functional yet, just a placeholder). Also include text fields for the company name, title, and a biography.
-Collaborators | Alfonso
+Collaborators | (Material-UI) TextField, MenuItem
 -------------------------
 
 Class Name | Profile
@@ -204,17 +196,17 @@ Collaborators | N/A
 Class Name | StudentFilter
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) TextField, MenuItem
+Classname subclasses | Button
 Responsibilities | Create the page for filtering students to be searched for. Includes drop-down options for their post-secondary institution, level of study, country, state/province and a text box for their city. Displays all relevant students matching the filter criteria in a table with the user ID and student name.
-Collaborators | Alfonso
+Collaborators | (Material-UI) TextField, MenuItem
 -------------------------
 
 Class Name | QuizFilter
 ------------ | -------------
 Parent class | React.Component
-Classname subclasses | (Material-UI) TextField
+Classname subclasses | Button 
 Responsibilities | Create the page for filtering quizzes that can be completed. Includes text fields to filter by quiz name, quiz author, or 3 different tags. Displays all relevant quizzes matching the filter criteria in a table with the quiz id, quiz name, and number of questions in the quiz.
-Collaborators | Alfonso
+Collaborators | (Material-UI) TextField
 -------------------------
 
 Class Name | QuizCreation
@@ -255,6 +247,30 @@ Parent class | React.Component
 Classname subclasses | ProfilePostings
 Responsibilities | This component renders the recruiter's info (company, location, title) and their postings.
 Collaborators | (Material-UI) WorkIcon, LocationCityIcon, LocationOnIcon, EditIcon, (Requests) getRecruiterInfo
+-------------------------
+
+Class Name | EditRecruiterProfile
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | Button
+Responsibilities | Create the page for recruiter profile customization. Includes a button for profile picture file uploading (not functional yet, just a placeholder). Also include text fields for the company name, title, and a biography. Also allow recruiters to choose their Country and State/Province.
+Collaborators | (Material-UI) TextField, MenuItem
+-------------------------
+
+Class Name | SuggestPostings
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | Posting, Button
+Responsibilities | Create the page for students to find job postings based on their location. Displays a table of all posting names, posting creators, and quizzes that apply for a specific posting from the user's location.
+Collaborators | (Material-UI) TextField, Grid
+-------------------------
+
+Class Name | CreatePosting
+------------ | -------------
+Parent class | React.Component
+Classname subclasses | Button
+Responsibilities | Create the page for recruiter's to create job postings. Have text fields for posting title, description and tags, as well as a drop-down menu to choose a state/province. Also, list out all quizzes and have checkboxes so a recruiter can choose select which quizzes are relevant to the posting they are making.
+Collaborators | (Material-UI) TextField, MenuItem, Checkbox, (React-router-dom) Redirect
 -------------------------
 
 
