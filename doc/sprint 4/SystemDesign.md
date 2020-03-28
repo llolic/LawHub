@@ -282,7 +282,7 @@ Class Name | Login
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | N/A
 Responsibilities | Handles POST login requests for both student and recruiter accounts. Parses the request which must consist of an email and password. It then will query the database and fulfil necessary checks. Upon success, it returns the uid of the user and a generated sessionid which will be used to authenticate the user throughout their session.
-Collaborators | Ahmad
+Collaborators | None
 -------------------------
 
 Class Name | Register
@@ -290,7 +290,7 @@ Class Name | Register
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | RegisterStudent, RegisterRecruiter
 Responsibilities | Receives a POST register request and parses the necessary arguments. It will insert a new row into the AppUser table of the database which consists of all necessary user information such as email, first name, last name, country, state, city, role, and their hashed password.
-Collaborators | Shahmeer
+Collaborators | None
 -------------------------
 
 Class Name | RegisterStudent
@@ -298,7 +298,7 @@ Class Name | RegisterStudent
 Parent class | Register
 Classname subclasses | N/A
 Responsibilities | Passes the POST request to the Register class along with the role “student” to the Register class to indicate a student account to be created.
-Collaborators | Shahmeer
+Collaborators | None
 -------------------------
 
 Class Name | RegisterRecruiter
@@ -306,7 +306,7 @@ Class Name | RegisterRecruiter
 Parent class | Register
 Classname subclasses | N/A
 Responsibilities | Passes the POST request to the Register class along with the role “recruiter” to the Register class to indicate a student account to be created.
-Collaborators | Shahmeer
+Collaborators | None
 -------------------------
 
 Class Name | EditProfile
@@ -314,7 +314,7 @@ Class Name | EditProfile
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | EditProfileStudent, EditProfileRecruiter
 Responsibilities | Receives a POST request to update a row in the specified role table. It will receive a role of either student or recruiter, then updates the necessary columns with the given arguments.
-Collaborators | Ahmad
+Collaborators | None
 -------------------------
 
 Class Name | EditProfileStudent
@@ -322,7 +322,7 @@ Class Name | EditProfileStudent
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | EditProfileStudent, EditProfileRecruiter
 Responsibilities | Passes the POST request to parent class EditProfile with the role as Student and the necessary fields that must be updated in the Student table.
-Collaborators | Ahmad
+Collaborators | None
 -------------------------
 
 Class Name | addQuiz
@@ -330,7 +330,7 @@ Class Name | addQuiz
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Parses the POST request for adding a quiz. It parses the title, author, tags, number of questions, and questions then executes the necessary queries to add the quiz and the questions into the database. 
-Collaborators | Ahmad
+Collaborators | None
 -------------------------
 
 Class Name | SubmitQuiz
@@ -338,7 +338,7 @@ Class Name | SubmitQuiz
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Receives a POST register request and parses the necessary arguments. It will calculate the score of the quiz that was submitted based on the number of correct multiple choice questions. It will then create a QuizRecord in the MySQL database, which signifies an attempt at some quiz by some user.
-Collaborators | Shahmeer
+Collaborators | None
 -------------------------
 
 Class Name | VerifyUser
@@ -346,7 +346,7 @@ Class Name | VerifyUser
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Receives a POST register request and parses the necessary arguments. It will check a local database which has user IDs, tokens assosciated with a session ID, and the timestamp of the token. The class will check if the supplied user has been authenticated within the last 5 minutes, ie if the local authentication database has a token for that user with a timestamp of within the last 5 minutes, and will return HTTP 200 if it does, or HTTP 401 if it does not/the token is older than 5 minutes. Everytime this happens, the timestamp of tokens are updated.
-Collaborators | Shahmeer
+Collaborators | None
 -------------------------
 
 Class Name | fetchQuestions
@@ -354,7 +354,7 @@ Class Name | fetchQuestions
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Receives a POST request with an empty body and responds with a json objects which is a list of question objects. Question objects are json objects that describe the question, the type of question (multiple choice or long answer), possible answers (if the question is multiple choice) and the correct answer (again, if the question is multiple choice).
-Collaborators | Ahmad
+Collaborators | None
 -------------------------
 
 Class Name | FilterStudents
@@ -362,7 +362,7 @@ Class Name | FilterStudents
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Receives a POST request with various attributes of a student profile and responds with a json object which is a list of student objects. Student objects consist of student names and their user id. 
-Collaborators | Ahmad
+Collaborators | None
 -------------------------
 
 
@@ -371,7 +371,7 @@ Class Name | GetUserInfo
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Receives a request with the required user's user ID and responds with a JSON object which contains the user's name, email, country, state, city, study level, school, and bio/description. Used for loading profile pages.
-Collaborators | Shahmeer
+Collaborators | None
 -------------------------
 
 Class Name | GetUserHistory
@@ -379,7 +379,7 @@ Class Name | GetUserHistory
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Receives a request with the required user's user ID and responds with a JSON object containing an array of the user's previous attempts at quizzes, including the quizID of the quiz, the score, and the name of the quiz.
-Collaborators | Shahmeer
+Collaborators | None
 -------------------------
 
 Class Name | FilterQuizzes
@@ -387,10 +387,41 @@ Class Name | FilterQuizzes
 Parent class | Resource (abstract RESTful resource)
 Classname subclasses | -
 Responsibilities | Receives a POST request with 0 or more tags, an optional 'author' attribute, and an optional 'name' attribute, and returns a JSON object consisting of the corresponding quizzes, which includes the quizId, quiz name, and the number of questions in the quiz.
-Collaborators | Shahmeer
+Collaborators | None
+-------------------------
+
+Class Name | CreatePosting
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Parses the POST request for creating a posting. Parses quizzes to be complete, author, and location of posting. Then adds the information into its respective tables in the database and sends an appropriate response.
+Collaborators | None
 -------------------------
 
 
+Class Name | EditProfileRecruiter
+------------ | -------------
+Parent class | EditProfile
+Classname subclasses | -
+Responsibilities | Parses the required information of a recruiter’s profile and passes the arguments to the EditProfile’s post method.
+Collaborators | EditProfile
+-------------------------
+
+Class Name | FetchPostings
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Parses a uid and stateOrProvince from the HTTP request body. if uid != -1, then filters all postings by the supplied postings. If stateOrProvince != "", then filters all postings by the supplied state. Returns the final list of postings in a HTTP response
+Collaborators | None
+-------------------------
+
+Class Name | GetRecruiterInfo
+------------ | -------------
+Parent class | Resource (abstract RESTful resource)
+Classname subclasses | -
+Responsibilities | Parses a uid from the HTTP request body. Returns the firstName, lastName, company, title, state, and country of the recruiter in a HTTP response.
+Collaborators | None
+-------------------------
 
 ## Architecture
 
