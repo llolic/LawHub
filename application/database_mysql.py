@@ -2,7 +2,7 @@ import mysql.connector
 
 class DatabaseMySql:
 
-	def __init__(self, name='lh_db', user='user1', password='Lamas123', host='35.227.67.4', port='3306'):
+	def __init__(self, name='lh_db', user='user1', password='Lamas123', host='127.0.0.1', port='3306'):
 		self.name = name
 		self.user = user
 		self.password = password
