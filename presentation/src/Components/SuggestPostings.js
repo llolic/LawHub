@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Navigation/Button";
+// import Button from "./Navigation/Button";
 import Posting from "./Postings/Posting";
 
 import {
@@ -8,7 +8,6 @@ import {
   getUserHistory
 } from "../Util/Requests";
 
-import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 import {

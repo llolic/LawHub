@@ -1,7 +1,6 @@
 import React from "react";
 import LeaderboardChart from "./Stats/LeaderboardChart";
 
-import { Link } from "react-router-dom";
 import { BarChart, Bar } from "recharts";
 
 import "../Styles/leaderboard.css"; //TODO

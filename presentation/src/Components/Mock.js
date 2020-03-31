@@ -1,9 +1,9 @@
 import React from "react";
 import Button from "./Navigation/Button";
-import { verifyUser, getQuizzes } from "../Util/Requests";
+import { getQuizzes } from "../Util/Requests";
 import MockQuizRow from "./MockQuizRow";
 
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
 import "../Styles/mock.css";
@@ -32,13 +32,6 @@ class Mock extends React.Component {
   clickCreate = () => {
     this.setState({ createQuiz: 1 });
     return;
-    verifyUser(this.props.sessId, this.props.uid).then(result => {
-      if (result === false) {
-        this.setState({ createQuiz: -1 });
-      } else {
-        this.setState({ createQuiz: 1 });
-      }
-    });
   };
 
   clickFilter = () => {
@@ -49,13 +42,6 @@ class Mock extends React.Component {
   clickStartQuiz = () => {
     this.setState({ startQuiz: 1 });
     return;
-    verifyUser(this.props.sessId, this.props.uid).then(result => {
-      if (result === false) {
-        this.setState({ startQuiz: -1 });
-      } else {
-        this.setState({ startQuiz: 1 });
-      }
-    });
   };
 
   clickLeaderboard = () => {

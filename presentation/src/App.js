@@ -74,6 +74,7 @@ class App extends React.Component {
             updateNavbar={this.updateNavbar}
             updateProfileUid={this.updateProfileUid}
             userType={this.state.userType}
+            uid={this.state.uid}
           />
           <Switch>
             <Route path="/login">

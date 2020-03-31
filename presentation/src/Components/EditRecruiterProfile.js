@@ -2,8 +2,6 @@ import React from "react";
 import Button from "./Navigation/Button";
 import profilePic from "../Images/lawhub.png";
 import {
-  schools,
-  studyLevels,
   countries,
   stateprovinces
 } from "../Constants/registration";
