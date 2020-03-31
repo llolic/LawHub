@@ -25,16 +25,17 @@ class StudentFilter extends React.Component {
       studyLevel: "",
       school: "",
       country: "",
-      state: "",
-      city: "",
+      // state: "",
+      city: "a",
+      stateOrProvince: "Virginia",
       submitted: false,
       error: false,
       students: [
-        {uid: 1, studentName: "Alfonso Dela Cruz"},
-        {uid: 2, studentName: "Ahmad Al-Taha"},
-        {uid: 3, studentName: "Lazar Lolic"},
-        {uid: 4, studentName: "Shahmeer Shahid"},
-        {uid: 5, studentName: "Michelle Luo"}
+        // {uid: 1, studentName: "Alfonso Dela Cruz"},
+        // {uid: 2, studentName: "Ahmad Al-Taha"},
+        // {uid: 3, studentName: "Lazar Lolic"},
+        // {uid: 4, studentName: "Shahmeer Shahid"},
+        // {uid: 5, studentName: "Michelle Luo"}
       ] //TODO: hard coded
     };
   }
@@ -67,7 +68,9 @@ class StudentFilter extends React.Component {
 
 
   submitStudentFilters = async () => {
-    filterStudents(this.state).then(result => {
+    var jsonObj = { studyLevel: this.state.studyLevel, state: this.state.stateOrProvince, school: this.state.school, country: this.state.country}
+    console.log(jsonObj);
+    filterStudents(jsonObj).then(result => {
       if (result === false) {
         this.setState({ error: true });
         
@@ -174,7 +177,7 @@ class StudentFilter extends React.Component {
             </div>
           </div>
 
-          <TextField
+          {/* <TextField
             id="city"
             label="City"
             helperText="City"
@@ -183,7 +186,7 @@ class StudentFilter extends React.Component {
             fullWidth
             variant="outlined"
             onChange={e => this.setState({ city: e.target.value })}
-          />
+          /> */}
 
 
           <div className="centerdiv">
