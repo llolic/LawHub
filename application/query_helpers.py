@@ -196,10 +196,17 @@ def queryStudent(args):
 	school = args['school']
 	country = args['country']
 	state = args['state']
-	city = args['city']
 
-	query = generateStudentQuery(study_level, school, country, state, city)
-	db = database_mysql.DatabaseMySql()
+	query = generateStudentQuery(study_level, school, country, state)
+	try:
+		db = database_mysql.DatabaseMySql()
+		db.connect()
+		rows = db.execute(query)
+		db.close_connection()
+	except Exception as e:
+		print(e)
+		return -1
+
 	if rows == []:
 		return 0
 
@@ -212,7 +219,7 @@ def queryStudent(args):
 
 	return matches
 
-def generateStudentQuery(study_level, school, country, state, city):
+def generateStudentQuery(study_level, school, country, state):
 	add_and = False
 	query = "SELECT AppUser.uid, firstName, lastName FROM AppUser RIGHT JOIN Student ON AppUser.uid=Student.uid WHERE"
 	if study_level != "":
