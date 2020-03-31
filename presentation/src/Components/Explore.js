@@ -26,15 +26,14 @@ class Explore extends React.Component {
       }
     });
     if (this.props.uid !== null) {
-        getUserHistory(this.props.uid, 0).then(result => {
-      var doneQuizzes = this.state.doneQuizzes;
-      for (let i = 0; i < result.scores.length; i++) {
-        doneQuizzes.push(result.scores[i].quizId);
-      }
-    });
+      getUserHistory(this.props.uid, 0).then(result => {
+        var doneQuizzes = this.state.doneQuizzes;
+        for (let i = 0; i < result.scores.length; i++) {
+          doneQuizzes.push(result.scores[i].quizId);
+        }
+      });
     }
 
-    
     // });
     // this.setState({ doneQuizzes: [17] });
     // this.setState({
@@ -135,15 +134,16 @@ class Explore extends React.Component {
         <div className="title">EXPLORE POSTINGS</div>
         {this.props.userType === "recruiter" && (
           <Link to="/createPosting">
-              <Button className="btn_small" text="Create Posting" />
-              </Link>
+            <Button className="btn_small" text="Create Posting" />
+          </Link>
         )}
 
         {/* <Link to="/suggestPostings">
               <Button className="btn_small" text="Explore Postings" />
             </Link> */}
         <div>
-          Complete all quizzes listed on a posting to automatically be considered as an applicant for that posting.
+          Complete all quizzes listed on a posting to automatically be
+          considered as an applicant for that posting.
         </div>
         <Grid container>{this.renderPostings()}</Grid>
       </div>

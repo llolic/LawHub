@@ -44,8 +44,9 @@ class Navbar extends React.Component {
 
           {this.props.loggedIn ? (
             <div className="row">
-              <Link to="/profile">
 
+              <Link to="/profile" onClick={() => {this.props.updateProfileUid(this.props.uid, this.props.userType)}}>
+                
                 <AccountCircleIcon
                   style={{ color: "#FFFFFF", fontSize: "2.5em" }}
                 />

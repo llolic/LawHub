@@ -118,7 +118,7 @@ class CreatePosting extends React.Component {
     }
 
     return (
-      <div className="createPosting_container">
+      <div className="mock_container">
         <div className="card">
           <div className="subtitle">Posting Creation</div>
 

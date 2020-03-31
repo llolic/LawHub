@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 
 import { getUserHistory } from "../../Util/Requests";
 
-import { historyStats } from "../../Constants/stats";
+// import { historyStats } from "../../Constants/stats";
 
 import "../../Styles/history.css"; //TODO
 
