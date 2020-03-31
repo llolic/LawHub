@@ -23,6 +23,8 @@ class EditProfile extends React.Component {
     this.state = {
       uid: this.props.uid,
       sessId: this.props.sessId,
+      firstName: "",
+      lastName: "",
       studyLevel: "",
       school: "",
       country: "",
