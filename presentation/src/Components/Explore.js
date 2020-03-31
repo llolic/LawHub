@@ -133,19 +133,32 @@ class Explore extends React.Component {
     return (
       <div className="explore_container">
         <div className="title">EXPLORE POSTINGS</div>
-        {this.props.userType === "recruiter" && (
-          <Link to="/createPosting">
+        {this.props.userType === "recruiter" ? 
+          (
+          <div>
+            <Link to="/createPosting">
               <Button className="btn_small" text="Create Posting" />
-              </Link>
-        )}
+            </Link>
+
+            <Link to="/studentFilter">
+              <Button className="btn_small" text="Find Students" />
+            </Link>  
+          </div>
+          )
+        : 
+        (
+        <div>
+          Complete all quizzes listed on a posting to automatically be considered as an applicant for that posting.
+        </div>
+        )
+        }
+
+        <Grid container>{this.renderPostings()}</Grid>
 
         {/* <Link to="/suggestPostings">
               <Button className="btn_small" text="Explore Postings" />
             </Link> */}
-        <div>
-          Complete all quizzes listed on a posting to automatically be considered as an applicant for that posting.
-        </div>
-        <Grid container>{this.renderPostings()}</Grid>
+
       </div>
     );
   };
