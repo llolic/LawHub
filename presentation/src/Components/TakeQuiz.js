@@ -46,8 +46,8 @@ class TakeQuiz extends React.Component {
       this.setState({
         title: result.quizName,
         dataSet: result.questions,
-        numQs: result.numQuestions - 1
-        // numMultChoice: result.numMultChoice
+        numQs: result.numQuestions - 1,
+        numMultChoice: result.numQuestions
       });
     });
   }
@@ -62,7 +62,7 @@ class TakeQuiz extends React.Component {
     this.setState({
       userAnswers: ans,
       current: this.state.current + 1,
-      numMultChoice: this.state.numMultChoice + 1
+      // numMultChoice: this.state.numMultChoice + 1
     });
     console.log(this.state.userAnswers);
   };
@@ -79,7 +79,7 @@ class TakeQuiz extends React.Component {
       this.addAnswerToList(choice); //TODO: final add
 
       if (this.state.current === this.state.numQs) {
-        this.setState({ done: true });
+        this.setState({ done: true, numQs: this.state.numQs + 1 });
         this.handleSubmit();
       }
       //TODO
@@ -106,6 +106,7 @@ class TakeQuiz extends React.Component {
   };
 
   handleSubmit = () => {
+    console.log(this.state);
     submitQuizAnswers(this.state).then(result => {
       // may want to change this?
       if (result === true) {
@@ -128,7 +129,7 @@ class TakeQuiz extends React.Component {
                 {this.state.numMultChoice}
               </div>
               {this.state.submitted && (
-                <div> Your results have been submitted </div>
+                <div className="centerdiv"> Your results have been submitted </div>
               )}
 
               {this.state.error === true && (
