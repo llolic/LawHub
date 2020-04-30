@@ -12,12 +12,6 @@ create table AppUser (
 
 -- INSERT INTO AppUser(password, firstName, lastName, email, role, country, stateOrProvince, city) VALUES($2, $3, $4, $5, 'student', $7, $8, $9);
 
--- 35.227.67.4
--- port: 3306
--- database name: 'lh_db'
--- user: 'user1'
--- password: 'Lamas123'
-
 
 create table QuizRecord (
     recordId SERIAL NOT NULL primary key,
